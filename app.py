@@ -26,6 +26,7 @@ from ui_styles import (
     render_onboarding_progress,
     render_career_intel,
     render_learning_paths,
+    render_job_search_tracker,
 )
 
 # הגדרות עמוד ראשיות
@@ -74,6 +75,21 @@ if "pii_stats" not in st.session_state:
 if "active_preset_name" not in st.session_state:
     st.session_state.active_preset_name = None
 
+# אבני דרך מובנות למעקב התקדמות (UX/UI Job Search Tracker)
+if "ux_ui_milestones" not in st.session_state:
+    st.session_state.ux_ui_milestones = {
+        "cv_scanned": False,
+        "bullet_rewriting": False,
+        "figma_mastery": False,
+        "case_study_project": False,
+        "portfolio_launch": False,
+        "job_applications": False,
+    }
+
+# עדכון אוטומטי של שלב סריקת קו"ח ברגע שיש ניתוח תוצאה
+if st.session_state.analysis_result:
+    st.session_state.ux_ui_milestones["cv_scanned"] = True
+
 
 # ==============================================================================
 # תהליך ONBOARDING רב-שלבי (Mobile-App Style Flow)
@@ -89,7 +105,7 @@ if st.session_state.onboarding_active:
             """
             <div class="onboarding-card">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
-            <span style="background: rgba(108, 99, 255, 0.2); color: #c7d2fe; border: 1.5px solid var(--primary-accent); border-radius: 9999px; padding: 5px 16px; font-size: 13px; font-weight: 800;">
+            <span style="background: #ede9fe; color: #3730a3; border: 1.5px solid #c7d2fe; border-radius: 9999px; padding: 5px 16px; font-size: 13px; font-weight: 800;">
             🚀 שלב 1 מתוך 3 • ברוכים הבאים
             </span>
             <div class="status-server-online">
@@ -99,44 +115,44 @@ if st.session_state.onboarding_active:
             </div>
 
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-            <div style="width: 58px; height: 58px; border-radius: 18px; background: linear-gradient(135deg, #6C63FF 0%, #5345EB 100%); display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 6px 18px rgba(108, 99, 255, 0.4); border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0;">
+            <div style="width: 58px; height: 58px; border-radius: 18px; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 16px rgba(79, 70, 229, 0.25); border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0;">
             🎯
             </div>
             <div>
-            <h1 style="margin: 0; font-size: 30px; font-weight: 800; color: #ffffff;">GetAJob</h1>
-            <p style="margin: 4px 0 0 0; color: #a5b4fc; font-size: 16px; font-weight: 600;">
+            <h1 style="margin: 0; font-size: 30px; font-weight: 800; color: #0f172a;">GetAJob</h1>
+            <p style="margin: 4px 0 0 0; color: #4f46e5; font-size: 16px; font-weight: 700;">
             Find your skill gap. Build what you're missing.
             </p>
             </div>
             </div>
 
-            <div style="background: var(--surface-secondary); border: 1.5px solid var(--border-color); border-radius: 20px; padding: 24px; margin: 24px 0;">
-            <h3 style="margin-top: 0; margin-bottom: 14px; font-size: 18px; color: #ffffff; font-weight: 800;">
+            <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 20px; padding: 24px; margin: 24px 0;">
+            <h3 style="margin-top: 0; margin-bottom: 14px; font-size: 18px; color: #0f172a; font-weight: 800;">
             איך המערכת הופכת אותך לג'וניור שאי אפשר להתעלם ממנו?
             </h3>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
-            <div style="background: var(--surface-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.25);">
-            <div style="font-size: 24px; margin-bottom: 6px;">🔍</div>
-            <strong style="color: #ffffff; font-size: 15px; display: block; margin-bottom: 4px;">איתור פערי מיומנויות</strong>
-            <p style="color: #94a3b8; font-size: 13.5px; margin: 0; line-height: 1.5;">סריקה קפדנית מול דרישות המשרה לאיתור הטכנולוגיות החסרות בקו"ח.</p>
+            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+            <div style="font-size: 26px; margin-bottom: 6px;">🔍</div>
+            <strong style="color: #0f172a; font-size: 15.5px; display: block; margin-bottom: 4px;">איתור פערי מיומנויות</strong>
+            <p style="color: #475569; font-size: 13.5px; margin: 0; line-height: 1.5;">סריקה קפדנית מול דרישות המשרה לאיתור הטכנולוגיות החסרות בקו"ח.</p>
             </div>
 
-            <div style="background: var(--surface-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.25);">
-            <div style="font-size: 24px; margin-bottom: 6px;">✍️</div>
-            <strong style="color: #ffffff; font-size: 15px; display: block; margin-bottom: 4px;">שכתוב סעיפים ל-ATS</strong>
-            <p style="color: #94a3b8; font-size: 13.5px; margin: 0; line-height: 1.5;">הפיכת סעיפים גנריים לסעיפי הישגים מדידים (Action + Scale + Impact) שפותחים דלתות.</p>
+            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+            <div style="font-size: 26px; margin-bottom: 6px;">✍️</div>
+            <strong style="color: #0f172a; font-size: 15.5px; display: block; margin-bottom: 4px;">שכתוב סעיפים ל-ATS</strong>
+            <p style="color: #475569; font-size: 13.5px; margin: 0; line-height: 1.5;">הפיכת סעיפים גנריים לסעיפי הישגים מדידים (Action + Scale + Impact) שפותחים דלתות.</p>
             </div>
 
-            <div style="background: var(--surface-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.25);">
-            <div style="font-size: 24px; margin-bottom: 6px;">🚀</div>
-            <strong style="color: #ffffff; font-size: 15px; display: block; margin-bottom: 4px;">מחולל פרויקט ל-GitHub</strong>
-            <p style="color: #94a3b8; font-size: 13.5px; margin: 0; line-height: 1.5;">מפרט פרויקט מעשי ושלד README מקצועי לסגירת הפער בדיוק מול המשרה.</p>
+            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+            <div style="font-size: 26px; margin-bottom: 6px;">🚀</div>
+            <strong style="color: #0f172a; font-size: 15.5px; display: block; margin-bottom: 4px;">מחולל פרויקט ל-GitHub</strong>
+            <p style="color: #475569; font-size: 13.5px; margin: 0; line-height: 1.5;">מפרט פרויקט מעשי ושלד README מקצועי לסגירת הפער בדיוק מול המשרה.</p>
             </div>
             </div>
             </div>
 
-            <p style="color: #cbd5e1; font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 24px;">
+            <p style="color: #334155; font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 24px;">
             בחר את מסלול היעד שלך (בראשם <strong>מסלול הדגל UX/UI</strong>) וקבל סקירת עומק על דרישות השוק!
             </p>
             </div>
@@ -214,14 +230,14 @@ if st.session_state.onboarding_active:
             is_flagship = domain.get("is_flagship", False)
             
             if is_flagship:
-                border_color = "#f43f5e" if is_selected else "rgba(244, 63, 94, 0.5)"
-                bg_color = "rgba(225, 29, 72, 0.12)" if is_selected else "var(--surface-card)"
-                shadow_style = "box-shadow: 0 4px 20px rgba(225, 29, 72, 0.35);" if is_selected else ""
-                flagship_badge = '<span style="background: rgba(225, 29, 72, 0.2); color: #fda4af; border: 1.5px solid #fda4af; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 800; direction: rtl;"><bdi>⭐ מסלול הדגל הראשי</bdi></span>'
+                border_color = "#e11d48" if is_selected else "#fda4af"
+                bg_color = "#fff1f2" if is_selected else "#ffffff"
+                shadow_style = "box-shadow: 0 4px 18px rgba(225, 29, 72, 0.18);" if is_selected else "box-shadow: 0 2px 8px rgba(225, 29, 72, 0.06);"
+                flagship_badge = '<span style="background: #ffe4e6; color: #9f1239; border: 1.5px solid #fda4af; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 800; direction: rtl;"><bdi>⭐ מסלול הדגל הראשי</bdi></span>'
             else:
-                border_color = "var(--primary-accent)" if is_selected else "var(--border-color)"
-                bg_color = "rgba(108, 99, 255, 0.12)" if is_selected else "var(--surface-card)"
-                shadow_style = "box-shadow: 0 4px 18px var(--primary-glow);" if is_selected else ""
+                border_color = "#4f46e5" if is_selected else "#cbd5e1"
+                bg_color = "#f5f3ff" if is_selected else "#ffffff"
+                shadow_style = "box-shadow: 0 4px 18px rgba(79, 70, 229, 0.15);" if is_selected else "box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);"
                 flagship_badge = ""
 
             domain_card_html = f"""
@@ -231,15 +247,15 @@ if st.session_state.onboarding_active:
             <span style="font-size: 32px; flex-shrink: 0;">{domain['icon']}</span>
             <div style="text-align: right !important; direction: rtl !important;">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; direction: rtl !important;">
-            <h3 style="margin: 0; font-size: 18.5px; font-weight: 800; color: #ffffff; text-align: right !important; direction: rtl !important;"><bdi>{domain['title']}</bdi></h3>
+            <h3 style="margin: 0; font-size: 18.5px; font-weight: 800; color: #0f172a; text-align: right !important; direction: rtl !important;"><bdi>{domain['title']}</bdi></h3>
             {flagship_badge}
             </div>
-            <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 14px; font-weight: 500; text-align: right !important; direction: rtl !important;"><bdi>{domain['short_desc']}</bdi></p>
+            <p style="margin: 4px 0 0 0; color: #475569; font-size: 14px; font-weight: 500; text-align: right !important; direction: rtl !important;"><bdi>{domain['short_desc']}</bdi></p>
             </div>
             </div>
             <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; direction: rtl !important;">
-            <span style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>{domain['demand_level']}</bdi></span>
-            <span style="background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid #f59e0b; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>💰 {domain['salary_range']}</bdi></span>
+            <span style="background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>{domain['demand_level']}</bdi></span>
+            <span style="background: #ede9fe; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>💰 {domain['salary_range']}</bdi></span>
             </div>
             </div>
             </div>
@@ -389,33 +405,33 @@ else:
     # כותרת עליונה (Hero Banner) עם צ'יפ החלפת מסלול
     # ----------------------------------------------------
     hero_html = f"""
-    <div style="background: var(--surface-card); border: 1.5px solid var(--border-color); border-radius: 24px; padding: 22px 28px; margin-bottom: 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.35);">
-    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-    <div style="display: flex; align-items: center; gap: 16px;">
-    <div style="width: 52px; height: 52px; border-radius: 16px; background: linear-gradient(135deg, #6C63FF 0%, #5345EB 100%); display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 16px rgba(108, 99, 255, 0.4); border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0;">
+    <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 24px; padding: 22px 28px; margin-bottom: 24px; box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05); direction: rtl; text-align: right;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; direction: rtl;">
+    <div style="display: flex; align-items: center; gap: 16px; direction: rtl;">
+    <div style="width: 52px; height: 52px; border-radius: 16px; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25); border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0;">
     🎯
     </div>
-    <div>
-    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-    <h1 style="margin: 0; font-size: 28px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">
+    <div style="text-align: right; direction: rtl;">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; direction: rtl;">
+    <h1 style="margin: 0; font-size: 28px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">
     GetAJob
     </h1>
     <div class="status-server-online">
     <span class="status-dot-pulse"></span>
     <span>● Server Online</span>
     </div>
-    <span style="background: rgba(108, 99, 255, 0.2); color: #c7d2fe; border: 1px solid var(--primary-accent); border-radius: 9999px; padding: 4px 14px; font-size: 13px; font-weight: 700;">
+    <span style="background: #ede9fe; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 9999px; padding: 4px 14px; font-size: 13px; font-weight: 700;">
     {curr_domain['icon']} מסלול יעד: {curr_domain['title']}
     </span>
     </div>
-    <p style="color: #a5b4fc; font-size: 14.5px; margin: 4px 0 0 0; line-height: 1.5; font-weight: 600;">
+    <p style="color: #4f46e5; font-size: 14.5px; margin: 4px 0 0 0; line-height: 1.5; font-weight: 700;">
     Find your skill gap. Build what you're missing.
-    <span style="color: #94a3b8; font-weight: 400; padding-right: 6px;">— איתור פערי מיומנויות מדויקים, שכתוב סעיפי קו"ח לפי Action-Impact, ומחולל פרויקט מעשי.</span>
+    <span style="color: #475569; font-weight: 500; padding-right: 6px;">— איתור פערי מיומנויות מדויקים, שכתוב סעיפי קו"ח לפי Action-Impact, ומחולל פרויקט מעשי.</span>
     </p>
     </div>
     </div>
     <div style="direction: ltr; text-align: left; display: flex; gap: 8px; align-items: center;">
-    <span style="background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700;">
+    <span style="background: #f0f9ff; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700;">
     ⚡ SLA: &lt; 15s | 0s Cache
     </span>
     </div>
@@ -589,16 +605,87 @@ else:
             """
             st.markdown(textwrap.dedent(cache_html).strip(), unsafe_allow_html=True)
 
+        # הכנת נתוני אבני הדרך למעקב התקדמות (UX/UI Job Search Tracker)
+        milestones_list = [
+            {
+                "id": "cv_scanned",
+                "title": "1. סריקה וניתוח קו\"ח מול המשרה",
+                "category": "שלב 1: הערכת פערים",
+                "desc": "ניתוח קורות החיים מול דרישות המשרה, איתור פערי מיומנויות וקביעת ציון התאמה ראשוני.",
+                "completed": bool(st.session_state.ux_ui_milestones.get("cv_scanned", False)),
+            },
+            {
+                "id": "bullet_rewriting",
+                "title": "2. שכתוב סעיפי ניסיון לפי נוסחת XYZ",
+                "category": "שלב 2: שדרוג קו\"ח",
+                "desc": "הפיכת סעיפים גנריים לסעיפי הישגים מדידים המשלבים בדיקות שמישות ו-Design Systems.",
+                "completed": bool(st.session_state.ux_ui_milestones.get("bullet_rewriting", False)),
+            },
+            {
+                "id": "figma_mastery",
+                "title": "3. השלמת מיומנויות סף ב-Figma",
+                "category": "שלב 3: כלי חובה",
+                "desc": "שליטה מעשית ב-Auto-layout, רכיבים מודולריים, Design Tokens ו-Variables.",
+                "completed": bool(st.session_state.ux_ui_milestones.get("figma_mastery", False)),
+            },
+            {
+                "id": "case_study_project",
+                "title": "4. בניית פרויקט דגל מקיף (Case Study)",
+                "category": "שלב 4: פרויקט פורטפוליו",
+                "desc": "אפיון ועיצוב מערכת SaaS או אפליקציית מובייל: מחקר משתמשים, ארכיטקטורת מידע ואב-טיפוס אינטראקטיבי.",
+                "completed": bool(st.session_state.ux_ui_milestones.get("case_study_project", False)),
+            },
+            {
+                "id": "portfolio_launch",
+                "title": "5. הקמת תיק עבודות חי (Portfolio Launch)",
+                "category": "שלב 5: תיק עבודות",
+                "desc": "פרסום 2-3 מקרי בוחן איכותיים ב-Behance, Dribbble או אתר אישי ב-Framer/Webflow.",
+                "completed": bool(st.session_state.ux_ui_milestones.get("portfolio_launch", False)),
+            },
+            {
+                "id": "job_applications",
+                "title": "6. הגשת מועמדויות ממוקדת ומעקב ראיונות",
+                "category": "שלב 6: ראיונות והשמה",
+                "desc": "הגשה ישירה לחברות רלוונטיות, ביצוע משימות בית והכנה לראיון HR וראיון מקצועי.",
+                "completed": bool(st.session_state.ux_ui_milestones.get("job_applications", False)),
+            },
+        ]
+        completed_count = sum(1 for m in milestones_list if m["completed"])
+        progress_pct = int((completed_count / len(milestones_list)) * 100)
+
         # 1. מד ציון ויזואלי וסיכום משוקלל (M3 Score Gauge)
         st.markdown(render_score_gauge(res.match_score, res.match_summary), unsafe_allow_html=True)
 
-        # 2. טאבים לתצוגה מפורטת וממוקדת
-        tab_gaps, tab_project, tab_learning, tab_checklist = st.tabs([
+        # 2. כרטיס גרף התקדמות ומעקב יעדים (UX/UI Job Search Tracker)
+        st.markdown(render_job_search_tracker(milestones_list, progress_pct), unsafe_allow_html=True)
+
+        # 3. טאבים לתצוגה מפורטת וממוקדת
+        tab_tracker, tab_gaps, tab_project, tab_learning, tab_checklist = st.tabs([
+            "📈 עדכון התקדמות אישי",
             "📊 פערי מיומנויות ושכתוב סעיפים",
             "🛠️ מפרט פרויקט ו-README ל-GitHub",
             "🎓 מסלולי לימוד והסמכות (49 מסלולים)",
             "📋 צ'קליסט מוכנות לגיוס (ATS Checklist)",
         ])
+
+        with tab_tracker:
+            st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>🎯 סמן את השלבים שהשלמת בדרך לקבלה לעבודה:</h3>", unsafe_allow_html=True)
+            st.markdown("<p style='color: #475569; font-size: 15px; margin-bottom: 20px;'>כל שלב שאתה מסמן מעדכן מידית את גרף המוכנות ואת אחוז ההתקדמות בראש הדף:</p>", unsafe_allow_html=True)
+            
+            chk_cols = st.columns(2)
+            for idx, m in enumerate(milestones_list):
+                with chk_cols[idx % 2]:
+                    current_val = st.session_state.ux_ui_milestones.get(m["id"], False)
+                    new_val = st.checkbox(
+                        f"{m['title']} • {m['category']}",
+                        value=current_val,
+                        key=f"chk_milestone_{m['id']}",
+                        help=m["desc"]
+                    )
+                    if new_val != current_val:
+                        st.session_state.ux_ui_milestones[m["id"]] = new_val
+                        st.rerun()
+                    st.markdown(f"<p style='color: #64748b; font-size: 13.5px; margin: -4px 0 16px 28px; line-height: 1.45;'>{m['desc']}</p>", unsafe_allow_html=True)
 
         with tab_gaps:
             st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>🎯 ניתוח פערי מיומנויות (Skill Gap Breakdown)</h3>", unsafe_allow_html=True)
