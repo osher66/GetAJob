@@ -43,13 +43,28 @@ def get_custom_css() -> str:
         --font-mono: 'JetBrains Mono', monospace;
     }
 
-    /* Base Body & App View */
-    html, body, [data-testid="stAppViewContainer"], .main {
-        background-color: var(--bg-main) !important;
-        color: var(--text-primary) !important;
+    /* Base Body & App View - Full RTL Enforcement */
+    html, body, [data-testid="stAppViewContainer"], .main,
+    [data-testid="stMarkdownContainer"],
+    [data-testid="stMarkdownContainer"] p,
+    [data-testid="stMarkdownContainer"] span,
+    [data-testid="stMarkdownContainer"] div,
+    [data-testid="stMarkdownContainer"] h1,
+    [data-testid="stMarkdownContainer"] h2,
+    [data-testid="stMarkdownContainer"] h3,
+    [data-testid="stMarkdownContainer"] h4,
+    [data-testid="stMarkdownContainer"] label,
+    .stMarkdown, .stText {
+        background-color: var(--bg-main);
+        color: var(--text-primary);
         font-family: var(--font-sans) !important;
-        direction: rtl;
-        text-align: right;
+        direction: rtl !important;
+        text-align: right !important;
+    }
+
+    /* Prevent mixed Hebrew/English from flipping parentheses or trailing punctuation */
+    bdi, [dir="rtl"] {
+        unicode-bidi: isolate !important;
     }
 
     [data-testid="stHeader"] {
@@ -61,6 +76,8 @@ def get_custom_css() -> str:
         padding-top: 1.5rem !important;
         padding-bottom: 3.5rem !important;
         max-width: 1200px !important;
+        direction: rtl !important;
+        text-align: right !important;
     }
 
     /* Typography Hierarchy (UX/UI Package Page 13) */
@@ -69,6 +86,8 @@ def get_custom_css() -> str:
         color: var(--text-primary) !important;
         font-weight: 800 !important;
         letter-spacing: -0.02em;
+        text-align: right !important;
+        direction: rtl !important;
     }
     h1 { font-size: 32px !important; }
     h2 { font-size: 24px !important; }
@@ -76,10 +95,8 @@ def get_custom_css() -> str:
     h4, h5, h6 {
         color: var(--text-primary) !important;
         font-weight: 700 !important;
-    }
-    p, span, li, div {
-        font-family: var(--font-sans);
-        unicode-bidi: plaintext;
+        text-align: right !important;
+        direction: rtl !important;
     }
 
     /* Header Bar & Server Status (Page 5 & 9) */
@@ -545,14 +562,13 @@ def render_onboarding_progress(current_step: int, total_steps: int = 3) -> str:
 
 
 def render_career_intel(domain: dict) -> str:
-    """כרטיס סקירה מקצועית מעמיקה עבור התחום שנבחר"""
+    """כרטיס סקירה מקצועית מעמיקה עבור התחום שנבחר - מיושר 100% ל-RTL ללא תיבות טקסט שבורות או מיותרות"""
     title = domain["title"]
     icon = domain["icon"]
     desc = domain["short_desc"]
     demand = domain["demand_level"]
     salary = domain["salary_range"]
     reality = domain["market_reality"]
-    ats = domain["ats_winning_formula"]
     project = domain["recommended_project_type"]
     must_skills = domain["must_have_skills"]
     good_skills = domain["good_to_have_skills"]
@@ -560,60 +576,40 @@ def render_career_intel(domain: dict) -> str:
     must_html = "".join([f'<span class="skill-badge badge-med" style="color: #fde047; font-size: 13px;">{s}</span>' for s in must_skills])
     good_html = "".join([f'<span class="skill-badge badge-low" style="color: #7dd3fc; font-size: 13px;">{s}</span>' for s in good_skills])
 
-    portfolio_html = ""
-    if "portfolio_prerequisites" in domain:
-        p_info = domain["portfolio_prerequisites"]
-        portfolio_html = f"""
-        <div style="background: rgba(225, 29, 72, 0.1); border: 1.5px solid rgba(244, 63, 94, 0.35); border-radius: 16px; padding: 16px 20px; margin-bottom: 18px;">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-        <span style="font-size: 20px;">🎨</span>
-        <strong style="color: #fda4af; font-size: 15px;">דרישת סף מחייבת: {p_info.get('requirement', '')}</strong>
-        </div>
-        <p style="margin: 0; color: #fecdd3; font-size: 14px; line-height: 1.5;">
-        {p_info.get('focus', '')}
-        </p>
-        </div>
-        """
-
     html = f"""
-    <div style="background: var(--surface-card); border: 1.5px solid var(--border-color); border-radius: 24px; padding: 26px 30px; box-shadow: 0 4px 24px rgba(0,0,0,0.35); margin-bottom: 24px;">
-    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 16px;">
-    <div style="display: flex; align-items: center; gap: 14px;">
-    <div style="width: 50px; height: 50px; border-radius: 16px; background: var(--surface-secondary); color: var(--primary-accent); display: flex; align-items: center; justify-content: center; font-size: 26px; border: 1.5px solid rgba(108, 99, 255, 0.4);">
+    <div style="direction: rtl !important; text-align: right !important; background: var(--surface-card); border: 1.5px solid var(--border-color); border-radius: 24px; padding: 26px 30px; box-shadow: 0 4px 24px rgba(0,0,0,0.35); margin-bottom: 24px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 16px; direction: rtl !important;">
+    <div style="display: flex; align-items: center; gap: 14px; direction: rtl !important; text-align: right !important;">
+    <div style="width: 50px; height: 50px; border-radius: 16px; background: var(--surface-secondary); color: var(--primary-accent); display: flex; align-items: center; justify-content: center; font-size: 26px; border: 1.5px solid rgba(108, 99, 255, 0.4); flex-shrink: 0;">
     {icon}
     </div>
-    <div>
-    <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #ffffff;">{title}</h2>
-    <p style="margin: 3px 0 0 0; color: #94a3b8; font-size: 14.5px; font-weight: 500;">{desc}</p>
+    <div style="text-align: right !important; direction: rtl !important;">
+    <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; text-align: right !important; direction: rtl !important;"><bdi>{title}</bdi></h2>
+    <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 14.5px; font-weight: 500; text-align: right !important; direction: rtl !important;"><bdi>{desc}</bdi></p>
     </div>
     </div>
-    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-    <span style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; border-radius: 9999px; padding: 5px 14px; font-size: 13px; font-weight: 700;">{demand}</span>
-    <span style="background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid #f59e0b; border-radius: 9999px; padding: 5px 14px; font-size: 13px; font-weight: 700;">💰 {salary}</span>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; direction: rtl !important;">
+    <span style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; border-radius: 9999px; padding: 5px 14px; font-size: 13px; font-weight: 700; direction: rtl !important;"><bdi>{demand}</bdi></span>
+    <span style="background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid #f59e0b; border-radius: 9999px; padding: 5px 14px; font-size: 13px; font-weight: 700; direction: rtl !important;"><bdi>💰 {salary}</bdi></span>
     </div>
     </div>
-    {portfolio_html}
-    <div style="margin-bottom: 18px;">
-    <h4 style="color: #ffffff; font-weight: 800; margin-bottom: 6px;">📌 מה השוק והמגייסים באמת מחפשים כיום?</h4>
-    <p style="color: #cbd5e1; font-size: 14.5px; line-height: 1.6; margin: 0; background: var(--surface-secondary); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px 18px;">{reality}</p>
+    <div style="margin-bottom: 18px; text-align: right !important; direction: rtl !important;">
+    <h4 style="color: #ffffff; font-weight: 800; margin-bottom: 8px; text-align: right !important; direction: rtl !important;">📌 מה השוק והמגייסים באמת מחפשים כיום?</h4>
+    <p style="color: #cbd5e1; font-size: 14.5px; line-height: 1.65; margin: 0; background: var(--surface-secondary); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px 18px; text-align: right !important; direction: rtl !important;"><bdi>{reality}</bdi></p>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
-    <div style="background: var(--surface-secondary); border: 1.5px solid var(--border-color); border-radius: 16px; padding: 16px 18px;">
-    <strong style="color: #fde047; font-size: 14px; display: block; margin-bottom: 8px;">🔥 סטאק טכנולוגי חובה (דרישות סף):</strong>
-    <div style="display: flex; flex-wrap: wrap; gap: 6px; direction: ltr;">{must_html}</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; direction: rtl !important;">
+    <div style="background: var(--surface-secondary); border: 1.5px solid var(--border-color); border-radius: 16px; padding: 16px 18px; text-align: right !important; direction: rtl !important;">
+    <strong style="color: #fde047; font-size: 14px; display: block; margin-bottom: 8px; text-align: right !important;">🔥 סטאק טכנולוגי חובה (דרישות סף):</strong>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px; direction: ltr; justify-content: flex-end;">{must_html}</div>
     </div>
-    <div style="background: var(--surface-secondary); border: 1.5px solid var(--border-color); border-radius: 16px; padding: 16px 18px;">
-    <strong style="color: #7dd3fc; font-size: 14px; display: block; margin-bottom: 8px;">⚡ טכנולוגיות יתרון שיבדילו אותך:</strong>
-    <div style="display: flex; flex-wrap: wrap; gap: 6px; direction: ltr;">{good_html}</div>
+    <div style="background: var(--surface-secondary); border: 1.5px solid var(--border-color); border-radius: 16px; padding: 16px 18px; text-align: right !important; direction: rtl !important;">
+    <strong style="color: #7dd3fc; font-size: 14px; display: block; margin-bottom: 8px; text-align: right !important;">⚡ טכנולוגיות יתרון שיבדילו אותך:</strong>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px; direction: ltr; justify-content: flex-end;">{good_html}</div>
     </div>
     </div>
-    <div style="background: rgba(108, 99, 255, 0.1); border: 1.5px solid rgba(108, 99, 255, 0.35); border-radius: 16px; padding: 16px 20px; margin-bottom: 16px;">
-    <strong style="color: #c7d2fe; font-size: 14px; display: block; margin-bottom: 4px;">🎯 נוסחת ATS מנצחת להעתקה עבור תחום זה:</strong>
-    <div style="direction: ltr; text-align: left; font-family: var(--font-mono); font-size: 13.5px; color: #ffffff; background: #070A12; border-radius: 10px; padding: 10px 14px; border: 1px solid var(--border-color);">{ats}</div>
-    </div>
-    <div style="background: var(--surface-secondary); border: 1.5px solid var(--border-color); border-radius: 16px; padding: 16px 20px;">
-    <strong style="color: #fcd34d; font-size: 14px; display: block; margin-bottom: 4px;">🚀 סוג הפרויקט המומלץ לפורטפוליו שלך:</strong>
-    <p style="margin: 0; color: #cbd5e1; font-size: 14px; line-height: 1.5;">{project}</p>
+    <div style="background: var(--surface-secondary); border: 1.5px solid var(--border-color); border-radius: 16px; padding: 16px 20px; text-align: right !important; direction: rtl !important;">
+    <strong style="color: #fcd34d; font-size: 14px; display: block; margin-bottom: 6px; text-align: right !important;">🚀 סוג הפרויקט המומלץ לפורטפוליו שלך:</strong>
+    <p style="margin: 0; color: #cbd5e1; font-size: 14.5px; line-height: 1.6; text-align: right !important; direction: rtl !important;"><bdi>{project}</bdi></p>
     </div>
     </div>
     """

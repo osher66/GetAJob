@@ -7,13 +7,13 @@
 CAREER_DOMAINS = {
     "ux_ui": {
         "id": "ux_ui",
-        "title": "עיצוב חוויית וממשק משתמש (UX/UI Designer)",
+        "title": "עיצוב חוויית וממשק משתמש – UX/UI Designer",
         "icon": "🎨",
         "is_flagship": True,
         "badge_text": "⭐ מסלול הדגל הראשי",
-        "short_desc": "אפיון ועיצוב מוצרים דיגיטליים – מחקר משתמשים, Design Systems ב-Figma, בדיקות שמישות ובניית Case Studies.",
-        "demand_level": "ביקוש גבוה ודגש על תיק עבודות (⭐ Flagship Track)",
-        "salary_range": "14,000 - 19,000 ₪ (ג'וניור) / 20,000 - 27,000 ₪ (Mid)",
+        "short_desc": "אפיון ועיצוב מוצרים דיגיטליים: מחקר משתמשים, בדיקות שמישות, Design Systems ב-Figma ובניית תיק עבודות.",
+        "demand_level": "ביקוש גבוה ודגש על תיק עבודות ⭐ מסלול הדגל",
+        "salary_range": "14,000 עד 19,000 ₪ (ג'וניור) | 20,000 עד 27,000 ₪ (Mid)",
         "must_have_skills": [
             "Figma (Auto-layout, Components, Tokens)",
             "User Research & Usability Testing",
@@ -32,11 +32,7 @@ CAREER_DOMAINS = {
         "market_reality": "במשרות UX/UI, תיק עבודות (Portfolio) הוא תנאי הסף המחייב ביותר: מעסיקים מסננים מועמדים שרק מציגים 'מסכים יפים' מ-Dribbble. כדי להתקבל, חובה להציג 2-3 מקרי בוחן (Case Studies) מלאים המראים את תהליך החשיבה: הגדרת הבעיה, מחקר משתמשים, ארכיטקטורת מידע (IA), בדיקות שמישות וההחלטות העיצוביות.",
         "ats_winning_formula": "Spearheaded end-to-end UX/UI redesign of SaaS workflow in Figma, reducing user drop-off by 34% as validated through iterative usability testing across 20 participants.",
         "recommended_project_type": "Case Study מעמיק למערכת SaaS B2B או אפליקציית מובייל מורכבת: מחקר משתמשים, Design System מלא ב-Figma (Variants & Variables), אב-טיפוס אינטראקטיבי ותיעוד Dev Hand-off מפורט למפתחים.",
-        "matching_preset_id": "ux_ui_preset",
-        "portfolio_prerequisites": {
-            "requirement": "חובה: לינק לתיק עבודות (Behance / Dribbble / אתר אישי ב-Webflow/Framer)",
-            "focus": "Case Studies ממוקדי B2B SaaS או אפליקציות מובייל עם פירוט תהליך מחקר ובדיקות שמישות"
-        }
+        "matching_preset_id": "ux_ui_preset"
     },
     "fullstack": {
         "id": "fullstack",

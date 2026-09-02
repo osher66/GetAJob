@@ -214,32 +214,32 @@ if st.session_state.onboarding_active:
             is_flagship = domain.get("is_flagship", False)
             
             if is_flagship:
-                border_color = "#e11d48" if is_selected else "#f43f5e"
-                bg_color = "#fff1f2" if is_selected else "#ffffff"
-                shadow_style = "box-shadow: 0 6px 22px rgba(225, 29, 72, 0.22);" if is_selected else "box-shadow: 0 3px 12px rgba(225, 29, 72, 0.08);"
-                flagship_badge = '<span style="background: #ffe4e6; color: #9f1239; border: 1.5px solid #fda4af; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 800;">⭐ מסלול הדגל הראשי</span>'
+                border_color = "#f43f5e" if is_selected else "rgba(244, 63, 94, 0.5)"
+                bg_color = "rgba(225, 29, 72, 0.12)" if is_selected else "var(--surface-card)"
+                shadow_style = "box-shadow: 0 4px 20px rgba(225, 29, 72, 0.35);" if is_selected else ""
+                flagship_badge = '<span style="background: rgba(225, 29, 72, 0.2); color: #fda4af; border: 1.5px solid #fda4af; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 800; direction: rtl;"><bdi>⭐ מסלול הדגל הראשי</bdi></span>'
             else:
-                border_color = "#4f46e5" if is_selected else "#cbd5e1"
-                bg_color = "#f5f3ff" if is_selected else "#ffffff"
-                shadow_style = "box-shadow: 0 4px 18px rgba(79, 70, 229, 0.18);" if is_selected else ""
+                border_color = "var(--primary-accent)" if is_selected else "var(--border-color)"
+                bg_color = "rgba(108, 99, 255, 0.12)" if is_selected else "var(--surface-card)"
+                shadow_style = "box-shadow: 0 4px 18px var(--primary-glow);" if is_selected else ""
                 flagship_badge = ""
 
             domain_card_html = f"""
-            <div style="background: {bg_color}; border: 2.5px solid {border_color}; border-radius: 20px; padding: 20px 24px; margin-bottom: 12px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); {shadow_style}">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-            <span style="font-size: 32px;">{domain['icon']}</span>
-            <div>
-            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <h3 style="margin: 0; font-size: 18.5px; font-weight: 800; color: #0f172a;">{domain['title']}</h3>
+            <div style="background: {bg_color}; border: 2px solid {border_color}; border-radius: 20px; padding: 20px 24px; margin-bottom: 12px; direction: rtl !important; text-align: right !important; {shadow_style}">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; direction: rtl !important;">
+            <div style="display: flex; align-items: center; gap: 14px; direction: rtl !important; text-align: right !important;">
+            <span style="font-size: 32px; flex-shrink: 0;">{domain['icon']}</span>
+            <div style="text-align: right !important; direction: rtl !important;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; direction: rtl !important;">
+            <h3 style="margin: 0; font-size: 18.5px; font-weight: 800; color: #ffffff; text-align: right !important; direction: rtl !important;"><bdi>{domain['title']}</bdi></h3>
             {flagship_badge}
             </div>
-            <p style="margin: 3px 0 0 0; color: #475569; font-size: 14px; font-weight: 500;">{domain['short_desc']}</p>
+            <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 14px; font-weight: 500; text-align: right !important; direction: rtl !important;"><bdi>{domain['short_desc']}</bdi></p>
             </div>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <span style="background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700;">{domain['demand_level']}</span>
-            <span style="background: #ede9fe; color: #3730a3; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700;">💰 {domain['salary_range']}</span>
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; direction: rtl !important;">
+            <span style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>{domain['demand_level']}</bdi></span>
+            <span style="background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid #f59e0b; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>💰 {domain['salary_range']}</bdi></span>
             </div>
             </div>
             </div>
