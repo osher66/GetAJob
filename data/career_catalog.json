@@ -1,0 +1,3543 @@
+{
+  "learning_paths": [
+    {
+      "id": "LP-001",
+      "domain": "אקדמי",
+      "name": "B.Sc. במדעי המחשב",
+      "type": "תואר",
+      "level": "יסודות–מתקדם",
+      "prerequisites": "מתמטיקה ברמת קבלה אקדמית",
+      "canonical_skills": [
+        "Programming Fundamentals",
+        "Data Structures",
+        "Algorithms",
+        "Discrete Math",
+        "Computer Architecture",
+        "Operating Systems",
+        "Databases",
+        "Networks",
+        "Software Engineering"
+      ],
+      "tools": [
+        "Python/Java/C/C++",
+        "Git",
+        "SQL",
+        "Linux"
+      ],
+      "target_roles": [
+        "Software Engineer",
+        "Backend Developer",
+        "Algorithms Engineer",
+        "Systems Engineer"
+      ],
+      "duration": "3–4 שנים",
+      "theory_depth": "5",
+      "practical_depth": "3",
+      "proof_strength": "4",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשפערים רבים הם תיאורטיים, כשמשרות היעד מסננות לפי תואר, או למסלול ארוך טווח",
+      "when_not_to_recommend": "כשהפער ממוקד בכלי אחד או כשהמשתמש כבר בעל ניסיון מוכח",
+      "recommended_project": "מערכת תוכנה רב-רכיבית עם בדיקות ותיעוד",
+      "official_url": "https://csed.acm.org/knowledge-areas/",
+      "product_note": "בסיס רחב; אינו מבטיח ניסיון תעשייתי"
+    },
+    {
+      "id": "LP-002",
+      "domain": "אקדמי",
+      "name": "B.Sc. בהנדסת תוכנה",
+      "type": "תואר",
+      "level": "יסודות–מתקדם",
+      "prerequisites": "מתמטיקה וקבלה אקדמית",
+      "canonical_skills": [
+        "Programming",
+        "Requirements Engineering",
+        "Software Architecture",
+        "Testing",
+        "Quality",
+        "Project Management",
+        "DevOps Foundations"
+      ],
+      "tools": [
+        "Java/C#/Python",
+        "Git",
+        "SQL",
+        "CI/CD",
+        "UML"
+      ],
+      "target_roles": [
+        "Software Engineer",
+        "Full Stack Developer",
+        "QA Automation",
+        "Technical Lead"
+      ],
+      "duration": "4 שנים",
+      "theory_depth": "4",
+      "practical_depth": "4",
+      "proof_strength": "4",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשנדרש עומק במחזור חיי פיתוח ובניית מערכות גדולות",
+      "when_not_to_recommend": "כשהמטרה היא התמחות קצרה בכלי/פלטפורמה",
+      "recommended_project": "פרויקט גמר קבוצתי עם CI/CD ובדיקות",
+      "official_url": "https://www.acm.org/binaries/content/assets/education/se2014.pdf",
+      "product_note": "לדרוש ראיות לפרויקט, לא להסתפק בשם התואר"
+    },
+    {
+      "id": "LP-003",
+      "domain": "אקדמי",
+      "name": "B.Sc. במערכות מידע",
+      "type": "תואר",
+      "level": "יסודות–מתקדם",
+      "prerequisites": "קבלה אקדמית; זיקה עסקית וטכנולוגית",
+      "canonical_skills": [
+        "Business Analysis",
+        "Databases",
+        "Systems Analysis",
+        "Enterprise Systems",
+        "Data Analytics",
+        "Project Management"
+      ],
+      "tools": [
+        "SQL",
+        "BPMN/UML",
+        "BI tools",
+        "ERP/CRM",
+        "Git"
+      ],
+      "target_roles": [
+        "Business Analyst",
+        "Systems Analyst",
+        "BI Analyst",
+        "Product Operations"
+      ],
+      "duration": "3–4 שנים",
+      "theory_depth": "4",
+      "practical_depth": "3",
+      "proof_strength": "4",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשנדרש חיבור בין תהליכים עסקיים, נתונים וטכנולוגיה",
+      "when_not_to_recommend": "לתפקיד פיתוח אלגוריתמי עמוק ללא השלמות",
+      "recommended_project": "אפיון והקמת מערכת מידע מקצה לקצה",
+      "official_url": "https://is2020.hosting2.acm.org/wp-content/uploads/2021/01/IS-2020-Final-Draft-Report.pdf",
+      "product_note": "מתאים במיוחד לתפקידי גשר עסק–טכנולוגיה"
+    },
+    {
+      "id": "LP-004",
+      "domain": "אקדמי",
+      "name": "B.Sc. בטכנולוגיות מידע (IT)",
+      "type": "תואר",
+      "level": "יסודות–מתקדם",
+      "prerequisites": "קבלה אקדמית",
+      "canonical_skills": [
+        "Information Management",
+        "Integrated Systems",
+        "Platform Technologies",
+        "UX",
+        "Networking",
+        "Software Development",
+        "Web/Mobile"
+      ],
+      "tools": [
+        "Windows/Linux",
+        "Networks",
+        "SQL",
+        "Cloud",
+        "Web stacks"
+      ],
+      "target_roles": [
+        "IT Specialist",
+        "Systems Administrator",
+        "Cloud Support",
+        "IT Project roles"
+      ],
+      "duration": "3–4 שנים",
+      "theory_depth": "4",
+      "practical_depth": "3",
+      "proof_strength": "4",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשנדרש בסיס רחב לתשתיות ומערכות ארגוניות",
+      "when_not_to_recommend": "כשחסר Skill יחיד שניתן להשלים בקורס ממוקד",
+      "recommended_project": "פרויקט אינטגרציה ארגוני הכולל רשת, זהויות ושירות",
+      "official_url": "https://www.abet.org/accreditation/accreditation-criteria/criteria-for-accrediting-computing-programs-2025-2026/",
+      "product_note": "יש לבדוק את תוכנית המוסד בפועל"
+    },
+    {
+      "id": "LP-005",
+      "domain": "אקדמי",
+      "name": "B.Sc. במדעי הנתונים / סטטיסטיקה",
+      "type": "תואר",
+      "level": "יסודות–מתקדם",
+      "prerequisites": "מתמטיקה, הסתברות וסטטיסטיקה",
+      "canonical_skills": [
+        "Statistics",
+        "Probability",
+        "Linear Algebra",
+        "Data Management",
+        "Machine Learning",
+        "Data Visualization",
+        "Experimentation"
+      ],
+      "tools": [
+        "Python",
+        "R",
+        "SQL",
+        "pandas",
+        "scikit-learn",
+        "notebooks"
+      ],
+      "target_roles": [
+        "Data Scientist",
+        "Quantitative Analyst",
+        "ML Analyst",
+        "Research Analyst"
+      ],
+      "duration": "3–4 שנים",
+      "theory_depth": "5",
+      "practical_depth": "3",
+      "proof_strength": "4",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשנדרש עומק מתמטי/סטטיסטי או תפקידי מחקר ו-ML",
+      "when_not_to_recommend": "כשיעד המשתמש הוא BI בסיסי ופערו הוא בעיקר כלי",
+      "recommended_project": "מחקר נתונים משוחזר עם הערכת מודל ודו״ח",
+      "official_url": "https://www.abet.org/2026-2027_cac_criteria/",
+      "product_note": "הערך תלוי בעומק המתמטי ובניסיון פרויקטלי"
+    },
+    {
+      "id": "LP-006",
+      "domain": "פיתוח",
+      "name": "יסודות תכנות ב-Python",
+      "type": "קורס",
+      "level": "מתחיל",
+      "prerequisites": "ללא",
+      "canonical_skills": [
+        "Programming Fundamentals",
+        "Problem Solving",
+        "Data Types",
+        "Control Flow",
+        "Functions",
+        "Testing Basics"
+      ],
+      "tools": [
+        "Python",
+        "VS Code",
+        "Git",
+        "pytest"
+      ],
+      "target_roles": [
+        "Junior Automation",
+        "Data/QA trainee",
+        "בסיס לתפקידי פיתוח"
+      ],
+      "duration": "6–12 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "4",
+      "proof_strength": "2",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשאין בסיס תכנות והיעד דורש סקריפטים או המשך למסלול פיתוח/דאטה",
+      "when_not_to_recommend": "כשכבר יש פרויקטים משמעותיים בשפת תכנות אחרת",
+      "recommended_project": "CLI שמושך API, שומר נתונים ומכוסה בבדיקות",
+      "official_url": "https://csed.acm.org/knowledge-areas/",
+      "product_note": "להמליץ יחד עם פרויקט; קורס לבדו הוא הוכחה חלשה"
+    },
+    {
+      "id": "LP-007",
+      "domain": "פיתוח",
+      "name": "מבני נתונים ואלגוריתמים",
+      "type": "קורס",
+      "level": "ביניים",
+      "prerequisites": "שפת תכנות אחת",
+      "canonical_skills": [
+        "Data Structures",
+        "Algorithms",
+        "Complexity",
+        "Problem Solving"
+      ],
+      "tools": [
+        "Python/Java/C++",
+        "test framework"
+      ],
+      "target_roles": [
+        "Software Engineer",
+        "Backend Developer",
+        "Interview readiness"
+      ],
+      "duration": "8–16 שבועות",
+      "theory_depth": "5",
+      "practical_depth": "3",
+      "proof_strength": "3",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשמודעות דורשות Algorithms/DS או כשחסר בסיס לפיתוח מורכב",
+      "when_not_to_recommend": "כשפער התפקיד הוא בעיקר Framework או Cloud",
+      "recommended_project": "מימוש ספרייה קטנה והשוואת ביצועים",
+      "official_url": "https://csed.acm.org/knowledge-areas/",
+      "product_note": "לא לבלבל הכנה לראיונות עם ניסיון הנדסי"
+    },
+    {
+      "id": "LP-008",
+      "domain": "פיתוח",
+      "name": "Frontend Web",
+      "type": "קורס / Bootcamp",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "יסודות מחשב; אנגלית טכנית",
+      "canonical_skills": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Accessibility",
+        "Responsive Design",
+        "Web APIs",
+        "Testing"
+      ],
+      "tools": [
+        "HTML5",
+        "CSS",
+        "JavaScript/TypeScript",
+        "React/Vue",
+        "Git",
+        "browser devtools"
+      ],
+      "target_roles": [
+        "Frontend Developer",
+        "Web Developer",
+        "UI Engineer"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשפערים חוזרים ב-HTML/CSS/JS/React ונדרש תיק עבודות",
+      "when_not_to_recommend": "כשהיעד Backend/Infrastructure והפערים אינם בצד לקוח",
+      "recommended_project": "אפליקציה נגישה ורספונסיבית עם API ובדיקות",
+      "official_url": "https://developer.mozilla.org/en-US/curriculum/",
+      "product_note": "להפריד Web fundamentals מ-Framework ספציפי"
+    },
+    {
+      "id": "LP-009",
+      "domain": "פיתוח",
+      "name": "Backend APIs",
+      "type": "קורס / Bootcamp",
+      "level": "ביניים",
+      "prerequisites": "יסודות תכנות, Git ו-SQL בסיסי",
+      "canonical_skills": [
+        "API Design",
+        "Databases",
+        "Authentication",
+        "Testing",
+        "Software Architecture",
+        "Security Basics"
+      ],
+      "tools": [
+        "Node.js/Java/.NET/Python",
+        "REST",
+        "SQL",
+        "Docker",
+        "Git"
+      ],
+      "target_roles": [
+        "Backend Developer",
+        "API Developer",
+        "Junior Software Engineer"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשפערים מתרכזים ב-API, שרת, DB ובדיקות",
+      "when_not_to_recommend": "למי שחסר קודם בסיס תכנות",
+      "recommended_project": "API מאובטח עם DB, בדיקות, Docker ותיעוד OpenAPI",
+      "official_url": "https://www.acm.org/binaries/content/assets/education/se2014.pdf",
+      "product_note": "הטכנולוגיה תיבחר לפי ביקוש המשרות באזור"
+    },
+    {
+      "id": "LP-010",
+      "domain": "פיתוח",
+      "name": "Full Stack Web",
+      "type": "Bootcamp",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "מומלץ יסודות תכנות",
+      "canonical_skills": [
+        "Frontend",
+        "Backend",
+        "APIs",
+        "Databases",
+        "Authentication",
+        "Testing",
+        "Deployment"
+      ],
+      "tools": [
+        "TypeScript",
+        "React",
+        "Node.js",
+        "SQL",
+        "Git",
+        "Docker",
+        "Cloud basics"
+      ],
+      "target_roles": [
+        "Full Stack Developer",
+        "Web Developer"
+      ],
+      "duration": "5–10 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשמשרות יעד דורשות רוחב Frontend+Backend והמשתמש מתחיל",
+      "when_not_to_recommend": "כשכבר יש התמחות חזקה וחסר כלי יחיד",
+      "recommended_project": "מוצר מלא בפריסה ציבורית עם CI ובדיקות",
+      "official_url": "https://developer.mozilla.org/en-US/curriculum/",
+      "product_note": "לדרוש עומק מינימלי בכל שכבה ולא רשימת כלים בלבד"
+    },
+    {
+      "id": "LP-011",
+      "domain": "פיתוח",
+      "name": "Android Development",
+      "type": "קורס",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "ללא ניסיון לפי מסלול הבסיס; יתרון ליסודות תכנות",
+      "canonical_skills": [
+        "Kotlin",
+        "UI",
+        "App Architecture",
+        "Data Storage",
+        "Networking",
+        "Testing",
+        "Accessibility"
+      ],
+      "tools": [
+        "Kotlin",
+        "Android Studio",
+        "Jetpack Compose",
+        "Material Design"
+      ],
+      "target_roles": [
+        "Android Developer",
+        "Mobile Developer"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשמשרות היעד דורשות Android/Kotlin/Compose",
+      "when_not_to_recommend": "כשמיקוד המשתמש הוא iOS או Web",
+      "recommended_project": "אפליקציה עם API, cache, בדיקות ונגישות",
+      "official_url": "https://developer.android.com/courses",
+      "product_note": "המקור הרשמי כולל מסלול מתחילים ללא ניסיון"
+    },
+    {
+      "id": "LP-012",
+      "domain": "פיתוח",
+      "name": "iOS Development",
+      "type": "קורס",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "מחשב macOS לתרגול; יסודות תכנות מועילים",
+      "canonical_skills": [
+        "Swift",
+        "UI",
+        "App Architecture",
+        "Networking",
+        "Persistence",
+        "Testing"
+      ],
+      "tools": [
+        "Swift",
+        "Xcode",
+        "SwiftUI",
+        "XCTest"
+      ],
+      "target_roles": [
+        "iOS Developer",
+        "Mobile Developer"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשפערים הם Swift/SwiftUI/iOS SDK",
+      "when_not_to_recommend": "כשאין גישה לסביבת פיתוח iOS או שהיעד Android",
+      "recommended_project": "אפליקציית SwiftUI עם API, persistence ובדיקות",
+      "official_url": "https://developer.apple.com/tutorials/develop-in-swift/",
+      "product_note": "חומרה ופרסום App Store עשויים להיות חסם"
+    },
+    {
+      "id": "LP-013",
+      "domain": "פיתוח",
+      "name": "Git ו-GitHub Collaboration",
+      "type": "קורס קצר / הסמכה",
+      "level": "מתחיל",
+      "prerequisites": "ללא",
+      "canonical_skills": [
+        "Version Control",
+        "Branching",
+        "Pull Requests",
+        "Collaboration",
+        "CI Basics"
+      ],
+      "tools": [
+        "Git",
+        "GitHub",
+        "GitHub Actions"
+      ],
+      "target_roles": [
+        "כל תפקידי הפיתוח, QA, DevOps ודאטה"
+      ],
+      "duration": "1–4 שבועות",
+      "theory_depth": "2",
+      "practical_depth": "4",
+      "proof_strength": "3",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כש-Git חסר או כשה-CV אינו מציג עבודה בצוות ובקרת גרסאות",
+      "when_not_to_recommend": "כשהמשתמש כבר מנהל ריפו פעיל עם PRs",
+      "recommended_project": "ריפו ציבורי עם branches, PR, issues ו-CI",
+      "official_url": "https://resources.github.com/learn/certifications/",
+      "product_note": "Skill רוחבי בעל עלות לימוד נמוכה"
+    },
+    {
+      "id": "LP-014",
+      "domain": "דאטה",
+      "name": "SQL ומסדי נתונים",
+      "type": "קורס",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "ללא; יתרון ללוגיקה בסיסית",
+      "canonical_skills": [
+        "SQL",
+        "Relational Modeling",
+        "Joins",
+        "Aggregation",
+        "Indexing Basics",
+        "Transactions"
+      ],
+      "tools": [
+        "PostgreSQL/MySQL",
+        "SQL",
+        "dbdiagram"
+      ],
+      "target_roles": [
+        "Data Analyst",
+        "Backend Developer",
+        "BI Analyst",
+        "QA"
+      ],
+      "duration": "6–12 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כש-SQL חוזר במשרות רבות או נדרש למסלול Data/Backend",
+      "when_not_to_recommend": "כשפער התפקיד אינו קשור לנתונים",
+      "recommended_project": "סכמת DB, שאילתות מורכבות וניתוח ביצועים",
+      "official_url": "https://csed.acm.org/knowledge-areas/",
+      "product_note": "מומלץ כמעט תמיד לפני BI/Data Engineering"
+    },
+    {
+      "id": "LP-015",
+      "domain": "דאטה",
+      "name": "Data Analyst",
+      "type": "קורס / Bootcamp",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "Excel בסיסי; יתרון ל-SQL",
+      "canonical_skills": [
+        "Data Cleaning",
+        "SQL",
+        "Statistics Basics",
+        "Visualization",
+        "Business Analysis",
+        "Storytelling"
+      ],
+      "tools": [
+        "Excel/Sheets",
+        "SQL",
+        "Python/pandas",
+        "Tableau/Power BI"
+      ],
+      "target_roles": [
+        "Data Analyst",
+        "Product Analyst",
+        "Operations Analyst"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשפערים הם SQL, ניתוח, ויזואליזציה והסקת מסקנות",
+      "when_not_to_recommend": "לתפקידי Data Science מחקריים ללא בסיס מתמטי",
+      "recommended_project": "דשבורד ומחקר cohort עם מסקנות עסקיות",
+      "official_url": "https://www.abet.org/2026-2027_cac_criteria/",
+      "product_note": "יש להבדיל Analyst מ-Data Scientist"
+    },
+    {
+      "id": "LP-016",
+      "domain": "דאטה",
+      "name": "Power BI Data Analyst (PL-300)",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "ניסיון בסיסי בנתונים ו-BI",
+      "canonical_skills": [
+        "Data Preparation",
+        "Data Modeling",
+        "Visualization",
+        "Analytics",
+        "BI Security"
+      ],
+      "tools": [
+        "Power BI",
+        "Power Query",
+        "DAX"
+      ],
+      "target_roles": [
+        "Power BI Developer",
+        "BI Analyst",
+        "Data Analyst"
+      ],
+      "duration": "6–12 שבועות",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "4",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כש-Power BI/DAX מופיעים במודעות יעד",
+      "when_not_to_recommend": "כששוק היעד משתמש ב-Tableau/Looker בלבד או כשחסר SQL בסיסי",
+      "recommended_project": "מודל נתונים ודשבורד מאובטח עם DAX",
+      "official_url": "https://learn.microsoft.com/en-us/credentials/certifications/data-analyst-associate/",
+      "product_note": "הסמכה ממוקדת כלי; אינה מחליפה חשיבה אנליטית"
+    },
+    {
+      "id": "LP-017",
+      "domain": "דאטה",
+      "name": "Data Engineering Foundations",
+      "type": "קורס / Bootcamp",
+      "level": "ביניים",
+      "prerequisites": "Python ו-SQL",
+      "canonical_skills": [
+        "ETL/ELT",
+        "Data Modeling",
+        "Pipelines",
+        "Distributed Processing",
+        "Data Quality",
+        "Orchestration"
+      ],
+      "tools": [
+        "Python",
+        "SQL",
+        "Spark",
+        "Airflow",
+        "dbt",
+        "Docker",
+        "Cloud storage"
+      ],
+      "target_roles": [
+        "Junior Data Engineer",
+        "Analytics Engineer"
+      ],
+      "duration": "4–8 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשפערים חוזרים ב-pipelines, ETL, Spark, Airflow/dbt",
+      "when_not_to_recommend": "כשחסר קודם SQL/Python בסיסי",
+      "recommended_project": "Pipeline מתוזמן עם בדיקות איכות ו-observability",
+      "official_url": "https://cloud.google.com/learn/certification/data-engineer",
+      "product_note": "יש לבחור stack לפי מודעות היעד"
+    },
+    {
+      "id": "LP-018",
+      "domain": "דאטה",
+      "name": "Databricks Data Engineer Associate",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "ניסיון מעשי מומלץ; SQL/Python",
+      "canonical_skills": [
+        "Data Ingestion",
+        "ETL",
+        "Data Transformation",
+        "Modeling",
+        "Jobs",
+        "CI/CD",
+        "Monitoring",
+        "Governance"
+      ],
+      "tools": [
+        "Databricks",
+        "PySpark",
+        "SQL",
+        "Lakeflow Jobs"
+      ],
+      "target_roles": [
+        "Data Engineer",
+        "Lakehouse Engineer"
+      ],
+      "duration": "6–12 שבועות",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "4",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כש-Databricks/Spark חוזרים במשרות והבסיס קיים",
+      "when_not_to_recommend": "למתחיל ללא SQL/Python או כשהשוק אינו משתמש Databricks",
+      "recommended_project": "Lakehouse pipeline עם PySpark, Jobs ו-CI",
+      "official_url": "https://www.databricks.com/learn/certification/data-engineer-associate",
+      "product_note": "ההסמכה ספציפית לפלטפורמה"
+    },
+    {
+      "id": "LP-019",
+      "domain": "דאטה",
+      "name": "Google Professional Data Engineer",
+      "type": "הסמכה",
+      "level": "מתקדם",
+      "prerequisites": "מומלץ 3+ שנות תעשייה, מהן 1+ ב-GCP",
+      "canonical_skills": [
+        "Data System Design",
+        "Ingestion",
+        "Storage",
+        "Analytics Preparation",
+        "Automation",
+        "Security"
+      ],
+      "tools": [
+        "GCP data services",
+        "SQL",
+        "pipelines",
+        "IAM",
+        "monitoring"
+      ],
+      "target_roles": [
+        "Cloud Data Engineer",
+        "Senior Data Engineer"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "4",
+      "proof_strength": "4",
+      "replaces_experience": "לא",
+      "when_to_recommend": "למנוסה ב-GCP שרוצה לאמת רוחב ארכיטקטוני",
+      "when_not_to_recommend": "למתחיל או כתחליף לניסיון Data Engineering",
+      "recommended_project": "מערכת נתונים ב-GCP עם אבטחה, ניטור ו-automation",
+      "official_url": "https://cloud.google.com/learn/certification/data-engineer",
+      "product_note": "לא להמליץ לפי שם ההסמכה בלבד; לבדוק readiness"
+    },
+    {
+      "id": "LP-020",
+      "domain": "AI/ML",
+      "name": "Machine Learning Foundations",
+      "type": "קורס",
+      "level": "ביניים",
+      "prerequisites": "Python; אלגברה; סטטיסטיקה בסיסית",
+      "canonical_skills": [
+        "Supervised Learning",
+        "Unsupervised Learning",
+        "Feature Engineering",
+        "Evaluation",
+        "Overfitting",
+        "Responsible AI"
+      ],
+      "tools": [
+        "Python",
+        "pandas",
+        "NumPy",
+        "scikit-learn",
+        "notebooks"
+      ],
+      "target_roles": [
+        "ML Analyst",
+        "Junior Data Scientist",
+        "בסיס ל-ML Engineer"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "4",
+      "practical_depth": "4",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשפערים הם מודלים, הערכה וסטטיסטיקה והמשתמש כבר יודע Python",
+      "when_not_to_recommend": "כשחסרים קודם תכנות ומתמטיקה בסיסית",
+      "recommended_project": "ניסוי משוחזר עם baseline, validation וניתוח שגיאות",
+      "official_url": "https://developers.google.com/machine-learning/crash-course",
+      "product_note": "לא להציג כקיצור דרך לתפקיד ML Engineer"
+    },
+    {
+      "id": "LP-021",
+      "domain": "AI/ML",
+      "name": "Generative AI / LLM Application Engineering",
+      "type": "קורס",
+      "level": "ביניים",
+      "prerequisites": "Python ו-API; מומלץ ML בסיסי",
+      "canonical_skills": [
+        "Transformers",
+        "Embeddings",
+        "Retrieval",
+        "Prompting",
+        "Evaluation",
+        "Guardrails",
+        "LLMOps Basics"
+      ],
+      "tools": [
+        "Python",
+        "Hugging Face",
+        "vector DB",
+        "model APIs",
+        "RAG frameworks"
+      ],
+      "target_roles": [
+        "AI Application Developer",
+        "GenAI Engineer",
+        "Applied AI Engineer"
+      ],
+      "duration": "8–16 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשמודעות יעד דורשות RAG/LLM/embeddings והמשתמש כבר מפתח",
+      "when_not_to_recommend": "כשהבעיה היא בסיס תכנות או ML ואין יכולת להעריך מערכת",
+      "recommended_project": "RAG עם dataset הערכה, citations, monitoring ו-guardrails",
+      "official_url": "https://huggingface.co/learn/llm-course/chapter1/1",
+      "product_note": "להעדיף יכולת הערכה על פני Prompting בלבד"
+    },
+    {
+      "id": "LP-022",
+      "domain": "QA",
+      "name": "בדיקות תוכנה ידניות / ISTQB CTFL",
+      "type": "קורס / הסמכה",
+      "level": "מתחיל",
+      "prerequisites": "ללא",
+      "canonical_skills": [
+        "Testing Fundamentals",
+        "SDLC",
+        "Test Design",
+        "Static Testing",
+        "Defect Management",
+        "Risk",
+        "Test Tools"
+      ],
+      "tools": [
+        "Jira",
+        "test management tool",
+        "API client",
+        "SQL basics"
+      ],
+      "target_roles": [
+        "QA Tester",
+        "Test Analyst",
+        "Junior QA Engineer"
+      ],
+      "duration": "6–12 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "3",
+      "proof_strength": "3",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשפערי היעד הם מושגי בדיקות, תכנון ובאגים",
+      "when_not_to_recommend": "כשמשרות היעד דורשות אוטומציה ותכנות משמעותי",
+      "recommended_project": "Test plan, cases, exploratory charter ודוחות באגים למוצר חי",
+      "official_url": "https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/",
+      "product_note": "CTFL הוא בסיס ידע; לצרף תיק בדיקות"
+    },
+    {
+      "id": "LP-023",
+      "domain": "QA",
+      "name": "QA Automation",
+      "type": "קורס / Bootcamp",
+      "level": "ביניים",
+      "prerequisites": "בדיקות ידניות + שפת תכנות אחת",
+      "canonical_skills": [
+        "Test Automation",
+        "UI Testing",
+        "API Testing",
+        "Test Design",
+        "CI",
+        "Reporting"
+      ],
+      "tools": [
+        "Playwright/Selenium",
+        "REST client",
+        "Java/Python/TypeScript",
+        "Git",
+        "CI"
+      ],
+      "target_roles": [
+        "QA Automation Engineer",
+        "SDET Junior"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשמשרות דורשות Selenium/Playwright/API/CI",
+      "when_not_to_recommend": "כשאין בסיס תכנות או הבנת בדיקות",
+      "recommended_project": "Suite UI+API יציב ב-CI עם דוחות ונתוני בדיקה",
+      "official_url": "https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/",
+      "product_note": "הכלי משני לעקרונות יציבות, design ו-CI"
+    },
+    {
+      "id": "LP-024",
+      "domain": "IT ותשתיות",
+      "name": "IT Support / Help Desk Foundations",
+      "type": "קורס",
+      "level": "מתחיל",
+      "prerequisites": "ללא",
+      "canonical_skills": [
+        "Troubleshooting",
+        "Operating Systems",
+        "Hardware",
+        "Networking Basics",
+        "Identity Basics",
+        "Customer Support"
+      ],
+      "tools": [
+        "Windows",
+        "Linux basics",
+        "ticketing",
+        "Active Directory/Entra basics",
+        "remote support"
+      ],
+      "target_roles": [
+        "Help Desk",
+        "IT Support",
+        "Desktop Support"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "2",
+      "replaces_experience": "רק עם מעבדה",
+      "when_to_recommend": "כשאין ניסיון והמסלול הריאלי מתחיל ב-IT Support",
+      "when_not_to_recommend": "כשיש ניסיון תשתיתי מתקדם או יעד פיתוח טהור",
+      "recommended_project": "Home lab עם users, permissions, tickets ו-runbooks",
+      "official_url": "https://www.abet.org/accreditation/accreditation-criteria/criteria-for-accrediting-computing-programs-2025-2026/",
+      "product_note": "מסלול כניסה אפשרי ל-System/Cloud/Security"
+    },
+    {
+      "id": "LP-025",
+      "domain": "רשתות",
+      "name": "Networking Foundations",
+      "type": "קורס",
+      "level": "מתחיל",
+      "prerequisites": "ללא",
+      "canonical_skills": [
+        "OSI/TCP-IP",
+        "IPv4/IPv6",
+        "Switching",
+        "Routing",
+        "DNS",
+        "DHCP",
+        "Troubleshooting",
+        "Security Basics"
+      ],
+      "tools": [
+        "Wireshark",
+        "Packet Tracer",
+        "ping/traceroute",
+        "subnet calculator"
+      ],
+      "target_roles": [
+        "NOC Technician",
+        "IT Support",
+        "בסיס ל-Network Engineer"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "2",
+      "replaces_experience": "רק עם מעבדה",
+      "when_to_recommend": "כשחסר בסיס רשתות לתפקידי IT, Cloud או Cyber",
+      "when_not_to_recommend": "כשהמשתמש כבר מחזיק CCNA וניסיון מעשי",
+      "recommended_project": "מעבדת רשת עם VLANs, routing, DNS ו-troubleshooting",
+      "official_url": "https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html",
+      "product_note": "אפשר כהכנה ל-CCNA"
+    },
+    {
+      "id": "LP-026",
+      "domain": "רשתות",
+      "name": "Cisco CCNA",
+      "type": "הסמכה",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "אין תנאי פורמלי; מומלץ בסיס מחשבים ורשת",
+      "canonical_skills": [
+        "Network Fundamentals",
+        "Network Access",
+        "IP Connectivity",
+        "IP Services",
+        "Security Fundamentals",
+        "Automation"
+      ],
+      "tools": [
+        "Cisco IOS",
+        "Packet Tracer/CML",
+        "Wireshark",
+        "CLI"
+      ],
+      "target_roles": [
+        "Network Technician",
+        "NOC",
+        "Junior Network Engineer",
+        "Network Support"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "4",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשמשרות יעד מבקשות CCNA/Cisco או יסודות רשת רחבים",
+      "when_not_to_recommend": "כשפער מרכזי הוא Cloud/Linux/Automation ולא Networking",
+      "recommended_project": "Topology מתועדת עם VLAN, OSPF, ACL ותרחישי תקלה",
+      "official_url": "https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html",
+      "product_note": "אין תנאי קדם רשמי; תוקף ההסמכה מוגבל בזמן"
+    },
+    {
+      "id": "LP-027",
+      "domain": "IT ותשתיות",
+      "name": "Linux Administration Foundations",
+      "type": "קורס",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "יסודות מחשב",
+      "canonical_skills": [
+        "Shell",
+        "Filesystems",
+        "Users/Groups",
+        "Permissions",
+        "Processes",
+        "Services",
+        "Networking",
+        "Logs",
+        "Bash"
+      ],
+      "tools": [
+        "Linux",
+        "Bash",
+        "SSH",
+        "systemd",
+        "journalctl",
+        "package manager"
+      ],
+      "target_roles": [
+        "Linux Support",
+        "System Administrator",
+        "DevOps trainee"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם מעבדה",
+      "when_to_recommend": "כש-Linux חוזר במשרות Cloud/DevOps/Cyber/System",
+      "when_not_to_recommend": "כשהיעד Frontend/BI ללא צורך תשתיתי",
+      "recommended_project": "שרת Linux מוקשח עם שירות, משתמשים, גיבוי ו-runbook",
+      "official_url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam",
+      "product_note": "בסיס נדרש לפני Kubernetes/DevOps מתקדמים"
+    },
+    {
+      "id": "LP-028",
+      "domain": "IT ותשתיות",
+      "name": "RHCSA",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "קורסי ניהול Red Hat או ניסיון שקול",
+      "canonical_skills": [
+        "Linux Administration",
+        "Shell",
+        "Storage",
+        "Filesystems",
+        "Services",
+        "Networking",
+        "Users",
+        "SELinux",
+        "Firewall"
+      ],
+      "tools": [
+        "RHEL",
+        "Bash",
+        "SSH",
+        "systemd",
+        "LVM",
+        "firewalld",
+        "SELinux"
+      ],
+      "target_roles": [
+        "Linux Administrator",
+        "System Administrator",
+        "DevOps Engineer Junior"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "5",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשמשרות היעד Linux/RHEL ומבקשות הוכחה מעשית",
+      "when_not_to_recommend": "ללא ניסיון Shell בסיסי או כשאין RHEL בשוק היעד",
+      "recommended_project": "שרת RHEL persistent עם storage, services, SELinux ו-firewall",
+      "official_url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam",
+      "product_note": "בחינה מעשית; חוזק הוכחה גבוה יחסית"
+    },
+    {
+      "id": "LP-029",
+      "domain": "IT ותשתיות",
+      "name": "LFCS",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "מומלץ ניסיון Linux בסיסי",
+      "canonical_skills": [
+        "Linux Administration",
+        "Networking",
+        "Storage",
+        "Services",
+        "Users",
+        "Troubleshooting"
+      ],
+      "tools": [
+        "Linux distro",
+        "Bash",
+        "SSH",
+        "systemd",
+        "storage tools"
+      ],
+      "target_roles": [
+        "Linux Administrator",
+        "Cloud Support",
+        "DevOps trainee"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "5",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשנדרשת הוכחה מעשית וניטרלית לספק ב-Linux",
+      "when_not_to_recommend": "כשהיעד דורש RHEL/SELinux ספציפית או כשהבסיס חסר",
+      "recommended_project": "Home lab רב-שרתים עם תקלות מתועדות",
+      "official_url": "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/",
+      "product_note": "חלופה ניטרלית לספק ל-RHCSA"
+    },
+    {
+      "id": "LP-030",
+      "domain": "ענן",
+      "name": "Cloud Fundamentals (Vendor-neutral)",
+      "type": "קורס",
+      "level": "מתחיל",
+      "prerequisites": "יסודות IT ורשת מועילים",
+      "canonical_skills": [
+        "Cloud Concepts",
+        "Shared Responsibility",
+        "Compute",
+        "Storage",
+        "Networking",
+        "IAM",
+        "Cost Basics",
+        "Resilience"
+      ],
+      "tools": [
+        "Cloud console",
+        "IAM",
+        "VM",
+        "object storage",
+        "monitoring"
+      ],
+      "target_roles": [
+        "Cloud Support",
+        "IT Support",
+        "בסיס ל-Cloud Engineer"
+      ],
+      "duration": "4–8 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "3",
+      "proof_strength": "2",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשאין ידע ענן ויש הרבה פערים חוצי-ספק",
+      "when_not_to_recommend": "כשכבר יש ניסיון בענן והפער הוא שירות מתקדם",
+      "recommended_project": "סביבת ענן קטנה עם IAM, network, VM, storage ו-budget",
+      "official_url": "https://aws.amazon.com/certification/certified-cloud-practitioner/",
+      "product_note": "שלב הכנה; לא מספיק לבדו לתפקיד Cloud Engineer"
+    },
+    {
+      "id": "LP-031",
+      "domain": "ענן",
+      "name": "AWS Cloud Practitioner",
+      "type": "הסמכה",
+      "level": "מתחיל",
+      "prerequisites": "אין ניסיון קודם נדרש",
+      "canonical_skills": [
+        "Cloud Concepts",
+        "AWS Services",
+        "Security",
+        "Governance",
+        "Billing",
+        "Support"
+      ],
+      "tools": [
+        "AWS Console",
+        "IAM basics",
+        "EC2/S3 concepts",
+        "Cost tools"
+      ],
+      "target_roles": [
+        "Cloud/Technical Support",
+        "Sales Engineering בסיסי",
+        "מעבר ל-AWS Associate"
+      ],
+      "duration": "4–8 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "2",
+      "proof_strength": "3",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשנדרש AWS foundational vocabulary או מעבר מתפקיד לא-טכני",
+      "when_not_to_recommend": "כשמשרות היעד דורשות בנייה/תפעול hands-on",
+      "recommended_project": "מעבדת AWS בסיסית בנוסף להסמכה",
+      "official_url": "https://aws.amazon.com/certification/certified-cloud-practitioner/",
+      "product_note": "ידע ברמה גבוהה; לא להסיק יכולת תפעול עמוקה"
+    },
+    {
+      "id": "LP-032",
+      "domain": "ענן",
+      "name": "AWS Solutions Architect – Associate",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "מומלצת שנה hands-on בתכנון פתרונות AWS",
+      "canonical_skills": [
+        "AWS Architecture",
+        "Resilience",
+        "Security",
+        "Networking",
+        "Storage",
+        "Compute",
+        "Cost Optimization"
+      ],
+      "tools": [
+        "VPC",
+        "IAM",
+        "EC2",
+        "S3",
+        "RDS",
+        "Lambda",
+        "CloudWatch",
+        "IaC basics"
+      ],
+      "target_roles": [
+        "Cloud Engineer",
+        "Solutions Architect Associate",
+        "DevOps Engineer"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "4",
+      "proof_strength": "4",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשיש בסיס AWS ומודעות דורשות תכנון פתרונות רחב",
+      "when_not_to_recommend": "למתחיל ללא תרגול AWS או כתחליף לניסיון",
+      "recommended_project": "ארכיטקטורה מרובת שכבות עם IaC, ניטור ואומדן עלות",
+      "official_url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/",
+      "product_note": "Coding עמוק אינו מוקד הבחינה; יש לצרף בנייה מעשית"
+    },
+    {
+      "id": "LP-033",
+      "domain": "ענן",
+      "name": "Microsoft Azure Fundamentals (AZ-900)",
+      "type": "הסמכה",
+      "level": "מתחיל",
+      "prerequisites": "ללא",
+      "canonical_skills": [
+        "Cloud Concepts",
+        "Azure Services",
+        "Management",
+        "Governance",
+        "Security Basics"
+      ],
+      "tools": [
+        "Azure Portal",
+        "compute/network/storage concepts",
+        "governance tools"
+      ],
+      "target_roles": [
+        "Cloud Support",
+        "IT",
+        "בסיס ל-Azure Administrator"
+      ],
+      "duration": "4–8 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "2",
+      "proof_strength": "3",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשמודעות היעד מציינות Azure והמשתמש מתחיל",
+      "when_not_to_recommend": "כשכבר נדרשת יכולת ניהול מעשית",
+      "recommended_project": "מעבדת Azure בסיסית עם resource group, network, VM ו-RBAC",
+      "official_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/",
+      "product_note": "הסמכת יסודות"
+    },
+    {
+      "id": "LP-034",
+      "domain": "ענן",
+      "name": "Azure Administrator Associate (AZ-104)",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "OS, networking, servers, virtualization; PowerShell/CLI מועילים",
+      "canonical_skills": [
+        "Azure Administration",
+        "Identity",
+        "Governance",
+        "Storage",
+        "Compute",
+        "Networking",
+        "Monitoring"
+      ],
+      "tools": [
+        "Azure Portal",
+        "Azure CLI",
+        "PowerShell",
+        "ARM/Bicep",
+        "Entra ID"
+      ],
+      "target_roles": [
+        "Azure Administrator",
+        "Cloud Engineer",
+        "Cloud Support Engineer"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "4",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשמשרות יעד דורשות Azure operations/administration",
+      "when_not_to_recommend": "ללא בסיס תשתיות או כשיעד AWS/GCP בלבד",
+      "recommended_project": "סביבת Azure עם VNet, RBAC, VM, storage, monitoring ו-Bicep",
+      "official_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/",
+      "product_note": "דורש תרגול CLI ו-IaC לצד הכנה לבחינה"
+    },
+    {
+      "id": "LP-035",
+      "domain": "ענן",
+      "name": "Google Associate Cloud Engineer",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "מומלצים 6+ חודשי hands-on ב-GCP",
+      "canonical_skills": [
+        "Cloud Environment Setup",
+        "Solution Implementation",
+        "Operations",
+        "Monitoring",
+        "IAM and Security"
+      ],
+      "tools": [
+        "gcloud",
+        "GCP Console",
+        "Compute Engine",
+        "Cloud Storage",
+        "IAM",
+        "monitoring"
+      ],
+      "target_roles": [
+        "GCP Cloud Engineer",
+        "Cloud Support",
+        "Platform Engineer Junior"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "4",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כש-GCP חוזר במודעות ויש בסיס מעשי",
+      "when_not_to_recommend": "למתחיל ללא Cloud/Networking/Linux",
+      "recommended_project": "פריסת שירות GCP עם IAM, network, monitoring ו-automation",
+      "official_url": "https://cloud.google.com/learn/certification/cloud-engineer",
+      "product_note": "לבדוק ניסיון hands-on לפני המלצה"
+    },
+    {
+      "id": "LP-036",
+      "domain": "DevOps",
+      "name": "DevOps Foundations",
+      "type": "קורס / Bootcamp",
+      "level": "ביניים",
+      "prerequisites": "Linux, Git ורשתות בסיסיות",
+      "canonical_skills": [
+        "CI/CD",
+        "Automation",
+        "Infrastructure",
+        "Containers",
+        "Cloud",
+        "Observability",
+        "Collaboration"
+      ],
+      "tools": [
+        "Git",
+        "CI platform",
+        "Linux",
+        "Docker",
+        "Terraform",
+        "cloud",
+        "monitoring"
+      ],
+      "target_roles": [
+        "DevOps Engineer Junior",
+        "Build/Release Engineer",
+        "Platform trainee"
+      ],
+      "duration": "4–8 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשפערים חוצי Linux/Git/CI/Containers/Cloud",
+      "when_not_to_recommend": "כשחסרים קודם יסודות מערכת ותכנות",
+      "recommended_project": "Pipeline מלא: build, test, container, IaC, deploy, observe",
+      "official_url": "https://www.acm.org/binaries/content/assets/education/se2014.pdf",
+      "product_note": "DevOps הוא צירוף Skills, לא כלי יחיד"
+    },
+    {
+      "id": "LP-037",
+      "domain": "DevOps",
+      "name": "Docker / Containers",
+      "type": "קורס קצר",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "Linux ו-CLI בסיסיים",
+      "canonical_skills": [
+        "Container Images",
+        "Runtime",
+        "Networking",
+        "Volumes",
+        "Registries",
+        "Compose",
+        "Security Basics"
+      ],
+      "tools": [
+        "Docker Engine",
+        "Dockerfile",
+        "Compose",
+        "registry"
+      ],
+      "target_roles": [
+        "Developer",
+        "QA Automation",
+        "DevOps",
+        "Cloud Engineer"
+      ],
+      "duration": "2–6 שבועות",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כש-Docker חוזר בתדירות גבוהה והפער ממוקד",
+      "when_not_to_recommend": "כשאין בסיס Linux/יישומים או כשנדרש Kubernetes administration עמוק",
+      "recommended_project": "Containerize אפליקציה ו-DB עם Compose, healthchecks ו-scan",
+      "official_url": "https://docs.docker.com/get-started/",
+      "product_note": "ROI לימודי גבוה לעיתים קרובות; יש לחשב מול משרות בפועל"
+    },
+    {
+      "id": "LP-038",
+      "domain": "DevOps",
+      "name": "Kubernetes Administrator (CKA)",
+      "type": "הסמכה",
+      "level": "ביניים–מתקדם",
+      "prerequisites": "אין תנאי פורמלי; בפועל Linux, containers ורשתות",
+      "canonical_skills": [
+        "Cluster Architecture",
+        "Installation",
+        "Workloads",
+        "Scheduling",
+        "Services",
+        "Networking",
+        "Storage",
+        "Troubleshooting",
+        "RBAC"
+      ],
+      "tools": [
+        "Kubernetes",
+        "kubectl",
+        "kubeadm",
+        "Helm",
+        "Kustomize",
+        "CNI/CSI"
+      ],
+      "target_roles": [
+        "Kubernetes Administrator",
+        "DevOps Engineer",
+        "Platform Engineer",
+        "SRE"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "5",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשמשרות יעד דורשות תפעול/פתרון תקלות Kubernetes והבסיס קיים",
+      "when_not_to_recommend": "למתחיל ללא Linux/containers/networking",
+      "recommended_project": "Cluster רב-צמתי עם workloads, policies, storage ותרחישי תקלה",
+      "official_url": "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/",
+      "product_note": "בחינה מעשית; לא להמליץ רק כי Kubernetes מופיע כ-nice to have"
+    },
+    {
+      "id": "LP-039",
+      "domain": "DevOps",
+      "name": "Kubernetes Application Developer (CKAD)",
+      "type": "הסמכה",
+      "level": "ביניים",
+      "prerequisites": "ידע ב-containers ו-microservices",
+      "canonical_skills": [
+        "Application Design",
+        "Deployments",
+        "Observability",
+        "Configuration",
+        "Security",
+        "Services",
+        "Networking"
+      ],
+      "tools": [
+        "Kubernetes",
+        "kubectl",
+        "OCI images",
+        "Helm",
+        "Kustomize"
+      ],
+      "target_roles": [
+        "Cloud-native Developer",
+        "Backend Developer",
+        "DevOps Engineer"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "5",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשמפתח צריך לבנות ולפרוס workloads ב-Kubernetes",
+      "when_not_to_recommend": "כשמטרת המשתמש היא ניהול cluster עמוק או אין ניסיון containers",
+      "recommended_project": "יישום microservices עם probes, secrets, rollout ו-network policy",
+      "official_url": "https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/",
+      "product_note": "להבדיל מ-CKA: מיקוד אפליקטיבי"
+    },
+    {
+      "id": "LP-040",
+      "domain": "DevOps",
+      "name": "Terraform Associate",
+      "type": "הסמכה",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "Terminal וארכיטקטורת ענן בסיסית",
+      "canonical_skills": [
+        "Infrastructure as Code",
+        "Providers",
+        "State",
+        "Workflows",
+        "Variables",
+        "Modules",
+        "Remote State",
+        "Drift",
+        "Import"
+      ],
+      "tools": [
+        "Terraform CLI",
+        "HCL",
+        "cloud provider",
+        "HCP Terraform"
+      ],
+      "target_roles": [
+        "DevOps Engineer",
+        "Cloud Engineer",
+        "Platform Engineer"
+      ],
+      "duration": "6–12 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "4",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כש-Terraform/IaC חוזרים במשרות והמשתמש מכיר Cloud",
+      "when_not_to_recommend": "כשאין הבנת משאבי ענן או שהארגון משתמש IaC אחר בלבד",
+      "recommended_project": "מודולים לסביבה מלאה עם remote state, plan review ו-drift demo",
+      "official_url": "https://developer.hashicorp.com/certifications/infrastructure-automation",
+      "product_note": "הסמכה אינה מחליפה תכנון תשתית אמיתי"
+    },
+    {
+      "id": "LP-041",
+      "domain": "DevOps",
+      "name": "CI/CD Engineering",
+      "type": "קורס קצר",
+      "level": "ביניים",
+      "prerequisites": "Git, testing, build basics",
+      "canonical_skills": [
+        "Continuous Integration",
+        "Delivery",
+        "Pipeline Design",
+        "Artifacts",
+        "Secrets",
+        "Environments",
+        "Release Strategies"
+      ],
+      "tools": [
+        "GitHub Actions/GitLab CI/Jenkins",
+        "artifact registry",
+        "Docker"
+      ],
+      "target_roles": [
+        "DevOps",
+        "QA Automation",
+        "Software Engineer",
+        "Release Engineer"
+      ],
+      "duration": "4–8 שבועות",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כש-CI/CD הוא פער שכיח וחסר pipeline מוכח",
+      "when_not_to_recommend": "כשאין עדיין קוד/בדיקות שניתן לבנות ולפרוס",
+      "recommended_project": "Pipeline עם quality gates, artifacts, environments ו-rollback",
+      "official_url": "https://resources.github.com/learn/certifications/",
+      "product_note": "לבחור פלטפורמה לפי המשרות אך לנרמל ל-Skill CI/CD"
+    },
+    {
+      "id": "LP-042",
+      "domain": "DevOps",
+      "name": "SRE / Observability",
+      "type": "קורס",
+      "level": "ביניים–מתקדם",
+      "prerequisites": "Linux, networking, cloud, distributed systems basics",
+      "canonical_skills": [
+        "SLI/SLO",
+        "Monitoring",
+        "Logging",
+        "Tracing",
+        "Alerting",
+        "Incident Response",
+        "Capacity",
+        "Reliability"
+      ],
+      "tools": [
+        "OpenTelemetry",
+        "Prometheus",
+        "Grafana",
+        "log platform",
+        "incident tooling"
+      ],
+      "target_roles": [
+        "SRE",
+        "Production Engineer",
+        "Platform Engineer",
+        "DevOps"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "4",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשמשרות דורשות reliability/monitoring/on-call והמשתמש תשתיתי",
+      "when_not_to_recommend": "למתחיל ללא ניסיון מערכות או כשהפער הוא Cloud fundamentals",
+      "recommended_project": "שירות עם telemetry, SLO, alerts, load test ו-postmortem",
+      "official_url": "https://opentelemetry.io/docs/",
+      "product_note": "לא לצמצם Observability לכלי dashboard יחיד"
+    },
+    {
+      "id": "LP-043",
+      "domain": "סייבר",
+      "name": "Cybersecurity Foundations / ISC2 CC",
+      "type": "קורס / הסמכה",
+      "level": "מתחיל",
+      "prerequisites": "אין ניסיון נדרש",
+      "canonical_skills": [
+        "Security Principles",
+        "Governance",
+        "IAM",
+        "Network/Cloud Security",
+        "Security Operations",
+        "Incident Response"
+      ],
+      "tools": [
+        "IAM concepts",
+        "network tools",
+        "SIEM concepts",
+        "ticketing"
+      ],
+      "target_roles": [
+        "Junior Security Analyst",
+        "GRC trainee",
+        "בסיס ל-SOC"
+      ],
+      "duration": "6–12 שבועות",
+      "theory_depth": "4",
+      "practical_depth": "2",
+      "proof_strength": "3",
+      "replaces_experience": "לא",
+      "when_to_recommend": "למעבר ראשוני לסייבר כשחסר מילון יסודות רחב",
+      "when_not_to_recommend": "כשיעד SOC/Pentest דורש hands-on משמעותי ואין מעבדה",
+      "recommended_project": "Threat model ו-home lab בסיסי בנוסף להסמכה",
+      "official_url": "https://www.isc2.org/certifications/cc",
+      "product_note": "הסמכת כניסה; לא להסיק יכולת SOC מלאה"
+    },
+    {
+      "id": "LP-044",
+      "domain": "סייבר",
+      "name": "SOC Analyst Foundations",
+      "type": "קורס / Bootcamp",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "Networking, Linux/Windows basics, security fundamentals",
+      "canonical_skills": [
+        "Security Monitoring",
+        "Log Analysis",
+        "SIEM",
+        "Detection",
+        "Triage",
+        "Incident Response",
+        "Threat Intelligence"
+      ],
+      "tools": [
+        "SIEM",
+        "EDR concepts",
+        "Wireshark",
+        "Sysmon",
+        "ticketing",
+        "MITRE ATT&CK"
+      ],
+      "target_roles": [
+        "SOC Analyst Tier 1",
+        "Cybersecurity Analyst"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם מעבדה",
+      "when_to_recommend": "כשפערי משרות SOC הם SIEM/logs/IR והבסיס קיים",
+      "when_not_to_recommend": "כשחסרים קודם רשתות ו-OS או כשהיעד GRC",
+      "recommended_project": "Home SOC: ingest logs, write detections, triage alerts, incident report",
+      "official_url": "https://www.isc2.org/certifications/cc",
+      "product_note": "להמליץ על תרגול blue-team לצד ידע"
+    },
+    {
+      "id": "LP-045",
+      "domain": "סייבר",
+      "name": "Penetration Testing / PEN-200 OSCP+",
+      "type": "קורס / הסמכה",
+      "level": "מתקדם",
+      "prerequisites": "מומלצים TCP/IP, ניהול Windows/Linux ו-Bash/Python",
+      "canonical_skills": [
+        "Enumeration",
+        "Vulnerability Assessment",
+        "Exploitation",
+        "Web Attacks",
+        "Privilege Escalation",
+        "Active Directory",
+        "Pivoting",
+        "Reporting"
+      ],
+      "tools": [
+        "Kali",
+        "Nmap",
+        "Burp Suite",
+        "Metasploit",
+        "Hydra",
+        "Nessus",
+        "sqlmap"
+      ],
+      "target_roles": [
+        "Penetration Tester",
+        "Vulnerability Analyst",
+        "Red Team Junior"
+      ],
+      "duration": "4–9 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "5",
+      "replaces_experience": "חלקית",
+      "when_to_recommend": "כשיעד Pentest והמשתמש כבר חזק ברשתות, OS וסקריפטים",
+      "when_not_to_recommend": "למתחיל בסייבר או כפתרון לפער SOC בסיסי",
+      "recommended_project": "דוח penetration test מלא ממעבדת רשת חוקית",
+      "official_url": "https://www.offsec.com/courses/pen-200/",
+      "product_note": "מסלול יקר ותובעני; לבצע readiness check קשיח"
+    },
+    {
+      "id": "LP-046",
+      "domain": "סייבר",
+      "name": "Cloud Security & IAM",
+      "type": "קורס",
+      "level": "ביניים–מתקדם",
+      "prerequisites": "Cloud admin, networking, security basics",
+      "canonical_skills": [
+        "IAM",
+        "Least Privilege",
+        "Cloud Network Security",
+        "Logging",
+        "Key Management",
+        "Posture Management",
+        "Incident Response"
+      ],
+      "tools": [
+        "AWS/Azure/GCP IAM",
+        "policy language",
+        "cloud logs",
+        "KMS",
+        "CSPM concepts"
+      ],
+      "target_roles": [
+        "Cloud Security Engineer",
+        "IAM Engineer",
+        "DevSecOps"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם פרויקט",
+      "when_to_recommend": "כשמודעות היעד דורשות IAM/Cloud Security והמשתמש כבר יודע Cloud",
+      "when_not_to_recommend": "כשאין ניסיון ניהול ענן בסיסי",
+      "recommended_project": "Landing zone קטנה עם least privilege, logs, alerts ו-key rotation",
+      "official_url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/",
+      "product_note": "לבחור ספק לפי ביקוש, לשמור Skills קנוניים חוצי-ספק"
+    },
+    {
+      "id": "LP-047",
+      "domain": "מוצר",
+      "name": "Scrum / Agile Foundations",
+      "type": "קורס קצר / הסמכה",
+      "level": "מתחיל",
+      "prerequisites": "ללא",
+      "canonical_skills": [
+        "Scrum Theory",
+        "Roles",
+        "Events",
+        "Artifacts",
+        "Product Goal",
+        "Backlog Management",
+        "Definition of Done"
+      ],
+      "tools": [
+        "Jira/Linear",
+        "roadmap/backlog tools",
+        "collaboration tools"
+      ],
+      "target_roles": [
+        "Scrum Master Junior",
+        "Product Operations",
+        "PM",
+        "Team Lead"
+      ],
+      "duration": "1–4 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "3",
+      "proof_strength": "3",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשמשרות דורשות Scrum vocabulary/process והפער קטן",
+      "when_not_to_recommend": "כתחליף לניסיון מוצר, הובלה או delivery",
+      "recommended_project": "ניהול simulation של sprint עם backlog, goal, review ו-retro",
+      "official_url": "https://scrumguides.org/scrum-guide.html",
+      "product_note": "Framework ידע; הוכחת ביצוע דורשת ניסיון/תרגול"
+    },
+    {
+      "id": "LP-048",
+      "domain": "מוצר",
+      "name": "Product Management Foundations",
+      "type": "קורס",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "ניסיון תחומי/עסקי מועיל",
+      "canonical_skills": [
+        "Customer Discovery",
+        "Problem Definition",
+        "Prioritization",
+        "Metrics",
+        "Experimentation",
+        "Roadmapping",
+        "Stakeholder Management"
+      ],
+      "tools": [
+        "Analytics",
+        "survey/interview tools",
+        "Jira/Linear",
+        "Figma basics"
+      ],
+      "target_roles": [
+        "Associate Product Manager",
+        "Product Analyst",
+        "Product Operations"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "4",
+      "proof_strength": "2",
+      "replaces_experience": "לא",
+      "when_to_recommend": "כשפערי היעד הם discovery, metrics, prioritization והמשתמש מביא domain value",
+      "when_not_to_recommend": "כשהמשרות דורשות ניסיון ownership משמעותי שאין למשתמש",
+      "recommended_project": "Case study עם research, PRD, KPI tree וניסוי",
+      "official_url": "https://scrumguides.org/scrum-guide.html",
+      "product_note": "Scrum הוא רק חלק ממסלול Product"
+    },
+    {
+      "id": "LP-049",
+      "domain": "UX/UI",
+      "name": "UX/UI Design Foundations",
+      "type": "קורס / Bootcamp",
+      "level": "מתחיל–ביניים",
+      "prerequisites": "ללא; זיקה לעיצוב ומחקר מועילה",
+      "canonical_skills": [
+        "User Research",
+        "Information Architecture",
+        "Interaction Design",
+        "Prototyping",
+        "Usability Testing",
+        "Accessibility",
+        "Visual Design"
+      ],
+      "tools": [
+        "Figma",
+        "prototyping",
+        "design systems",
+        "analytics basics"
+      ],
+      "target_roles": [
+        "UX Designer",
+        "UI Designer",
+        "Product Designer Junior"
+      ],
+      "duration": "3–6 חודשים",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "3",
+      "replaces_experience": "רק עם תיק עבודות",
+      "when_to_recommend": "כשמודעות דורשות Figma, research, prototyping ו-portfolio",
+      "when_not_to_recommend": "כשחסר ניסיון מוצר/מחקר עמוק לתפקיד Senior",
+      "recommended_project": "2–3 case studies עם תהליך, בדיקות משתמשים ואיטרציות",
+      "official_url": "https://csed.acm.org/knowledge-areas/",
+      "product_note": "תיק עבודות חשוב יותר מתעודה לבדה"
+    }
+  ],
+  "skills": {
+    "SK-001": {
+      "id": "SK-001",
+      "canonical_name": "Programming Fundamentals",
+      "name_he": "יסודות תכנות",
+      "aliases": [
+        "coding basics",
+        "variables",
+        "loops",
+        "functions"
+      ],
+      "type": "ידע",
+      "category": "פיתוח",
+      "minimum_evidence": "תרגיל קוד + פרויקט קטן",
+      "prerequisites": "Problem Solving",
+      "related_roles": [
+        "Developer",
+        "QA Automation",
+        "Data"
+      ]
+    },
+    "SK-002": {
+      "id": "SK-002",
+      "canonical_name": "Data Structures",
+      "name_he": "מבני נתונים",
+      "aliases": [
+        "DSA",
+        "arrays",
+        "lists",
+        "trees",
+        "graphs"
+      ],
+      "type": "ידע",
+      "category": "פיתוח",
+      "minimum_evidence": "מימוש + ניתוח מורכבות",
+      "prerequisites": "Programming Fundamentals",
+      "related_roles": [
+        "Software Engineer",
+        "Backend"
+      ]
+    },
+    "SK-003": {
+      "id": "SK-003",
+      "canonical_name": "Algorithms",
+      "name_he": "אלגוריתמים",
+      "aliases": [
+        "algorithm design",
+        "complexity",
+        "Big O"
+      ],
+      "type": "ידע",
+      "category": "פיתוח",
+      "minimum_evidence": "פתרונות מוסברים ומדודים",
+      "prerequisites": "Data Structures",
+      "related_roles": [
+        "Software Engineer",
+        "Algorithms"
+      ]
+    },
+    "SK-004": {
+      "id": "SK-004",
+      "canonical_name": "Object-Oriented Programming",
+      "name_he": "תכנות מונחה עצמים",
+      "aliases": [
+        "OOP",
+        "classes",
+        "inheritance",
+        "polymorphism"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "פיתוח",
+      "minimum_evidence": "קוד מודולרי עם בדיקות",
+      "prerequisites": "Programming Fundamentals",
+      "related_roles": [
+        "Developer"
+      ]
+    },
+    "SK-005": {
+      "id": "SK-005",
+      "canonical_name": "Software Architecture",
+      "name_he": "ארכיטקטורת תוכנה",
+      "aliases": [
+        "system design",
+        "architecture patterns"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "פיתוח",
+      "minimum_evidence": "design doc + מימוש trade-offs",
+      "prerequisites": "Programming; Databases; APIs",
+      "related_roles": [
+        "Backend",
+        "Software Engineer",
+        "Architect"
+      ]
+    },
+    "SK-006": {
+      "id": "SK-006",
+      "canonical_name": "HTML",
+      "name_he": "HTML סמנטי",
+      "aliases": [
+        "HTML5",
+        "semantic markup"
+      ],
+      "type": "כלי/שפה",
+      "category": "Frontend",
+      "minimum_evidence": "עמוד סמנטי ונגיש",
+      "prerequisites": "Web Fundamentals",
+      "related_roles": [
+        "Frontend"
+      ]
+    },
+    "SK-007": {
+      "id": "SK-007",
+      "canonical_name": "CSS",
+      "name_he": "עיצוב ופריסת Web",
+      "aliases": [
+        "CSS3",
+        "Flexbox",
+        "Grid",
+        "responsive"
+      ],
+      "type": "כלי/שפה",
+      "category": "Frontend",
+      "minimum_evidence": "ממשק רספונסיבי",
+      "prerequisites": "HTML",
+      "related_roles": [
+        "Frontend"
+      ]
+    },
+    "SK-008": {
+      "id": "SK-008",
+      "canonical_name": "JavaScript",
+      "name_he": "JavaScript",
+      "aliases": [
+        "JS",
+        "ECMAScript"
+      ],
+      "type": "שפה",
+      "category": "Frontend/Backend",
+      "minimum_evidence": "אפליקציה עם async/API",
+      "prerequisites": "Programming Fundamentals",
+      "related_roles": [
+        "Frontend",
+        "Full Stack"
+      ]
+    },
+    "SK-009": {
+      "id": "SK-009",
+      "canonical_name": "TypeScript",
+      "name_he": "TypeScript",
+      "aliases": [
+        "TS",
+        "typed JavaScript"
+      ],
+      "type": "שפה",
+      "category": "Frontend/Backend",
+      "minimum_evidence": "פרויקט typed עם lint/test",
+      "prerequisites": "JavaScript",
+      "related_roles": [
+        "Frontend",
+        "Full Stack"
+      ]
+    },
+    "SK-010": {
+      "id": "SK-010",
+      "canonical_name": "Frontend Frameworks",
+      "name_he": "Framework צד לקוח",
+      "aliases": [
+        "React",
+        "Vue",
+        "Angular"
+      ],
+      "type": "כלי",
+      "category": "Frontend",
+      "minimum_evidence": "SPA עם routing/state/test",
+      "prerequisites": "HTML; CSS; JavaScript",
+      "related_roles": [
+        "Frontend"
+      ]
+    },
+    "SK-011": {
+      "id": "SK-011",
+      "canonical_name": "API Design",
+      "name_he": "תכנון API",
+      "aliases": [
+        "REST",
+        "OpenAPI",
+        "API contracts"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "Backend",
+      "minimum_evidence": "API מתועד עם auth/errors",
+      "prerequisites": "Programming; HTTP",
+      "related_roles": [
+        "Backend",
+        "Full Stack"
+      ]
+    },
+    "SK-012": {
+      "id": "SK-012",
+      "canonical_name": "Databases",
+      "name_he": "מסדי נתונים",
+      "aliases": [
+        "DB",
+        "RDBMS",
+        "NoSQL"
+      ],
+      "type": "ידע",
+      "category": "Data/Backend",
+      "minimum_evidence": "סכמה, שאילתות וטרנזקציות",
+      "prerequisites": "Programming Basics",
+      "related_roles": [
+        "Backend",
+        "Data"
+      ]
+    },
+    "SK-013": {
+      "id": "SK-013",
+      "canonical_name": "SQL",
+      "name_he": "SQL",
+      "aliases": [
+        "Structured Query Language",
+        "T-SQL"
+      ],
+      "type": "שפה/כלי",
+      "category": "Data",
+      "minimum_evidence": "שאילתות מורכבות על dataset",
+      "prerequisites": "Databases basics",
+      "related_roles": [
+        "Data Analyst",
+        "Backend",
+        "BI"
+      ]
+    },
+    "SK-014": {
+      "id": "SK-014",
+      "canonical_name": "Version Control",
+      "name_he": "בקרת גרסאות",
+      "aliases": [
+        "Git",
+        "source control",
+        "SCM"
+      ],
+      "type": "כלי/פרקטיקה",
+      "category": "רוחבי",
+      "minimum_evidence": "היסטוריית commits ו-branches",
+      "prerequisites": "ללא",
+      "related_roles": [
+        "כל תפקיד טכני"
+      ]
+    },
+    "SK-015": {
+      "id": "SK-015",
+      "canonical_name": "Collaboration Workflow",
+      "name_he": "שיתוף פעולה בפיתוח",
+      "aliases": [
+        "pull request",
+        "code review",
+        "issues"
+      ],
+      "type": "פרקטיקה",
+      "category": "רוחבי",
+      "minimum_evidence": "PRs עם review ו-CI",
+      "prerequisites": "Version Control",
+      "related_roles": [
+        "Developer",
+        "QA",
+        "DevOps"
+      ]
+    },
+    "SK-016": {
+      "id": "SK-016",
+      "canonical_name": "Software Testing",
+      "name_he": "בדיקות תוכנה",
+      "aliases": [
+        "QA",
+        "test design",
+        "verification"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "QA",
+      "minimum_evidence": "test plan + cases + defects",
+      "prerequisites": "SDLC basics",
+      "related_roles": [
+        "QA",
+        "Developer"
+      ]
+    },
+    "SK-017": {
+      "id": "SK-017",
+      "canonical_name": "Test Automation",
+      "name_he": "אוטומציית בדיקות",
+      "aliases": [
+        "Selenium",
+        "Playwright",
+        "automated testing"
+      ],
+      "type": "פרקטיקה",
+      "category": "QA",
+      "minimum_evidence": "suite יציב ב-CI",
+      "prerequisites": "Testing; Programming",
+      "related_roles": [
+        "QA Automation",
+        "SDET"
+      ]
+    },
+    "SK-018": {
+      "id": "SK-018",
+      "canonical_name": "CI/CD",
+      "name_he": "אינטגרציה ומסירה רציפה",
+      "aliases": [
+        "pipeline",
+        "Jenkins",
+        "GitHub Actions",
+        "GitLab CI"
+      ],
+      "type": "פרקטיקה",
+      "category": "DevOps",
+      "minimum_evidence": "pipeline עם quality gates ו-deploy",
+      "prerequisites": "Git; Testing",
+      "related_roles": [
+        "DevOps",
+        "Developer",
+        "QA"
+      ]
+    },
+    "SK-019": {
+      "id": "SK-019",
+      "canonical_name": "Linux Administration",
+      "name_he": "ניהול Linux",
+      "aliases": [
+        "Linux",
+        "Unix administration",
+        "RHEL"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "תשתיות",
+      "minimum_evidence": "שרת מתועד + troubleshooting",
+      "prerequisites": "CLI basics",
+      "related_roles": [
+        "System",
+        "DevOps",
+        "Cloud",
+        "Cyber"
+      ]
+    },
+    "SK-020": {
+      "id": "SK-020",
+      "canonical_name": "Shell Scripting",
+      "name_he": "סקריפטים ב-Shell",
+      "aliases": [
+        "Bash",
+        "shell automation"
+      ],
+      "type": "שפה/פרקטיקה",
+      "category": "תשתיות",
+      "minimum_evidence": "סקריפט idempotent עם logs",
+      "prerequisites": "Linux basics",
+      "related_roles": [
+        "System",
+        "DevOps"
+      ]
+    },
+    "SK-021": {
+      "id": "SK-021",
+      "canonical_name": "Networking Fundamentals",
+      "name_he": "יסודות רשתות",
+      "aliases": [
+        "TCP/IP",
+        "OSI",
+        "subnetting"
+      ],
+      "type": "ידע",
+      "category": "רשתות",
+      "minimum_evidence": "lab עם packet capture ותקלות",
+      "prerequisites": "ללא",
+      "related_roles": [
+        "Network",
+        "Cloud",
+        "Cyber",
+        "IT"
+      ]
+    },
+    "SK-022": {
+      "id": "SK-022",
+      "canonical_name": "Routing and Switching",
+      "name_he": "ניתוב ומיתוג",
+      "aliases": [
+        "VLAN",
+        "STP",
+        "OSPF",
+        "switching"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "רשתות",
+      "minimum_evidence": "Topology עובדת ומתועדת",
+      "prerequisites": "Networking Fundamentals",
+      "related_roles": [
+        "Network Engineer",
+        "NOC"
+      ]
+    },
+    "SK-023": {
+      "id": "SK-023",
+      "canonical_name": "Network Security",
+      "name_he": "אבטחת רשת",
+      "aliases": [
+        "ACL",
+        "firewall",
+        "segmentation",
+        "VPN"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "רשתות/סייבר",
+      "minimum_evidence": "segmentation + policy validation",
+      "prerequisites": "Networking Fundamentals",
+      "related_roles": [
+        "Network",
+        "Cyber",
+        "Cloud"
+      ]
+    },
+    "SK-024": {
+      "id": "SK-024",
+      "canonical_name": "Cloud Fundamentals",
+      "name_he": "יסודות ענן",
+      "aliases": [
+        "cloud concepts",
+        "shared responsibility"
+      ],
+      "type": "ידע",
+      "category": "ענן",
+      "minimum_evidence": "סביבת cloud בסיסית",
+      "prerequisites": "IT/Networking basics",
+      "related_roles": [
+        "Cloud Support",
+        "IT"
+      ]
+    },
+    "SK-025": {
+      "id": "SK-025",
+      "canonical_name": "Cloud Administration",
+      "name_he": "ניהול ענן",
+      "aliases": [
+        "cloud operations",
+        "Azure admin",
+        "GCP ops"
+      ],
+      "type": "פרקטיקה",
+      "category": "ענן",
+      "minimum_evidence": "סביבה עם IAM/network/monitoring",
+      "prerequisites": "Cloud; Linux; Networking",
+      "related_roles": [
+        "Cloud Engineer",
+        "Administrator"
+      ]
+    },
+    "SK-026": {
+      "id": "SK-026",
+      "canonical_name": "Cloud Architecture",
+      "name_he": "ארכיטקטורת ענן",
+      "aliases": [
+        "solution architecture",
+        "HA",
+        "resilience"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "ענן",
+      "minimum_evidence": "design + IaC + cost/security review",
+      "prerequisites": "Cloud Administration",
+      "related_roles": [
+        "Cloud Architect",
+        "Cloud Engineer"
+      ]
+    },
+    "SK-027": {
+      "id": "SK-027",
+      "canonical_name": "AWS",
+      "name_he": "Amazon Web Services",
+      "aliases": [
+        "Amazon Web Services"
+      ],
+      "type": "פלטפורמה",
+      "category": "ענן",
+      "minimum_evidence": "פרויקט AWS בפריסה",
+      "prerequisites": "Cloud Fundamentals",
+      "related_roles": [
+        "Cloud",
+        "DevOps"
+      ]
+    },
+    "SK-028": {
+      "id": "SK-028",
+      "canonical_name": "Azure",
+      "name_he": "Microsoft Azure",
+      "aliases": [
+        "MS Azure"
+      ],
+      "type": "פלטפורמה",
+      "category": "ענן",
+      "minimum_evidence": "פרויקט Azure בפריסה",
+      "prerequisites": "Cloud Fundamentals",
+      "related_roles": [
+        "Cloud",
+        "IT"
+      ]
+    },
+    "SK-029": {
+      "id": "SK-029",
+      "canonical_name": "Google Cloud",
+      "name_he": "Google Cloud Platform",
+      "aliases": [
+        "GCP"
+      ],
+      "type": "פלטפורמה",
+      "category": "ענן",
+      "minimum_evidence": "פרויקט GCP בפריסה",
+      "prerequisites": "Cloud Fundamentals",
+      "related_roles": [
+        "Cloud",
+        "Data"
+      ]
+    },
+    "SK-030": {
+      "id": "SK-030",
+      "canonical_name": "Identity and Access Management",
+      "name_he": "זהויות והרשאות",
+      "aliases": [
+        "IAM",
+        "RBAC",
+        "least privilege",
+        "Entra ID"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "ענן/סייבר",
+      "minimum_evidence": "policy set + access tests",
+      "prerequisites": "Security/Cloud basics",
+      "related_roles": [
+        "Cloud",
+        "Security",
+        "IT"
+      ]
+    },
+    "SK-031": {
+      "id": "SK-031",
+      "canonical_name": "Infrastructure as Code",
+      "name_he": "תשתית כקוד",
+      "aliases": [
+        "IaC",
+        "declarative infrastructure"
+      ],
+      "type": "פרקטיקה",
+      "category": "DevOps",
+      "minimum_evidence": "repo עם plan/apply/state workflow",
+      "prerequisites": "Cloud Administration; Git",
+      "related_roles": [
+        "DevOps",
+        "Platform",
+        "Cloud"
+      ]
+    },
+    "SK-032": {
+      "id": "SK-032",
+      "canonical_name": "Terraform",
+      "name_he": "Terraform",
+      "aliases": [
+        "HCL",
+        "HashiCorp Terraform"
+      ],
+      "type": "כלי",
+      "category": "DevOps",
+      "minimum_evidence": "modules + remote state + CI plan",
+      "prerequisites": "IaC; Cloud",
+      "related_roles": [
+        "DevOps",
+        "Platform"
+      ]
+    },
+    "SK-033": {
+      "id": "SK-033",
+      "canonical_name": "Containers",
+      "name_he": "קונטיינרים",
+      "aliases": [
+        "containerization",
+        "OCI",
+        "Docker"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "DevOps",
+      "minimum_evidence": "image קטן ומאובטח",
+      "prerequisites": "Linux; App basics",
+      "related_roles": [
+        "Developer",
+        "DevOps",
+        "Cloud"
+      ]
+    },
+    "SK-034": {
+      "id": "SK-034",
+      "canonical_name": "Docker",
+      "name_he": "Docker",
+      "aliases": [
+        "Dockerfile",
+        "Compose",
+        "Docker Engine"
+      ],
+      "type": "כלי",
+      "category": "DevOps",
+      "minimum_evidence": "Compose stack + healthchecks",
+      "prerequisites": "Containers",
+      "related_roles": [
+        "Developer",
+        "DevOps",
+        "QA"
+      ]
+    },
+    "SK-035": {
+      "id": "SK-035",
+      "canonical_name": "Kubernetes",
+      "name_he": "Kubernetes",
+      "aliases": [
+        "K8s",
+        "orchestration"
+      ],
+      "type": "פלטפורמה",
+      "category": "DevOps",
+      "minimum_evidence": "cluster workload + troubleshooting",
+      "prerequisites": "Containers; Linux; Networking",
+      "related_roles": [
+        "DevOps",
+        "SRE",
+        "Platform"
+      ]
+    },
+    "SK-036": {
+      "id": "SK-036",
+      "canonical_name": "Kubernetes Administration",
+      "name_he": "ניהול Kubernetes",
+      "aliases": [
+        "cluster admin",
+        "kubeadm",
+        "CNI",
+        "CSI"
+      ],
+      "type": "פרקטיקה",
+      "category": "DevOps",
+      "minimum_evidence": "cluster lifecycle + incident lab",
+      "prerequisites": "Kubernetes; Linux; Networking",
+      "related_roles": [
+        "K8s Admin",
+        "Platform",
+        "SRE"
+      ]
+    },
+    "SK-037": {
+      "id": "SK-037",
+      "canonical_name": "Kubernetes Application Development",
+      "name_he": "פיתוח יישומים ל-Kubernetes",
+      "aliases": [
+        "workloads",
+        "probes",
+        "configmaps",
+        "secrets"
+      ],
+      "type": "פרקטיקה",
+      "category": "DevOps/פיתוח",
+      "minimum_evidence": "deployment + rollout + observability",
+      "prerequisites": "Kubernetes; Containers",
+      "related_roles": [
+        "Cloud-native Developer",
+        "DevOps"
+      ]
+    },
+    "SK-038": {
+      "id": "SK-038",
+      "canonical_name": "Observability",
+      "name_he": "תצפיות מערכת",
+      "aliases": [
+        "monitoring",
+        "logging",
+        "tracing",
+        "telemetry"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "SRE",
+      "minimum_evidence": "service telemetry + dashboards + alerts",
+      "prerequisites": "Systems basics",
+      "related_roles": [
+        "SRE",
+        "DevOps",
+        "Platform"
+      ]
+    },
+    "SK-039": {
+      "id": "SK-039",
+      "canonical_name": "Reliability Engineering",
+      "name_he": "הנדסת אמינות",
+      "aliases": [
+        "SRE",
+        "SLI",
+        "SLO",
+        "error budget"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "SRE",
+      "minimum_evidence": "SLO doc + incident exercise",
+      "prerequisites": "Observability; Systems",
+      "related_roles": [
+        "SRE",
+        "Production Engineer"
+      ]
+    },
+    "SK-040": {
+      "id": "SK-040",
+      "canonical_name": "Incident Response",
+      "name_he": "תגובה לאירועים",
+      "aliases": [
+        "IR",
+        "incident handling",
+        "postmortem"
+      ],
+      "type": "פרקטיקה",
+      "category": "SRE/סייבר",
+      "minimum_evidence": "tabletop + timeline + postmortem",
+      "prerequisites": "Logs/Monitoring",
+      "related_roles": [
+        "SOC",
+        "SRE",
+        "Security"
+      ]
+    },
+    "SK-041": {
+      "id": "SK-041",
+      "canonical_name": "Data Analysis",
+      "name_he": "ניתוח נתונים",
+      "aliases": [
+        "analytics",
+        "exploratory analysis"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "דאטה",
+      "minimum_evidence": "analysis notebook + conclusions",
+      "prerequisites": "SQL/Statistics basics",
+      "related_roles": [
+        "Data Analyst",
+        "Product Analyst"
+      ]
+    },
+    "SK-042": {
+      "id": "SK-042",
+      "canonical_name": "Data Visualization",
+      "name_he": "ויזואליזציית נתונים",
+      "aliases": [
+        "dashboard",
+        "data viz",
+        "BI"
+      ],
+      "type": "פרקטיקה",
+      "category": "דאטה",
+      "minimum_evidence": "dashboard עם narrative ו-KPIs",
+      "prerequisites": "Data Analysis",
+      "related_roles": [
+        "BI",
+        "Data Analyst"
+      ]
+    },
+    "SK-043": {
+      "id": "SK-043",
+      "canonical_name": "Power BI",
+      "name_he": "Power BI",
+      "aliases": [
+        "DAX",
+        "Power Query",
+        "PL-300"
+      ],
+      "type": "כלי",
+      "category": "BI",
+      "minimum_evidence": "semantic model + DAX dashboard",
+      "prerequisites": "Data Analysis; SQL",
+      "related_roles": [
+        "BI Analyst",
+        "Power BI Developer"
+      ]
+    },
+    "SK-044": {
+      "id": "SK-044",
+      "canonical_name": "Statistics",
+      "name_he": "סטטיסטיקה",
+      "aliases": [
+        "probability",
+        "inference",
+        "hypothesis testing"
+      ],
+      "type": "ידע",
+      "category": "דאטה/ML",
+      "minimum_evidence": "analysis with assumptions and uncertainty",
+      "prerequisites": "Math basics",
+      "related_roles": [
+        "Data Scientist",
+        "Analyst"
+      ]
+    },
+    "SK-045": {
+      "id": "SK-045",
+      "canonical_name": "Machine Learning",
+      "name_he": "למידת מכונה",
+      "aliases": [
+        "ML",
+        "supervised",
+        "unsupervised"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "AI/ML",
+      "minimum_evidence": "validated model + error analysis",
+      "prerequisites": "Python; Statistics; Linear Algebra",
+      "related_roles": [
+        "Data Scientist",
+        "ML Engineer"
+      ]
+    },
+    "SK-046": {
+      "id": "SK-046",
+      "canonical_name": "Data Engineering",
+      "name_he": "הנדסת נתונים",
+      "aliases": [
+        "ETL",
+        "ELT",
+        "pipelines",
+        "data platform"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "דאטה",
+      "minimum_evidence": "scheduled tested pipeline",
+      "prerequisites": "Python; SQL; Databases",
+      "related_roles": [
+        "Data Engineer"
+      ]
+    },
+    "SK-047": {
+      "id": "SK-047",
+      "canonical_name": "Apache Spark",
+      "name_he": "Apache Spark",
+      "aliases": [
+        "Spark",
+        "PySpark"
+      ],
+      "type": "כלי",
+      "category": "דאטה",
+      "minimum_evidence": "distributed transform job",
+      "prerequisites": "Python/SQL; Data Engineering",
+      "related_roles": [
+        "Data Engineer"
+      ]
+    },
+    "SK-048": {
+      "id": "SK-048",
+      "canonical_name": "Data Orchestration",
+      "name_he": "תזמור תהליכי נתונים",
+      "aliases": [
+        "Airflow",
+        "Dagster",
+        "workflow orchestration"
+      ],
+      "type": "כלי/פרקטיקה",
+      "category": "דאטה",
+      "minimum_evidence": "DAG עם retries/alerts/tests",
+      "prerequisites": "Data Engineering",
+      "related_roles": [
+        "Data Engineer",
+        "Analytics Engineer"
+      ]
+    },
+    "SK-049": {
+      "id": "SK-049",
+      "canonical_name": "LLM Applications",
+      "name_he": "יישומי מודלי שפה",
+      "aliases": [
+        "LLM",
+        "GenAI",
+        "generative AI"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "AI",
+      "minimum_evidence": "app with evaluation dataset",
+      "prerequisites": "Python; APIs",
+      "related_roles": [
+        "AI App Developer"
+      ]
+    },
+    "SK-050": {
+      "id": "SK-050",
+      "canonical_name": "Retrieval-Augmented Generation",
+      "name_he": "RAG",
+      "aliases": [
+        "retrieval augmented generation",
+        "vector search"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "AI",
+      "minimum_evidence": "RAG עם citations/evaluation",
+      "prerequisites": "LLM; Embeddings",
+      "related_roles": [
+        "GenAI Engineer"
+      ]
+    },
+    "SK-051": {
+      "id": "SK-051",
+      "canonical_name": "Cybersecurity Fundamentals",
+      "name_he": "יסודות סייבר",
+      "aliases": [
+        "information security",
+        "CIA",
+        "governance"
+      ],
+      "type": "ידע",
+      "category": "סייבר",
+      "minimum_evidence": "threat model + controls mapping",
+      "prerequisites": "IT basics",
+      "related_roles": [
+        "Security Analyst",
+        "GRC"
+      ]
+    },
+    "SK-052": {
+      "id": "SK-052",
+      "canonical_name": "Security Operations",
+      "name_he": "תפעול אבטחה",
+      "aliases": [
+        "SOC",
+        "monitoring",
+        "detection",
+        "triage"
+      ],
+      "type": "פרקטיקה",
+      "category": "סייבר",
+      "minimum_evidence": "detect + triage + incident report",
+      "prerequisites": "Security; Networking; OS",
+      "related_roles": [
+        "SOC Analyst"
+      ]
+    },
+    "SK-053": {
+      "id": "SK-053",
+      "canonical_name": "SIEM",
+      "name_he": "מערכת SIEM",
+      "aliases": [
+        "Splunk",
+        "Sentinel",
+        "QRadar",
+        "log analytics"
+      ],
+      "type": "כלי/פרקטיקה",
+      "category": "סייבר",
+      "minimum_evidence": "queries + detections + alert triage",
+      "prerequisites": "Logs; Security Operations",
+      "related_roles": [
+        "SOC Analyst"
+      ]
+    },
+    "SK-054": {
+      "id": "SK-054",
+      "canonical_name": "Penetration Testing",
+      "name_he": "בדיקות חדירה",
+      "aliases": [
+        "pentest",
+        "ethical hacking",
+        "offensive security"
+      ],
+      "type": "פרקטיקה",
+      "category": "סייבר",
+      "minimum_evidence": "lab assessment + report",
+      "prerequisites": "Networking; Linux/Windows; Scripting",
+      "related_roles": [
+        "Penetration Tester"
+      ]
+    },
+    "SK-055": {
+      "id": "SK-055",
+      "canonical_name": "Vulnerability Assessment",
+      "name_he": "הערכת פגיעויות",
+      "aliases": [
+        "vulnerability scanning",
+        "Nessus"
+      ],
+      "type": "פרקטיקה",
+      "category": "סייבר",
+      "minimum_evidence": "scan validation + remediation report",
+      "prerequisites": "Networking; Security",
+      "related_roles": [
+        "Vulnerability Analyst",
+        "Pentester"
+      ]
+    },
+    "SK-056": {
+      "id": "SK-056",
+      "canonical_name": "Active Directory Security",
+      "name_he": "אבטחת Active Directory",
+      "aliases": [
+        "AD attacks",
+        "Kerberos",
+        "lateral movement"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "סייבר",
+      "minimum_evidence": "legal lab attack/defense exercise",
+      "prerequisites": "Windows; Networking; Security",
+      "related_roles": [
+        "Pentester",
+        "SOC",
+        "IAM"
+      ]
+    },
+    "SK-057": {
+      "id": "SK-057",
+      "canonical_name": "Android Development",
+      "name_he": "פיתוח Android",
+      "aliases": [
+        "Android",
+        "Kotlin",
+        "Jetpack Compose"
+      ],
+      "type": "פלטפורמה",
+      "category": "מובייל",
+      "minimum_evidence": "אפליקציה שפורסת נתונים ובדיקות",
+      "prerequisites": "Programming",
+      "related_roles": [
+        "Android Developer"
+      ]
+    },
+    "SK-058": {
+      "id": "SK-058",
+      "canonical_name": "iOS Development",
+      "name_he": "פיתוח iOS",
+      "aliases": [
+        "iOS",
+        "Swift",
+        "SwiftUI"
+      ],
+      "type": "פלטפורמה",
+      "category": "מובייל",
+      "minimum_evidence": "אפליקציית SwiftUI עם tests",
+      "prerequisites": "Programming",
+      "related_roles": [
+        "iOS Developer"
+      ]
+    },
+    "SK-059": {
+      "id": "SK-059",
+      "canonical_name": "Product Management",
+      "name_he": "ניהול מוצר",
+      "aliases": [
+        "product discovery",
+        "roadmap",
+        "prioritization"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "מוצר",
+      "minimum_evidence": "case study + PRD + metrics",
+      "prerequisites": "Domain knowledge",
+      "related_roles": [
+        "Product Manager",
+        "APM"
+      ]
+    },
+    "SK-060": {
+      "id": "SK-060",
+      "canonical_name": "Scrum",
+      "name_he": "Scrum",
+      "aliases": [
+        "sprint",
+        "backlog",
+        "product owner",
+        "scrum master"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "מוצר",
+      "minimum_evidence": "sprint simulation",
+      "prerequisites": "ללא",
+      "related_roles": [
+        "Product",
+        "Scrum Master",
+        "Delivery"
+      ]
+    },
+    "SK-061": {
+      "id": "SK-061",
+      "canonical_name": "User Research",
+      "name_he": "מחקר משתמשים",
+      "aliases": [
+        "interviews",
+        "usability research"
+      ],
+      "type": "פרקטיקה",
+      "category": "UX",
+      "minimum_evidence": "research plan + findings",
+      "prerequisites": "ללא",
+      "related_roles": [
+        "UX",
+        "Product"
+      ]
+    },
+    "SK-062": {
+      "id": "SK-062",
+      "canonical_name": "Interaction Design",
+      "name_he": "עיצוב אינטראקציה",
+      "aliases": [
+        "UX",
+        "wireframes",
+        "prototyping"
+      ],
+      "type": "פרקטיקה",
+      "category": "UX",
+      "minimum_evidence": "prototype + usability iterations",
+      "prerequisites": "User Research",
+      "related_roles": [
+        "UX/UI",
+        "Product Designer"
+      ]
+    },
+    "SK-063": {
+      "id": "SK-063",
+      "canonical_name": "Figma",
+      "name_he": "Figma",
+      "aliases": [
+        "design tool",
+        "prototyping"
+      ],
+      "type": "כלי",
+      "category": "UX",
+      "minimum_evidence": "component library + prototype",
+      "prerequisites": "Interaction Design",
+      "related_roles": [
+        "UX/UI"
+      ]
+    },
+    "SK-064": {
+      "id": "SK-064",
+      "canonical_name": "Accessibility",
+      "name_he": "נגישות דיגיטלית",
+      "aliases": [
+        "a11y",
+        "WCAG",
+        "inclusive design"
+      ],
+      "type": "ידע/פרקטיקה",
+      "category": "Frontend/UX",
+      "minimum_evidence": "audit + accessible implementation",
+      "prerequisites": "HTML/UX basics",
+      "related_roles": [
+        "Frontend",
+        "UX",
+        "QA"
+      ]
+    }
+  },
+  "roles": {
+    "Frontend Developer": {
+      "role_name": "Frontend Developer",
+      "main_skills": [
+        "HTML",
+        "CSS",
+        "JavaScript/TypeScript",
+        "Frontend Frameworks",
+        "Git",
+        "Testing"
+      ],
+      "common_tools": [
+        "Browser DevTools",
+        "React/Vue/Angular",
+        "Git",
+        "test tools"
+      ],
+      "preferred_paths": [
+        "Frontend Web",
+        "Git/GitHub"
+      ],
+      "minimum_evidence": "אפליקציה רספונסיבית ונגישה עם API ובדיקות",
+      "education_note": "תואר מועיל אך לרוב תיק עבודות יכול להיות ראיה מרכזית"
+    },
+    "Backend Developer": {
+      "role_name": "Backend Developer",
+      "main_skills": [
+        "Programming",
+        "API Design",
+        "SQL",
+        "Databases",
+        "Testing",
+        "Git"
+      ],
+      "common_tools": [
+        "Node/Java/.NET/Python",
+        "SQL DB",
+        "Docker"
+      ],
+      "preferred_paths": [
+        "Backend APIs",
+        "CS/Software Engineering",
+        "Docker"
+      ],
+      "minimum_evidence": "API מאובטח עם DB, tests, CI ותיעוד",
+      "education_note": "תואר נותן בסיס חזק; לא מחליף בניית מערכת"
+    },
+    "Full Stack Developer": {
+      "role_name": "Full Stack Developer",
+      "main_skills": [
+        "Frontend",
+        "Backend",
+        "APIs",
+        "SQL",
+        "Git",
+        "Testing",
+        "Deployment"
+      ],
+      "common_tools": [
+        "TypeScript",
+        "React",
+        "Node",
+        "SQL",
+        "Docker",
+        "Cloud"
+      ],
+      "preferred_paths": [
+        "Full Stack",
+        "Git",
+        "Docker",
+        "CI/CD"
+      ],
+      "minimum_evidence": "מוצר מלא בפריסה ציבורית",
+      "education_note": "רוחב ללא עומק הוא סיכון"
+    },
+    "Android Developer": {
+      "role_name": "Android Developer",
+      "main_skills": [
+        "Kotlin",
+        "Android",
+        "UI",
+        "Architecture",
+        "Networking",
+        "Testing"
+      ],
+      "common_tools": [
+        "Android Studio",
+        "Jetpack Compose",
+        "Git"
+      ],
+      "preferred_paths": [
+        "Android Development"
+      ],
+      "minimum_evidence": "אפליקציה עם API, cache, tests ו-accessibility",
+      "education_note": "Portfolio חשוב"
+    },
+    "iOS Developer": {
+      "role_name": "iOS Developer",
+      "main_skills": [
+        "Swift",
+        "iOS",
+        "UI",
+        "Networking",
+        "Persistence",
+        "Testing"
+      ],
+      "common_tools": [
+        "Xcode",
+        "SwiftUI",
+        "XCTest",
+        "Git"
+      ],
+      "preferred_paths": [
+        "iOS Development"
+      ],
+      "minimum_evidence": "אפליקציית SwiftUI מלאה",
+      "education_note": "Portfolio חשוב"
+    },
+    "QA Tester": {
+      "role_name": "QA Tester",
+      "main_skills": [
+        "Testing Fundamentals",
+        "Test Design",
+        "Defect Management",
+        "SDLC"
+      ],
+      "common_tools": [
+        "Jira",
+        "test management",
+        "API client",
+        "SQL basics"
+      ],
+      "preferred_paths": [
+        "Manual QA / ISTQB CTFL"
+      ],
+      "minimum_evidence": "Test plan + defects + exploratory testing",
+      "education_note": "הסמכה לבדה אינה ראיה מעשית"
+    },
+    "QA Automation Engineer": {
+      "role_name": "QA Automation Engineer",
+      "main_skills": [
+        "Testing",
+        "Programming",
+        "UI/API Automation",
+        "Git",
+        "CI"
+      ],
+      "common_tools": [
+        "Playwright/Selenium",
+        "REST",
+        "CI platform"
+      ],
+      "preferred_paths": [
+        "QA Automation",
+        "Git",
+        "CI/CD"
+      ],
+      "minimum_evidence": "Suite UI+API יציב ב-CI",
+      "education_note": "קוד ויציבות בדיקות חשובים מהתעודה"
+    },
+    "Data Analyst": {
+      "role_name": "Data Analyst",
+      "main_skills": [
+        "SQL",
+        "Data Analysis",
+        "Statistics Basics",
+        "Visualization",
+        "Business Context"
+      ],
+      "common_tools": [
+        "SQL",
+        "Excel",
+        "Python/pandas",
+        "Power BI/Tableau"
+      ],
+      "preferred_paths": [
+        "Data Analyst",
+        "SQL",
+        "Power BI"
+      ],
+      "minimum_evidence": "מחקר נתונים ודשבורד עם החלטה עסקית",
+      "education_note": "תואר רלוונטי מועיל; תיק עבודות נדרש למתחילים"
+    },
+    "BI Analyst / Developer": {
+      "role_name": "BI Analyst / Developer",
+      "main_skills": [
+        "SQL",
+        "Data Modeling",
+        "BI",
+        "DAX/Power Query לפי stack"
+      ],
+      "common_tools": [
+        "Power BI",
+        "SQL",
+        "semantic model"
+      ],
+      "preferred_paths": [
+        "Power BI Data Analyst",
+        "SQL"
+      ],
+      "minimum_evidence": "מודל נתונים ודשבורד מאובטח",
+      "education_note": "הסמכה ממוקדת כלי"
+    },
+    "Data Engineer": {
+      "role_name": "Data Engineer",
+      "main_skills": [
+        "Python",
+        "SQL",
+        "Data Modeling",
+        "ETL",
+        "Orchestration",
+        "Data Quality",
+        "Cloud"
+      ],
+      "common_tools": [
+        "Spark",
+        "Airflow/dbt",
+        "Databricks",
+        "Cloud storage"
+      ],
+      "preferred_paths": [
+        "Data Engineering",
+        "Databricks",
+        "GCP Data Engineer"
+      ],
+      "minimum_evidence": "Pipeline מתוזמן, בדוק ומנוטר",
+      "education_note": "הסמכה מתקדמת דורשת readiness"
+    },
+    "Data Scientist": {
+      "role_name": "Data Scientist",
+      "main_skills": [
+        "Statistics",
+        "Probability",
+        "ML",
+        "Python",
+        "SQL",
+        "Experimentation"
+      ],
+      "common_tools": [
+        "pandas",
+        "scikit-learn",
+        "notebooks",
+        "ML platform"
+      ],
+      "preferred_paths": [
+        "Data Science degree",
+        "ML Foundations"
+      ],
+      "minimum_evidence": "מחקר משוחזר עם validation ו-error analysis",
+      "education_note": "עומק מתמטי משמעותי בחלק מהמשרות"
+    },
+    "Cloud Support Engineer": {
+      "role_name": "Cloud Support Engineer",
+      "main_skills": [
+        "Cloud Fundamentals",
+        "Linux",
+        "Networking",
+        "IAM",
+        "Troubleshooting"
+      ],
+      "common_tools": [
+        "AWS/Azure/GCP console+CLI",
+        "ticketing",
+        "monitoring"
+      ],
+      "preferred_paths": [
+        "Cloud Fundamentals",
+        "vendor fundamentals",
+        "Linux",
+        "Networking"
+      ],
+      "minimum_evidence": "Lab עם IAM/network/VM/storage ו-runbook",
+      "education_note": "מסלול כניסה טוב מ-IT/NOC"
+    },
+    "Cloud Engineer": {
+      "role_name": "Cloud Engineer",
+      "main_skills": [
+        "Cloud Administration",
+        "Linux",
+        "Networking",
+        "IAM",
+        "IaC",
+        "Monitoring"
+      ],
+      "common_tools": [
+        "AWS/Azure/GCP",
+        "Terraform",
+        "Git",
+        "monitoring"
+      ],
+      "preferred_paths": [
+        "AWS SAA / AZ-104 / GCP ACE",
+        "Terraform"
+      ],
+      "minimum_evidence": "סביבה מלאה עם IaC וניטור",
+      "education_note": "Certification ללא hands-on אינה מספקת"
+    },
+    "DevOps Engineer": {
+      "role_name": "DevOps Engineer",
+      "main_skills": [
+        "Linux",
+        "Git",
+        "CI/CD",
+        "Containers",
+        "Cloud",
+        "IaC",
+        "Observability",
+        "Scripting"
+      ],
+      "common_tools": [
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "CI platform",
+        "cloud"
+      ],
+      "preferred_paths": [
+        "DevOps Foundations",
+        "Docker",
+        "Terraform",
+        "Kubernetes"
+      ],
+      "minimum_evidence": "Pipeline מקצה לקצה עם deploy ו-observe",
+      "education_note": "לרוב אינו תפקיד ראשון ללא בסיס Systems/Dev"
+    },
+    "Kubernetes / Platform Engineer": {
+      "role_name": "Kubernetes / Platform Engineer",
+      "main_skills": [
+        "Kubernetes Admin",
+        "Linux",
+        "Networking",
+        "Containers",
+        "IaC",
+        "Observability"
+      ],
+      "common_tools": [
+        "kubectl",
+        "Helm",
+        "Kustomize",
+        "Terraform",
+        "Prometheus"
+      ],
+      "preferred_paths": [
+        "CKA",
+        "Terraform",
+        "SRE"
+      ],
+      "minimum_evidence": "cluster עם policies, storage, upgrades ו-incidents",
+      "education_note": "CKA מעשי אך עדיין אינו ניסיון production"
+    },
+    "SRE": {
+      "role_name": "SRE",
+      "main_skills": [
+        "Reliability",
+        "Observability",
+        "Linux",
+        "Networking",
+        "Distributed Systems",
+        "Automation",
+        "Incident Response"
+      ],
+      "common_tools": [
+        "OpenTelemetry",
+        "Prometheus/Grafana",
+        "cloud",
+        "scripting"
+      ],
+      "preferred_paths": [
+        "SRE/Observability",
+        "Linux",
+        "Cloud",
+        "Kubernetes"
+      ],
+      "minimum_evidence": "שירות עם SLO, alerts, load ו-postmortem",
+      "education_note": "דורש בסיס production חזק"
+    },
+    "NOC / Network Technician": {
+      "role_name": "NOC / Network Technician",
+      "main_skills": [
+        "Networking",
+        "IP",
+        "Switching/Routing",
+        "Troubleshooting",
+        "Monitoring"
+      ],
+      "common_tools": [
+        "Cisco IOS",
+        "Packet Tracer",
+        "Wireshark",
+        "NMS"
+      ],
+      "preferred_paths": [
+        "Networking Foundations",
+        "CCNA"
+      ],
+      "minimum_evidence": "Topology + troubleshooting scenarios",
+      "education_note": "מסלול כניסה ל-Network Engineer"
+    },
+    "SOC Analyst Tier 1": {
+      "role_name": "SOC Analyst Tier 1",
+      "main_skills": [
+        "Security Fundamentals",
+        "Networking",
+        "OS",
+        "SIEM",
+        "Log Analysis",
+        "Triage",
+        "IR"
+      ],
+      "common_tools": [
+        "SIEM",
+        "EDR concepts",
+        "Wireshark",
+        "Sysmon",
+        "ticketing"
+      ],
+      "preferred_paths": [
+        "ISC2 CC",
+        "SOC Foundations",
+        "Networking/Linux"
+      ],
+      "minimum_evidence": "Home SOC עם detections ו-incident report",
+      "education_note": "לא לדלג על Networking ו-OS"
+    },
+    "Penetration Tester": {
+      "role_name": "Penetration Tester",
+      "main_skills": [
+        "Networking",
+        "Linux/Windows",
+        "Scripting",
+        "Web Security",
+        "Enumeration",
+        "Exploitation",
+        "Reporting"
+      ],
+      "common_tools": [
+        "Kali",
+        "Nmap",
+        "Burp",
+        "Metasploit",
+        "AD lab"
+      ],
+      "preferred_paths": [
+        "PEN-200/OSCP+ אחרי prerequisites"
+      ],
+      "minimum_evidence": "דוח מלא ממעבדה חוקית",
+      "education_note": "מסלול מתקדם, לא המלצת ברירת מחדל"
+    },
+    "Product Manager / APM": {
+      "role_name": "Product Manager / APM",
+      "main_skills": [
+        "Discovery",
+        "Prioritization",
+        "Metrics",
+        "Experimentation",
+        "Stakeholders",
+        "Agile"
+      ],
+      "common_tools": [
+        "Analytics",
+        "Jira/Linear",
+        "Figma basics"
+      ],
+      "preferred_paths": [
+        "Product Foundations",
+        "Scrum",
+        "Data Analysis"
+      ],
+      "minimum_evidence": "Case study עם PRD, KPI tree וניסוי",
+      "education_note": "ניסיון ownership ו-domain חשובים מאוד"
+    },
+    "UX/UI Designer": {
+      "role_name": "UX/UI Designer",
+      "main_skills": [
+        "User Research",
+        "Interaction Design",
+        "Prototyping",
+        "Usability",
+        "Accessibility",
+        "Visual Design"
+      ],
+      "common_tools": [
+        "Figma",
+        "design systems",
+        "analytics basics"
+      ],
+      "preferred_paths": [
+        "UX/UI Foundations"
+      ],
+      "minimum_evidence": "2–3 case studies עם מחקר ואיטרציות",
+      "education_note": "Portfolio הוא ראיה מרכזית"
+    }
+  }
+}

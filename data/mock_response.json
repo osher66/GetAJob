@@ -1,0 +1,64 @@
+{
+  "match_score": 72,
+  "match_summary": "התאמה בסיסית טובה לתשתיות ומערכות הפעלה, פער מובהק בכלי CI/CD וניטור ענן.",
+  "missing_skills": [
+    {
+      "skill": "Docker & Containerization",
+      "importance": "High"
+    },
+    {
+      "skill": "Prometheus & Grafana",
+      "importance": "Medium"
+    },
+    {
+      "skill": "CI/CD Pipelines (GitHub Actions)",
+      "importance": "High"
+    },
+    {
+      "skill": "AWS Cloud Foundations",
+      "importance": "Low"
+    }
+  ],
+  "cv_bullet_improvements": [
+    {
+      "original": "תחזוקת שרתים ומערכות הפעלה Linux.",
+      "improved": "ניהול ותחזוקת שרתי Ubuntu Server בסביבה וירטואלית, ניטור שירותים וכתיבת סקריפטים ב-Bash לאוטומציית משימות שחסכו 4 שעות עבודה שבועיות.",
+      "reason": "הדגשת עשייה מעשית, סביבה טכנולוגית ברורה, מספרים וערך תפעולי מדויק (Impact-Driven)."
+    },
+    {
+      "original": "בניית אפליקציות ווב ב-Python.",
+      "improved": "פיתוח שירותי RESTful API מבוססי FastAPI ו-Python, כולל ולידציית נתונים עם Pydantic ואינטגרציה למסד נתונים PostgreSQL.",
+      "reason": "שימוש בטרמינולוגיה מקצועית, ציון פריימוורקים מודרניים והדגשת אמינות הנתונים."
+    },
+    {
+      "original": "עבודה עם צוותי פיתוח בשיטת Agile.",
+      "improved": "עבודה בצוות Scrum רב-תחומי, השתתפות פעילה ב-Daily Standups, Sprint Planning וביצוע Code Reviews מקצועיים ב-GitHub.",
+      "reason": "הפיכת הצהרה כללית לפרקטיקות עבודה ספציפיות המעידות על בגרות הנדסית."
+    }
+  ],
+  "portfolio_project": {
+    "project_name": "Automated Linux Log Monitor & Alerting Pipeline",
+    "targeted_skills": [
+      "Docker",
+      "Bash",
+      "Prometheus",
+      "Python",
+      "Grafana"
+    ],
+    "business_context": "ארגונים נדרשים לזהות תקלות ואירועי חריגה בשרתים בזמן אמת ללא השבתת שירות. פרויקט זה מייצר מערך ניטור אוטונומי, קל משקל ומבוסס קונטיינרים, המנתח לוגי מערכת ומתריע על חריגות משאבים.",
+    "architecture_stack": [
+      "Docker & Docker Compose",
+      "Python 3.11+",
+      "Prometheus",
+      "Grafana",
+      "Bash Scripting"
+    ],
+    "implementation_steps": [
+      "הקמת מכולת Docker המריצה שרת איסוף לוגים וסוכן Prometheus מקומי.",
+      "כתיבת סקריפט Python/Bash לעיבוד זרם לוגים (Syslog/Auth) וזיהוי חריגות ואירועי שגיאה.",
+      "הגדרת מדדי Prometheus מותאמים (Custom Metrics) וחיבור Dashboard ב-Grafana.",
+      "תיעוד תהליך ההרצה המלא, ארכיטקטורת המערכת ופקודות Quickstart בקובץ README.md."
+    ],
+    "readme_content": "# Automated Linux Log Monitor & Alerting Pipeline\n\n[![Docker](https://img.shields.io/badge/Docker-Containerized-blue.svg)](https://www.docker.com/)\n[![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-orange.svg)](https://prometheus.io/)\n[![Python](https://img.shields.io/badge/Python-3.11%2B-green.svg)](https://python.org)\n\n## 📌 Business Overview\nA lightweight, containerized log monitoring and telemetry pipeline designed for Linux environments. It ingests system events, parses error spikes using a custom Python daemon, and exposes Prometheus metrics for real-time operational visibility.\n\n---\n\n## 🏗️ Architecture Stack\n- **Container Engine**: Docker & Docker Compose\n- **Telemetry & Scraping**: Prometheus (Custom Exporter via Python)\n- **Dashboards**: Grafana\n- **Log Processing**: Python 3.11 (Regex & In-Memory Pipeline)\n- **Automation**: Bash Scripts\n\n```\n+------------------+      +-------------------+      +------------------+\n|  Linux Syslogs   | ---> | Python Log Daemon | ---> | Prometheus Scrap |\n+------------------+      +-------------------+      +------------------+\n                                                               |\n                                                               v\n                                                     +------------------+\n                                                     | Grafana Monitor  |\n                                                     +------------------+\n```\n\n---\n\n## 📁 Project Structure\n```bash\n.\n├── docker-compose.yml\n├── prometheus/\n│   └── prometheus.yml\n├── src/\n│   ├── monitor.py\n│   └── requirements.txt\n├── scripts/\n│   └── setup_env.sh\n└── README.md\n```\n\n---\n\n## 🚀 Quickstart Guide\n\n### 1. Clone the repository\n```bash\ngit clone https://github.com/your-username/linux-log-monitor.git\ncd linux-log-monitor\n```\n\n### 2. Launch Services\n```bash\ndocker-compose up -d --build\n```\n\n### 3. Verify Health\n- **Prometheus Dashboard**: `http://localhost:9090`\n- **Grafana Metrics**: `http://localhost:3000` (Default: `admin` / `admin`)\n\n---\n\n## 🧪 Verification & Testing\nTo generate synthetic error spikes and observe automated alerts:\n```bash\npython scripts/generate_mock_spikes.py --rate 50\n```\n"
+  }
+}

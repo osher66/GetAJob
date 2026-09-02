@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.DS_Store
+*.log
+docx_dump.txt
+xlsx_dump.txt
+uxui_package_dump.txt
+.streamlit/secrets.toml
+publish_repo.py
+token.tmp
