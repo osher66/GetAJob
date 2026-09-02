@@ -392,7 +392,7 @@ def get_custom_css() -> str:
 
 
 def render_step_bar(current_step: int = 1) -> str:
-    """סרגל שלבים מעוצב למסך הראשי בעיצוב בהיר"""
+    """סרגל שלבים מעוצב למסך הראשי בעיצוב בהיר ללא תקלות Markdown"""
     steps = [
         (1, "טעינת קו\"ח ומשרה"),
         (2, "ניתוח פערים ושכתוב"),
@@ -411,13 +411,18 @@ def render_step_bar(current_step: int = 1) -> str:
             text_color = "#64748b"
             num_bg = "#94a3b8"
         
-        items.append(f"""
-        <div style="flex: 1; min-width: 170px; background: {bg_color}; border: 1.5px solid {border_color}; border-radius: 9999px; padding: 8px 18px; display: flex; align-items: center; gap: 10px; color: {text_color}; font-weight: 700; font-size: 14px; direction: rtl;">
-        <span style="background: {num_bg}; color: #ffffff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;">{num}</span>
-        <span>{title}</span>
-        </div>
-        """)
-    return f"""<div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; direction: rtl;">{"".join(items)}</div>"""
+        item_html = (
+            f'<div style="flex: 1; min-width: 170px; background: {bg_color}; '
+            f'border: 1.5px solid {border_color}; border-radius: 9999px; padding: 8px 18px; '
+            f'display: flex; align-items: center; gap: 10px; color: {text_color}; '
+            f'font-weight: 700; font-size: 14px; direction: rtl;">'
+            f'<span style="background: {num_bg}; color: #ffffff; width: 24px; height: 24px; '
+            f'border-radius: 50%; display: flex; align-items: center; justify-content: center; '
+            f'font-size: 12px; font-weight: 800;">{num}</span>'
+            f'<span>{title}</span></div>'
+        )
+        items.append(item_html)
+    return f'<div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; direction: rtl;">{"".join(items)}</div>'
 
 
 def render_ats_tip() -> str:
@@ -723,6 +728,7 @@ def render_job_search_tracker(milestones: list, progress_pct: int) -> str:
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; margin-top: 14px;">
     """
 
+    milestone_cards = []
     for m in milestones:
         is_done = m.get("completed", False)
         icon = "✔" if is_done else "○"
@@ -732,21 +738,19 @@ def render_job_search_tracker(milestones: list, progress_pct: int) -> str:
         badge_bg = "#ecfdf5" if is_done else "#f1f5f9"
         badge_color = "#16a34a" if is_done else "#64748b"
 
-        html += f"""
-        <div style="background: {box_bg}; border: 1.5px solid {box_border}; border-radius: 16px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);">
-        <span style="background: {badge_bg}; color: {badge_color}; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0;">{icon}</span>
-        <div style="flex: 1;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
-        <strong style="color: {title_color}; font-size: 14.5px;">{m.get('title')}</strong>
-        <span style="font-size: 11.5px; font-weight: 700; color: {badge_color};">{m.get('category')}</span>
-        </div>
-        <p style="margin: 0; color: #475569; font-size: 13px; line-height: 1.45;">{m.get('desc')}</p>
-        </div>
-        </div>
-        """
+        m_card = (
+            f'<div style="background: {box_bg}; border: 1.5px solid {box_border}; border-radius: 16px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);">'
+            f'<span style="background: {badge_bg}; color: {badge_color}; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0;">{icon}</span>'
+            f'<div style="flex: 1;">'
+            f'<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">'
+            f'<strong style="color: {title_color}; font-size: 14.5px;">{m.get("title")}</strong>'
+            f'<span style="font-size: 11.5px; font-weight: 700; color: {badge_color};">{m.get("category")}</span>'
+            f'</div>'
+            f'<p style="margin: 0; color: #475569; font-size: 13px; line-height: 1.45;">{m.get("desc")}</p>'
+            f'</div></div>'
+        )
+        milestone_cards.append(m_card)
 
-    html += """
-    </div>
-    </div>
-    """
+    html += "".join(milestone_cards)
+    html += "</div></div>"
     return textwrap.dedent(html).strip()
