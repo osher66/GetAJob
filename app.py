@@ -27,6 +27,7 @@ from ui_styles import (
     render_career_intel,
     render_learning_paths,
     render_job_search_tracker,
+    render_readme_block,
 )
 
 # הגדרות עמוד ראשיות
@@ -38,7 +39,7 @@ st.set_page_config(
 )
 
 # הזרקת מערכת העיצוב Material 3 Expressive (Light Mode & Accessible)
-st.markdown(get_custom_css(), unsafe_allow_html=True)
+st.markdown(get_custom_css(theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
 
 def load_presets():
@@ -53,6 +54,10 @@ def load_presets():
 presets = load_presets()
 
 # אתחול Session State
+if "theme_mode" not in st.session_state:
+    st.session_state.theme_mode = "dark"
+if "gemini_api_key" not in st.session_state:
+    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY", "")
 if "onboarding_active" not in st.session_state:
     st.session_state.onboarding_active = True
 if "onboarding_step" not in st.session_state:
@@ -160,7 +165,7 @@ if st.session_state.onboarding_active:
             unsafe_allow_html=True,
         )
 
-        st.markdown(render_onboarding_progress(1, 3), unsafe_allow_html=True)
+        st.markdown(render_onboarding_progress(1, 3, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
         col_start, col_skip = st.columns([2, 1])
         with col_start:
@@ -288,7 +293,7 @@ if st.session_state.onboarding_active:
                         st.session_state.selected_domain_id = matched_key if matched_key else "catalog_role"
                         st.rerun()
 
-        st.markdown(render_onboarding_progress(2, 3), unsafe_allow_html=True)
+        st.markdown(render_onboarding_progress(2, 3, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
         nav_col1, nav_col2, nav_col3 = st.columns([1, 2, 1])
         with nav_col1:
@@ -362,7 +367,7 @@ if st.session_state.onboarding_active:
         # כרטיס סקירה מעמיקה
         st.markdown(render_career_intel(selected_dom), unsafe_allow_html=True)
 
-        st.markdown(render_onboarding_progress(3, 3), unsafe_allow_html=True)
+        st.markdown(render_onboarding_progress(3, 3, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
         bot_col1, bot_col2 = st.columns([1, 2])
         with bot_col1:
@@ -440,20 +445,62 @@ else:
     """
     st.markdown(textwrap.dedent(hero_html).strip(), unsafe_allow_html=True)
 
-    # כפתור החלפת מסלול / Onboarding מהיר
-    change_col1, change_col2 = st.columns([3, 1])
-    with change_col2:
-        if st.button("🔄 שנה מסלול / סקירת מקצוע", use_container_width=True):
+    # סרגל בקרה עליון: סטטוס מודל, מתג מצב כהה/בהיר והחלפת מסלול
+    top_ctrl1, top_ctrl2, top_ctrl3 = st.columns([2, 1, 1], gap="small")
+    with top_ctrl1:
+        if st.session_state.gemini_api_key.strip():
+            st.markdown(
+                '<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); '
+                'border: 1px solid #10b981; color: #34d399; padding: 6px 16px; border-radius: 9999px; font-weight: 700; font-size: 13.5px;">'
+                '<span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>'
+                '🟢 מחובר למודל Google Gemini (חי בזמן אמת)</div>',
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                '<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(108, 99, 255, 0.15); '
+                'border: 1px solid var(--primary-accent); color: var(--text-primary); padding: 6px 16px; border-radius: 9999px; font-weight: 700; font-size: 13.5px;">'
+                '<span style="width: 8px; height: 8px; border-radius: 50%; background: var(--primary-accent); display: inline-block;"></span>'
+                '🛡️ מנוע היוריסטי דינמי + מגן הזרקות פעיל</div>',
+                unsafe_allow_html=True
+            )
+    with top_ctrl2:
+        theme_btn_label = "☀️ מצב בהיר" if st.session_state.theme_mode == "dark" else "🌙 מצב כהה (אפיון)"
+        if st.button(theme_btn_label, key="btn_theme_switcher", use_container_width=True):
+            st.session_state.theme_mode = "light" if st.session_state.theme_mode == "dark" else "dark"
+            st.rerun()
+    with top_ctrl3:
+        if st.button("🔄 שנה מסלול / סקירה", use_container_width=True):
             st.session_state.onboarding_active = True
             st.session_state.onboarding_step = 2
             st.rerun()
 
+    with st.expander("🔑 חיבור למפתח Google Gemini API (אופציונלי לניתוח חי בענן)", expanded=False):
+        st.markdown(
+            "<p style='color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;'>"
+            "המערכת מגיעה עם מנוע ניתוח היוריסטי חכם דינמי וחסינות Prompt Injection פעילה ללא צורך במפתח. "
+            "אם תרצה להתחבר ישירות למודל Google Gemini 2.5 Flash, הדבק את המפתח כאן:"
+            "</p>",
+            unsafe_allow_html=True
+        )
+        api_input = st.text_input(
+            "מפתח Gemini API:",
+            value=st.session_state.gemini_api_key,
+            type="password",
+            placeholder="AIzaSy...",
+            key="gemini_key_input",
+            help="המפתח נשמר בסשן הדפדפן בלבד לצורך קריאה מאובטחת."
+        )
+        if api_input != st.session_state.gemini_api_key:
+            st.session_state.gemini_api_key = api_input
+            st.rerun()
+
     # סרגל שלבים להנחיית המשתמש (M3 Segmented Pills)
     current_step = 2 if st.session_state.analysis_result else 1
-    st.markdown(render_step_bar(current_step), unsafe_allow_html=True)
+    st.markdown(render_step_bar(current_step, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
     # כרטיס טיפ מקצועי לעמידה ב-ATS (M3 Callout)
-    st.markdown(render_ats_tip(), unsafe_allow_html=True)
+    st.markdown(render_ats_tip(theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
     # ----------------------------------------------------
     # כפתורי תרחישי דמו מהירים (M3 Expressive Segmented Presets)
@@ -582,7 +629,7 @@ else:
                 st.session_state.cache_hit = True
             else:
                 with st.spinner("🧠 מנתח התאמה מול דרישות המשרה, שוקל סעיפים ומחולל פרויקט..."):
-                    result = analyze_job_match(st.session_state.resume_text, truncated_job)
+                    result = analyze_job_match(st.session_state.resume_text, truncated_job, api_key=st.session_state.gemini_api_key)
                     global_cache.set(cache_key, result)
                     st.session_state.analysis_result = result
                     st.session_state.cache_hit = False
@@ -654,10 +701,10 @@ else:
         progress_pct = int((completed_count / len(milestones_list)) * 100)
 
         # 1. מד ציון ויזואלי וסיכום משוקלל (M3 Score Gauge)
-        st.markdown(render_score_gauge(res.match_score, res.match_summary), unsafe_allow_html=True)
+        st.markdown(render_score_gauge(res.match_score, res.match_summary, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
         # 2. כרטיס גרף התקדמות ומעקב יעדים (UX/UI Job Search Tracker)
-        st.markdown(render_job_search_tracker(milestones_list, progress_pct), unsafe_allow_html=True)
+        st.markdown(render_job_search_tracker(milestones_list, progress_pct, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
         # 3. טאבים לתצוגה מפורטת וממוקדת
         tab_tracker, tab_gaps, tab_project, tab_learning, tab_checklist = st.tabs([
@@ -694,7 +741,7 @@ else:
                 unsafe_allow_html=True,
             )
             st.markdown(
-                render_skill_badges([s.model_dump() for s in res.missing_skills]),
+                render_skill_badges([s.model_dump() for s in res.missing_skills], theme=st.session_state.theme_mode),
                 unsafe_allow_html=True,
             )
 
@@ -705,7 +752,7 @@ else:
                 unsafe_allow_html=True,
             )
             st.markdown(
-                render_bullet_comparison([b.model_dump() for b in res.cv_bullet_improvements]),
+                render_bullet_comparison([b.model_dump() for b in res.cv_bullet_improvements], theme=st.session_state.theme_mode),
                 unsafe_allow_html=True,
             )
 
@@ -769,13 +816,8 @@ else:
                     use_container_width=True,
                 )
 
-            # תצוגת Markdown ב-LTR מלא למניעת שיבוש קוד ותרשימים
-            readme_display = f"""
-            <div class="readme-container">
-            <pre style="white-space: pre-wrap; word-break: break-word; color: #1f2328; font-size: 13.5px; line-height: 1.6; font-weight: 500;">{proj.readme_content}</pre>
-            </div>
-            """
-            st.markdown(textwrap.dedent(readme_display).strip(), unsafe_allow_html=True)
+            # תצוגת Markdown מלאה בקוד LTR מונגש (TC-07)
+            st.markdown(render_readme_block(proj.readme_content, proj.project_name, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
         with tab_learning:
             st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>🎓 מסלולי לימוד והסמכות מומלצים לסגירת הפער</h3>", unsafe_allow_html=True)
@@ -795,7 +837,7 @@ else:
             )
             missing_skills_list = [s.skill for s in res.missing_skills]
             matched_lps = get_learning_paths_for_skills(missing_skills_list)
-            st.markdown(render_learning_paths(matched_lps), unsafe_allow_html=True)
+            st.markdown(render_learning_paths(matched_lps, theme=st.session_state.theme_mode), unsafe_allow_html=True)
 
         with tab_checklist:
             st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>📋 צ'קליסט מוכנות להגשת מועמדות (ATS Readiness Checklist)</h3>", unsafe_allow_html=True)
@@ -826,3 +868,39 @@ else:
                 </div>
                 """
                 st.markdown(textwrap.dedent(item_card).strip(), unsafe_allow_html=True)
+
+        # ==============================================================================
+        # בלוק ייצוא והורדת קובץ README.md מוכן ל-GitHub בתחתית מסך התוצאות (TC-07)
+        # ==============================================================================
+        st.markdown("<div style='margin-top: 36px;'></div>", unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="custom-card" style="border: 2px solid var(--primary-accent);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+        <div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 24px;">📦</span>
+        <h3 style="margin: 0; font-size: 20px; font-weight: 800; color: var(--text-primary);">ייצוא פרויקט ושלד README.md ל-GitHub (One-Click Export)</h3>
+        </div>
+        <p style="margin: 4px 0 0 0; color: var(--text-muted); font-size: 14px;">
+        בלוק תצוגת קוד Markdown מלא ומדויק לפני ההורדה – מוכן להעתקה מיידית או להורדה ישירה:
+        </p>
+        </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown(render_readme_block(res.portfolio_project.readme_content, res.portfolio_project.project_name, theme=st.session_state.theme_mode), unsafe_allow_html=True)
+
+        bt_col1, bt_col2 = st.columns([1, 1], gap="medium")
+        with bt_col1:
+            st.download_button(
+                label="📥 הורד עכשיו את קובץ ה-README.md ל-GitHub",
+                data=res.portfolio_project.readme_content,
+                file_name=f"README_{res.portfolio_project.project_name.replace(' ', '_')}.md",
+                mime="text/markdown",
+                use_container_width=True,
+                key="bottom_download_readme_btn",
+            )
+        with bt_col2:
+            st.info("💡 קובץ ה-README כולל את כל ארכיטקטורת המערכת, תרשימי הזרימה ושלבי ההרצה הדרושים למגייסים.")
+
+        st.markdown("</div>", unsafe_allow_html=True)
