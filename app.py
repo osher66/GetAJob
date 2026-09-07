@@ -38,8 +38,15 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# הזרקת מערכת העיצוב Material 3 Expressive (Light Mode & Accessible)
-st.markdown(get_custom_css(theme=st.session_state.theme_mode), unsafe_allow_html=True)
+# אתחול Session State מוקדם
+if "theme_mode" not in st.session_state:
+    st.session_state.theme_mode = "dark"
+if "gemini_api_key" not in st.session_state:
+    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY", "")
+
+# הזרקת מערכת העיצוב (Dark Mode ברירת מחדל / Light Mode לפי בחירה)
+active_theme = st.session_state.get("theme_mode", "dark")
+st.markdown(get_custom_css(theme=active_theme), unsafe_allow_html=True)
 
 
 def load_presets():
@@ -52,12 +59,6 @@ def load_presets():
 
 
 presets = load_presets()
-
-# אתחול Session State
-if "theme_mode" not in st.session_state:
-    st.session_state.theme_mode = "dark"
-if "gemini_api_key" not in st.session_state:
-    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY", "")
 if "onboarding_active" not in st.session_state:
     st.session_state.onboarding_active = True
 if "onboarding_step" not in st.session_state:
