@@ -1,12 +1,17 @@
 [theme]
-base = "dark"
+base = "light"
 primaryColor = "#6C63FF"
-backgroundColor = "#0B0F19"
-secondaryBackgroundColor = "#131A2A"
-textColor = "#F8FAFC"
+backgroundColor = "#f8faff"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#0f172a"
 font = "sans serif"
 
 [server]
 headless = true
 enableCORS = false
 enableXsrfProtection = false
+maxUploadSize = 10
+runOnSave = true
+
+[client]
+toolbarMode = "minimal"

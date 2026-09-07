@@ -22,7 +22,7 @@ _CATALOG = _load_catalog()
 UX_UI_OFFICIAL_SPEC = {
     "role_name": "UX/UI Designer",
     "title_he": "מעצב/ת חוויית וממשק משתמש (UX/UI Designer)",
-    "is_flagship": True,
+    "is_flagship": False,
     "tools": {
         "must_have": [
             {"name": "Figma", "note": "הכלי השולט כיום בשוק (חובה כמעט בכל משרה)"},

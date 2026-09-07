@@ -265,5 +265,139 @@
         "readme_content": "# SaaS Churn & Retention Analytics Pipeline\n\n[![Python](https://img.shields.io/badge/Python-Data-yellow.svg)](https://python.org)\n[![SQL](https://img.shields.io/badge/SQL-Advanced-blue.svg)](https://www.postgresql.org/)\n[![PowerBI](https://img.shields.io/badge/PowerBI-Dashboard-gold.svg)](https://powerbi.microsoft.com/)\n\n## 📌 Executive Summary\nEnd-to-end data analytics workflow uncovering churn velocity and customer lifetime value (LTV) for a recurring subscription model. Combines relational SQL modeling with advanced cohort analytics.\n\n---\n\n## 📊 Analytical Pipeline\n1. Ingestion: Raw transactional dataset (50,000+ subscription rows)\n2. SQL Modeling: Cohort groupings and Windowed retention calculations\n3. Exploratory Data Analysis: Python/Pandas feature correlation\n4. Executive Dashboard: Interactive executive KPI summary\n"
       }
     }
+  },
+  {
+    "id": "devops_cloud",
+    "title": "תרחיש 5: Junior DevOps / Cloud Engineer (Docker, CI/CD & Linux)",
+    "description": "מועמד בעל רקע ב-Linux ותמיכה טכנית המעוניין להשתלב כמהנדס DevOps ראשון",
+    "cv_text": "איש סיסטם ותשתיות מתחיל בעל רקע של שנתיים ב-Linux System Administration ותמיכת רשתות. שליטה בעבודה שוטפת ב-Linux CLI (Ubuntu, Debian), כתיבת סקריפטים ב-Bash וב-Python לאוטומציה של משימות תחזוקה. ניסיון מעשי ב-Docker: כתיבת Dockerfiles, יצירת Images והרמת שירותים רב-קונטיינריים עם Docker Compose. היכרות עם Git ו-GitHub Actions לבניית CI בסיסי. עבודה עם שרתי אינטרנט Nginx וניהול תעודות SSL. ידע תיאורטי בשירותי הענן של AWS (EC2, S3, VPC). שואף להשתלב בתפקיד Junior DevOps / Cloud Infrastructure.",
+    "job_text": "דרוש/ה Junior DevOps / Cloud Engineer להצטרפות לצוות התשתיות של חברת הייטק.\nתיאור התפקיד:\n- תחזוקה ואוטומציה של סביבות פיתוח וייצור מבוססות ענן (AWS)\n- בנייה ושיפור של צינורות CI/CD מרובי-שלבים ב-GitHub Actions\n- ניהול וקונטיינריזציה של שירותים באמצעות Docker ו-Kubernetes (K8s)\n- הגדרת תשתיות כקוד (Infrastructure as Code) באמצעות Terraform\n- ניטור ביצועים, איסוף מטריקות וניהול לוגים באמצעות Prometheus ו-Grafana\nדרישות חובה:\n- שליטה עמוקה במערכות הפעלה Linux וכתיבת סקריפטים (Bash / Python)\n- ניסיון מעשי מוכח ב-Docker ובניית קונטיינרים יעילים\n- היכרות טובה עם כלי CI/CD (GitHub Actions / GitLab CI)\n- ידע בסיסי לפחות באחד מספקי הענן (AWS / GCP / Azure)\n- יכולת פתרון תקלות עצמאית ותשוקה לאוטומציה\nיתרון משמעותי:\n- היכרות מעשית עם Kubernetes / Helm\n- ניסיון בכתיבת קבצי Terraform (IaC)\n- ניסיון בכלי מוניטורינג (Prometheus, Grafana, Datadog)",
+    "result": {
+      "match_score": 68,
+      "match_summary": "בסיס חזק ב-Linux, Bash ו-Docker, אך קיים פער מהותי בניסיון מעשי ב-Kubernetes, כתיבת תשתיות כקוד (Terraform) ומוניטורינג ארגוני (Prometheus & Grafana).",
+      "missing_skills": [
+        {
+          "skill": "Kubernetes & Container Orchestration",
+          "importance": "High"
+        },
+        {
+          "skill": "Terraform (Infrastructure as Code)",
+          "importance": "High"
+        },
+        {
+          "skill": "Monitoring & Alerting (Prometheus & Grafana)",
+          "importance": "Medium"
+        },
+        {
+          "skill": "AWS Production Architecture (IAM, ALB, ECS)",
+          "importance": "Medium"
+        }
+      ],
+      "cv_bullet_improvements": [
+        {
+          "original": "כתיבת סקריפטים ב-Bash לתחזוקת שרתים וגיבויים.",
+          "improved": "פיתוח סקריפטים אוטונומיים ב-Bash ו-Python לגיבוי תקופתי של מסדי נתונים וניטור משאבי זיכרון, שחסכו 8 שעות תחזוקה שבועיות ב-15 שרתי Linux.",
+          "reason": "הדגשת היקף המערכת (Scale) וההשפעה הכמותית (Impact) על שעות עבודה."
+        },
+        {
+          "original": "בניית קונטיינרים ב-Docker לאפליקציות.",
+          "improved": "תכנון ואופטימיזציה של Multi-stage Dockerfiles לשירותי Web, תוך צמצום גודל ה-Image ב-55% והטמעת סריקת אבטחה אוטומטית כחלק מ-GitHub Actions CI.",
+          "reason": "שימוש בפרקטיקות מתקדמות (Multi-stage builds) והצגת שילוב ישיר ב-CI."
+        }
+      ],
+      "portfolio_project": {
+        "project_name": "CloudOps Pipeline: GitOps Automated CI/CD & AWS Infrastructure with Terraform",
+        "targeted_skills": [
+          "Docker & Multi-Stage Builds",
+          "GitHub Actions CI/CD",
+          "Terraform (AWS IaC)",
+          "Kubernetes (Minikube/EKS)",
+          "Prometheus & Grafana"
+        ],
+        "business_context": "מגייסי DevOps מחפשים הוכחה ליכולת אוטומציה מלאה ולא רק הרצה ידנית של פקודות. פרויקט זה מקים תשתית ענן שלמה כקוד, פורס Microservice ב-Kubernetes באמצעות CI/CD ומספק דשבורד מוניטורינג בזמן אמת.",
+        "architecture_stack": [
+          "Terraform (AWS VPC, EC2, EKS)",
+          "Docker & Docker Compose",
+          "GitHub Actions",
+          "Kubernetes & Helm",
+          "Prometheus & Grafana"
+        ],
+        "implementation_steps": [
+          "כתיבת מודול Terraform להקמת סביבת ענן מבודדת (VPC, Subnets, Security Groups) ב-AWS.",
+          "בניית קונטיינר Microservice מבוסס Python/Go עם Multi-stage build ומניעת הרצה כ-root.",
+          "הגדרת GitHub Actions Workflow: בדיקות יחידה, סריקת חולשות ב-Image ודחיפה אוטומטית ל-Docker Hub.",
+          "הגדרת קבצי Kubernetes Deployment, Service ו-Ingress עם בדיקות בריאות (Healthchecks).",
+          "התקנת Prometheus ו-Grafana באמצעות Helm Chart ויצירת דשבורד לניטור עומסי CPU/RAM."
+        ],
+        "readme_content": "# CloudOps Pipeline – Production-Grade CI/CD & IaC Infrastructure\n\nAutomated GitOps pipeline provisioning AWS infrastructure via Terraform, packaging microservices with Docker, and orchestrating deployments on Kubernetes with Prometheus/Grafana observability.\n\n## Architecture\n- **IaC**: Terraform 1.6+ (AWS VPC, Security Groups, ECR)\n- **Container**: Docker Multi-stage builds (<50MB)\n- **CI/CD**: GitHub Actions (Lint, Security Scan, Build, Push)\n- **Orchestration**: Kubernetes manifests (Deployment, HPA, Ingress)\n- **Monitoring**: Prometheus scraper & Grafana dashboard\n\n## Quick Start\n```bash\n# 1. Initialize & plan cloud infrastructure\ncd terraform && terraform init && terraform plan\n\n# 2. Deploy local orchestration\nkubectl apply -f k8s/\n\n# 3. View live monitoring\nkubectl port-forward svc/grafana 3000:3000\n```"
+      }
+    }
+  },
+  {
+    "id": "qa_automation",
+    "title": "תרחיש 6: Junior QA Automation Engineer (Python, Selenium & PyTest)",
+    "description": "בודק/ת תוכנה ידני/ת עם ידע ב-Python המעוניין/ת במשרת אוטומציה ראשונה",
+    "cv_text": "בודק/ת תוכנה (QA) בעל/ת שנה וחצי ניסיון בבדיקות ידניות (Manual Testing) של מערכות Web ומובייל. כתיבת מסמכי בדיקות מפורטים: STP, STD, STR ופתיחת באגים מנומקת ב-Jira. ידע מעשי מוכח בפיתוח סקריפטי אוטומציה ב-Python באמצעות Selenium WebDriver ו-PyTest. ניסיון בבדיקות API ידניות ב-Postman (שליחת בקשות GET/POST/PUT ואימות קודי סטטוס). היכרות עם Git וניהול גרסאות קוד. שואף/ת להשתלב כאיש/אשת QA Automation במשרה מלאה.",
+    "job_text": "דרוש/ה Junior QA Automation Engineer להקמה והרחבה של תשתיות הבדיקות האוטומטיות בחברה.\nתיאור התפקיד:\n- כתיבה, תחזוקה והרצה של בדיקות אוטומטיות מקצה לקצה (E2E) בסביבות Web ו-API\n- פיתוח תשתיות אוטומציה מודולריות ב-Python (שימוש ב-Page Object Model)\n- ביצוע בדיקות עומסים ואימות נתוני Backend מול מסדי נתונים (SQL)\n- שילוב הרצת חליפות הבדיקות כחלק מצינור ה-CI/CD ב-GitHub Actions / Jenkins\n- עבודה צמודה עם צוותי הפיתוח וניהול תהליך שחרור גרסאות\nדרישות חובה:\n- ניסיון קודם בבדיקות תוכנה והבנה מעמיקה במתודולוגיות QA (מחזור חיי באג, סוגי בדיקות)\n- יכולת תכנות מוכחת ב-Python לכתיבת סקריפטים ותשתיות בדיקה\n- ניסיון מעשי בכלי אוטומציה כגון Selenium WebDriver, Playwright או Cypress\n- ניסיון בבדיקות API (Rest Assured / Postman / Requests)\n- חשיבה אנליטית, יסודיות ותשומת לב גבוהה לפרטים\nיתרון:\n- היכרות עם מודל Page Object Model (POM)\n- ניסיון בשילוב בדיקות אוטומטיות ב-CI/CD\n- היכרות עם שאילתות SQL מורכבות לאימות נתונים",
+    "result": {
+      "match_score": 71,
+      "match_summary": "רקע מעולה במתודולוגיות בדיקה וידע טוב ב-Python ו-Selenium, אך קיים פער באוטומציית API מונחית קוד (Requests), תבנית Page Object Model מתקדמת ושילוב הבדיקות ב-CI/CD.",
+      "missing_skills": [
+        {
+          "skill": "Page Object Model (POM) Design Pattern",
+          "importance": "High"
+        },
+        {
+          "skill": "REST API Automated Testing (Python Requests)",
+          "importance": "High"
+        },
+        {
+          "skill": "CI/CD Automated Test Execution (GitHub Actions)",
+          "importance": "Medium"
+        },
+        {
+          "skill": "SQL Database Validation for QA",
+          "importance": "Medium"
+        }
+      ],
+      "cv_bullet_improvements": [
+        {
+          "original": "ביצוע בדיקות ידניות וכתיבת סקריפטים ב-Selenium.",
+          "improved": "פיתוח תשתית בדיקות E2E ב-Python מבוססת Selenium ו-Page Object Model, שכיסתה 45 תרחישי משתמש קריטיים וקיצרה את זמן ה-Regression מיומיים לשעתיים.",
+          "reason": "ציון מפורש של ה-Design Pattern (POM) והצגת חיסכון זמנים מדיד (Metric)."
+        },
+        {
+          "original": "בדיקות API ב-Postman.",
+          "improved": "בניית חליפת בדיקות API אוטומטית ב-Python (ספריית Requests) לאימות 20 נקודות קצה (Endpoints), כולל אימות סכמת JSON ובדיקת זמני תגובה תחת עומס.",
+          "reason": "מעבר מתיאור בדיקות ידניות לפיתוח אוטומציה מבוססת קוד עם אימות סכמה."
+        }
+      ],
+      "portfolio_project": {
+        "project_name": "QualityGuard: Enterprise E2E & REST API Test Automation Framework",
+        "targeted_skills": [
+          "Python & PyTest Framework",
+          "Selenium WebDriver / Playwright",
+          "Page Object Model (POM)",
+          "REST API Testing (Requests)",
+          "GitHub Actions CI Execution"
+        ],
+        "business_context": "מגייסי אוטומציה רוצים לראות framework שלם: ארכיטקטורת תיקיות נכונה, הפרדת נתונים מקוד (Data-Driven), דוחות HTML צבעוניים עם צילומי מסך בעת כישלון, והרצה אוטומטית בכל Push ל-GitHub.",
+        "architecture_stack": [
+          "Python 3.11+",
+          "PyTest & PyTest-HTML Reports",
+          "Selenium WebDriver & Playwright",
+          "Requests (API testing)",
+          "GitHub Actions Workflow"
+        ],
+        "implementation_steps": [
+          "תכנון ארכיטקטורת Framework מודולרית לפי תבנית Page Object Model (דפי Page, מבדקים Tests, ותצורות Conftest).",
+          "פיתוח חליפת בדיקות E2E עבור תהליך רישום, התחברות וביצוע רכישה בחנות הדגמה.",
+          "פיתוח חליפת בדיקות API מקבילה ב-Python Requests הבודקת Authentication, אימות Headers ו-JSON Schema.",
+          "הגדרת לכידת צילום מסך אוטומטי (Screenshot on Failure) והפקת דוח HTML גרפי מקיף.",
+          "כתיבת GitHub Actions Workflow המריץ את כל הבדיקות ב-Headless Mode ושולח סטטוס מעבר."
+        ],
+        "readme_content": "# QualityGuard – Modular E2E & API Automation Framework\n\nProduction-ready test automation framework engineered in Python utilizing PyTest, Selenium, and Requests, implementing Page Object Model (POM) and GitHub Actions CI execution.\n\n## Key Highlights\n- **Pattern**: Strict Page Object Model (POM) architecture\n- **Coverage**: Full E2E flows + REST API endpoint assertions\n- **Reporting**: Detailed PyTest-HTML reports with auto-captured failure screenshots\n- **CI/CD**: Headless multi-browser test runner in GitHub Actions\n\n## Quick Start\n```bash\n# 1. Install dependencies\npip install -r requirements.txt\n\n# 2. Execute E2E & API test suites with HTML report\npytest --html=reports/test_report.html --self-contained-html\n```"
+      }
+    }
   }
 ]

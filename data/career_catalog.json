@@ -1856,7 +1856,7 @@
     {
       "id": "LP-049",
       "domain": "UX/UI",
-      "name": "UX/UI Design Foundations",
+      "name": "Nielsen Norman Group (NN/g) UX Foundations",
       "type": "קורס / Bootcamp",
       "level": "מתחיל–ביניים",
       "prerequisites": "ללא; זיקה לעיצוב ומחקר מועילה",
@@ -1888,8 +1888,154 @@
       "when_to_recommend": "כשמודעות דורשות Figma, research, prototyping ו-portfolio",
       "when_not_to_recommend": "כשחסר ניסיון מוצר/מחקר עמוק לתפקיד Senior",
       "recommended_project": "2–3 case studies עם תהליך, בדיקות משתמשים ואיטרציות",
-      "official_url": "https://csed.acm.org/knowledge-areas/",
-      "product_note": "תיק עבודות חשוב יותר מתעודה לבדה"
+      "official_url": "https://www.nngroup.com/articles/ux-career-advice/",
+      "product_note": "בסיס מתודולוגי מקיף מאת חלוצי תחום חוויית המשתמש בעולם"
+    },
+    {
+      "id": "LP-050",
+      "domain": "UX/UI",
+      "name": "Google UX Design Professional Certificate",
+      "type": "הסמכה מקצועית",
+      "level": "מתחילים–מתקדם",
+      "prerequisites": "ללא צורך בניסיון קודם",
+      "canonical_skills": [
+        "User Research",
+        "Wireframing",
+        "Prototyping",
+        "Usability Testing",
+        "Figma",
+        "Design Sprint",
+        "Portfolio Building"
+      ],
+      "tools": [
+        "Figma",
+        "Adobe XD",
+        "Miro"
+      ],
+      "target_roles": [
+        "UX Designer",
+        "Junior Product Designer",
+        "UI Designer"
+      ],
+      "duration": "3–6 חודשים (בקצב אישי)",
+      "theory_depth": "4",
+      "practical_depth": "5",
+      "proof_strength": "4",
+      "replaces_experience": "מספק 3 מקרי בוחן מוכנים לתיק עבודות",
+      "when_to_recommend": "כשחסרים תיק עבודות, הבנה מובנית של מחקר משתמשים ותהליך עבודה מלא מקצה לקצה",
+      "when_not_to_recommend": "כשיש כבר תיק עבודות פעיל עם פרויקטים חיים",
+      "recommended_project": "עיצוב מוצר דיגיטלי מקצה לקצה (אפליקציה או אתר רספונסיבי) כולל מחקר ואיטרציות",
+      "official_url": "https://www.coursera.org/professional-certificates/google-ux-design",
+      "product_note": "תוכנית ההסמכה הפופולרית בעולם לג'וניורים בתחום חוויית המשתמש"
+    },
+    {
+      "id": "LP-051",
+      "domain": "UX/UI",
+      "name": "Figma For Designers: Professional Certificate & Design Systems",
+      "type": "הסמכת כלי מקצועית",
+      "level": "בינוני–מתקדם",
+      "prerequisites": "היכרות בסיסית עם עקרונות עיצוב ממשקים",
+      "canonical_skills": [
+        "Design Systems",
+        "Auto-layout",
+        "Figma Variables",
+        "Component Architecture",
+        "Interactive Prototyping",
+        "Design Tokens",
+        "Dev Hand-off"
+      ],
+      "tools": [
+        "Figma",
+        "Figma Tokens",
+        "FigJam"
+      ],
+      "target_roles": [
+        "UI Designer",
+        "Product Designer",
+        "Design System Specialist"
+      ],
+      "duration": "4–8 שבועות",
+      "theory_depth": "3",
+      "practical_depth": "5",
+      "proof_strength": "5",
+      "replaces_experience": "מוכיח יכולת עבודה מעשית וסטנדרט תעשייה עדכני",
+      "when_to_recommend": "כשהמועמד שולט באפיון אך מתקשה במבחני בית מעשיים ב-Figma או בארכיטקטורת קומפוננטות",
+      "when_not_to_recommend": "כשיש פערים מהותיים במחקר משתמשים ובארכיטקטורת מידע בלבד",
+      "recommended_project": "Design System שלם עם Tokens, Variants, Auto-layout ודפי תיעוד לצוותי פיתוח",
+      "official_url": "https://help.figma.com/hc/en-us/categories/360002042553-Figma-Design",
+      "product_note": "שליטה מעשית ב-Figma היא תנאי סף ראשון בכל סינון קורות חיים לג'וניורים"
+    },
+    {
+      "id": "LP-052",
+      "domain": "UX/UI",
+      "name": "Interaction Design Foundation (IxDF) – UX Master Track",
+      "type": "הסמכה בינלאומית מוכרת",
+      "level": "מתקדם",
+      "prerequisites": "יסודות עיצוב או אפיון",
+      "canonical_skills": [
+        "Human-Computer Interaction (HCI)",
+        "Information Architecture (IA)",
+        "Usability Testing",
+        "Psychology of UX",
+        "Micro-interactions"
+      ],
+      "tools": [
+        "Miro",
+        "Optimal Workshop",
+        "Figma",
+        "Axure"
+      ],
+      "target_roles": [
+        "UX Researcher",
+        "Product Designer",
+        "UX Architect"
+      ],
+      "duration": "2–4 חודשים",
+      "theory_depth": "5",
+      "practical_depth": "4",
+      "proof_strength": "4",
+      "replaces_experience": "מעניק תעודה בינלאומית בעלת מוניטין מקצועי גבוה",
+      "when_to_recommend": "למי שרוצה להעמיק במחקר משתמשים, ארכיטקטורת מידע והנדסת אנוש מעבר לעיצוב ויזואלי בלבד",
+      "when_not_to_recommend": "כשהצורך הוא שליטה מהירה בכלים ויזואליים בלבד",
+      "recommended_project": "מחקר משתמשים כמותי ואיכותי כולל Card Sorting, Tree Testing ואפיון ארכיטקטורת מידע",
+      "official_url": "https://www.interaction-design.org/",
+      "product_note": "המוסד המוביל בעולם למחקר והנדסת חוויית משתמש (באישור דון נורמן)"
+    },
+    {
+      "id": "LP-053",
+      "domain": "UX/UI",
+      "name": "ADPList Mentorship & Portfolio Launchpad",
+      "type": "ליווי מנטורינג אישי",
+      "level": "הכנה לגיוס והשמה",
+      "prerequisites": "תיק עבודות ראשוני או קורות חיים מוכנים לביקורת",
+      "canonical_skills": [
+        "Portfolio Review",
+        "Design Critique",
+        "Interview Preparation",
+        "Take-Home Assignment Strategy",
+        "Career Storytelling"
+      ],
+      "tools": [
+        "Notion",
+        "Behance",
+        "Dribbble",
+        "Framer",
+        "Webflow"
+      ],
+      "target_roles": [
+        "Junior Product Designer",
+        "Junior UX/UI Designer"
+      ],
+      "duration": "3–6 שבועות",
+      "theory_depth": "2",
+      "practical_depth": "5",
+      "proof_strength": "5",
+      "replaces_experience": "ביקורת עמיתים על ידי מובילי עיצוב בחברות מובילות",
+      "when_to_recommend": "כשיש ידע וכלים אך המועמד לא מקבל פניות או נכשל במעבר משלב ראיונות HR לשלב המקצועי",
+      "when_not_to_recommend": "לפני שנבנה פרויקט או תיק עבודות ראשוני",
+      "recommended_project": "ליטוש מקרי הבוחן בתיק העבודות וביצוע סימולציית ראיון מקצועי עם מנטור פעיל בתעשייה",
+      "official_url": "https://adplist.org/",
+      "product_note": "קהילת המנטורינג הגדולה בעולם – ליווי אישי 1-על-1 ללא עלות מצד מנהלי עיצוב פעילים"
     }
   ],
   "skills": {

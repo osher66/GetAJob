@@ -1,55 +1,55 @@
+"""
+GetAJob - פלטפורמת הדרכה ומעבר לתפקידי הייטק
+זרימת משתמש מובנית, מזמינה וקלה לשימוש:
+מסך 1: ברוכים הבאים וערך מוסף (3 כרטיסי יכולות מרכזיות למעבר לקריירה בהייטק).
+מסך 2: בחירת תפקיד יעד (Pills מהירים / מאגר תפקידים) והזנת קורות חיים (דמו מהיר / קובץ).
+מסך 3: לוח תוצאות (חיווי עליון רוחבי + 3 לשוניות: פערים ומסלולים, שדרוג קו"ח ל-ATS, צ'קליסט ומעקב התקדמות ליעד).
+"""
+
 import os
 import json
 import textwrap
 import streamlit as st
 
 from schemas import JobMatchAnalysis
-from extractor import extract_text_from_pdf, PDFExtractionError
+from extractor import extract_text_from_file, DocumentExtractionError
 from sanitizer import sanitize_pii, truncate_job_description
 from cache_manager import global_cache
-from llm_engine import analyze_job_match
-from career_domains import CAREER_DOMAINS
+from llm_engine import analyze_job_match, load_mock_response
 from career_catalog import (
     get_all_roles,
     get_role_data,
-    search_roles,
     get_learning_paths_for_skills,
-    UX_UI_OFFICIAL_SPEC,
 )
 from ui_styles import (
     get_custom_css,
-    render_step_bar,
-    render_ats_tip,
     render_score_gauge,
-    render_skill_badges,
     render_bullet_comparison,
-    render_onboarding_progress,
-    render_career_intel,
     render_learning_paths,
-    render_job_search_tracker,
-    render_readme_block,
+    render_ats_tip,
 )
 
 # הגדרות עמוד ראשיות
 st.set_page_config(
-    page_title="GetAJob | מקפצת הקריירה לג'וניורים",
+    page_title="GetAJob | מקפצת הקריירה להייטק",
     page_icon="🎯",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# אתחול Session State מוקדם
-if "theme_mode" not in st.session_state:
-    st.session_state.theme_mode = "dark"
-if "gemini_api_key" not in st.session_state:
-    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY", "")
-
-# הזרקת מערכת העיצוב (Dark Mode ברירת מחדל / Light Mode לפי בחירה)
-active_theme = st.session_state.get("theme_mode", "dark")
-st.markdown(get_custom_css(theme=active_theme), unsafe_allow_html=True)
+# הזרקת מערכת העיצוב (מצב בהיר קבוע ומודרני)
+st.markdown(get_custom_css(theme="light"), unsafe_allow_html=True)
 
 
-def load_presets():
+def render_clean_html(html_str: str) -> None:
+    """מרנדר HTML ב-Streamlit ללא רווחים מובילים או שורות ריקות שגורמות ל-Markdown לפרש כקוד."""
+    cleaned = "\n".join(line.strip() for line in html_str.splitlines() if line.strip())
+    st.markdown(cleaned, unsafe_allow_html=True)
+
+
+# טעינת נתוני דמו מוכנים
+@st.cache_data
+def load_all_presets():
     presets_path = os.path.join(os.path.dirname(__file__), "data", "demo_presets.json")
     try:
         with open(presets_path, "r", encoding="utf-8") as f:
@@ -58,850 +58,959 @@ def load_presets():
         return []
 
 
-presets = load_presets()
-if "onboarding_active" not in st.session_state:
-    st.session_state.onboarding_active = True
-if "onboarding_step" not in st.session_state:
-    st.session_state.onboarding_step = 1
-if "selected_domain_id" not in st.session_state:
-    st.session_state.selected_domain_id = "ux_ui"
-if "custom_profession_name" not in st.session_state:
-    st.session_state.custom_profession_name = CAREER_DOMAINS["ux_ui"]["title"]
+PRESETS = load_all_presets()
+
+# מיפוי 3 התפקידים הפופולריים לשמות במאגר
+POPULAR_ROLES_MAP = {
+    "🎨 מעצב/ת UX/UI": "UX/UI Designer",
+    "💻 מפתח/ת Frontend": "Frontend Developer",
+    "📊 אנליסט/ית נתונים": "Data Analyst",
+}
+
+
+def map_role_to_preset(role_name: str) -> str:
+    """התאמת תפקיד לתרחיש הדמו המתאים ביותר"""
+    r = role_name.lower()
+    if any(k in r for k in ["ux", "ui", "design", "product"]):
+        return "ux_ui_preset"
+    if any(k in r for k in ["soc", "security", "penetration", "network", "noc"]):
+        return "soc_analyst"
+    if any(k in r for k in ["data", "bi ", "analyst", "scientist"]):
+        return "data_analyst"
+    if any(k in r for k in ["devops", "cloud", "sre", "kubernetes"]):
+        return "devops_cloud"
+    if any(k in r for k in ["qa", "test"]):
+        return "qa_automation"
+    return "fullstack_dev"
+
+
+def generate_role_milestones(target_role: str, missing_skills: list, project=None) -> list:
+    """
+    מחולל צ'קליסט אבני דרך אינטראקטיבי ומותאם אישית לתפקיד היעד ולפערי המועמד.
+    מתאים לכל קשת התפקידים: עיצוב חוויית משתמש (UX/UI), ניתוח נתונים (Data), ותכנות/הנדסת תוכנה.
+    """
+    role_lower = target_role.lower()
+    milestones = []
+    high_skills = [s.skill for s in missing_skills if getattr(s, "importance", "") == "High"]
+    med_skills = [s.skill for s in missing_skills if getattr(s, "importance", "") == "Medium"]
+
+    # 1. UX/UI Designer
+    if any(k in role_lower for k in ["ux", "ui", "design", "מעצב", "אפיון"]):
+        proj_name = project.project_name if project else "אפיון ועיצוב מערכת SaaS מקצה לקצה"
+        primary_skill = high_skills[0] if high_skills else (med_skills[0] if med_skills else "Figma & Design Systems")
+
+        milestones.append({
+            "id": "ms_ux_case_study",
+            "category": "🎨 תיק עבודות ומקרה בוחן",
+            "title": f"בניית מקרה בוחן מעמיק (Case Study) ב-Figma: {proj_name}",
+            "desc": f"אפיון ועיצוב פרויקט דגל מלא הכולל: הגדרת הבעיה העסקית, מחקר מתחרים, מסעות לקוח (User Journey), אפיון מסכים ב-Wireframes ועיצוב Visual UI מלא ב-Figma.",
+            "action_hint": "💡 טיפ למעצבי ג'וניור: מגייסים בוחנים את תהליך החשיבה והפתרון של הבעיה (Problem Solving) ולא רק תמונות של מסכים יפים.",
+        })
+
+        milestones.append({
+            "id": "ms_ux_primary_skill",
+            "category": "🛠️ סגירת פער מיומנות חובה",
+            "title": f"שליטה ותרגול מעשי בכלי החובה: {primary_skill}",
+            "desc": f"הטמעת עבודה מקצועית ב-{primary_skill}, כולל שימוש במערכות עיצוב (Design Systems), רכיבי Auto-Layout, משתנים (Variables) ו-Tokens.",
+            "action_hint": f"💡 עיין בלשונית 'ניתוח פערים ומסלולי למידה' לסילבוס ההסמכה הרשמי ב-{primary_skill}.",
+        })
+
+        if len(high_skills) > 1:
+            second_skill = high_skills[1]
+            milestones.append({
+                "id": "ms_ux_second_skill",
+                "category": "🛠️ סגירת פער מיומנות קריטי",
+                "title": f"שליטה במיומנות ליבה נוספת: {second_skill}",
+                "desc": f"סגירת פער המיומנות ב-{second_skill} על ידי יישום תרגיל מעשי ייעודי והוספתו לתיק העבודות.",
+                "action_hint": "💡 הוכחת שליטה במיומנויות החובה תאפשר לך לעבור את שלב המיון המקצועי של ה-Design Lead.",
+            })
+
+        milestones.append({
+            "id": "ms_ux_usability",
+            "category": "🧪 מחקר ובדיקות שמישות",
+            "title": "ביצוע בדיקות שמישות (Usability Testing) עם 3-5 משתמשים",
+            "desc": "העברת משתמשים אמיתיים באב-טיפוס אינטראקטיבי (Clickable Prototype), זיהוי חסמים בחוויית המשתמש (Friction Points) ותיעוד האיטרציות העיצוביות שבוצעו במקרה הבוחן.",
+            "action_hint": "💡 תיעוד של 'מה לא עבד וכיצד תיקנו את זה' על בסיס משתמשים מוכיח בשלות מקצועית יוצאת דופן.",
+        })
+
+        milestones.append({
+            "id": "ms_ux_cv_ats",
+            "category": "✍️ שדרוג קורות חיים ל-ATS",
+            "title": "שדרוג סעיפי הניסיון בקו\"ח לנוסחת Action + Scale + Impact",
+            "desc": "המרת ניסוחים כלליים להישגים מדידים (למשל: 'עיצוב מחדש של תהליך ההרשמה שהפחית נטישה ב-34% והעלה שביעות רצון משתמשים').",
+            "action_hint": "💡 העתק ישירות את הסעיפים המשודרגים מתוך לשונית 'שדרוג קורות חיים'.",
+        })
+
+        milestones.append({
+            "id": "ms_ux_certification",
+            "category": "🎓 הסמכה מקצועית מהקטלוג",
+            "title": "השלמת הסמכה מוכרת ב-UX/UI Design",
+            "desc": "סיום קורס מעשי מוביל מהקטלוג (כגון Google UX Design Professional Certificate או Figma Academy) להוספת תעודה רשמית לפרופיל ה-LinkedIn.",
+            "action_hint": "💡 תעודות רשמיות עוזרות לצלוח את סינון ה-ATS הראשוני של מחלקות הגיוס.",
+        })
+
+        milestones.append({
+            "id": "ms_ux_launch_outreach",
+            "category": "🚀 פרסום ונטוורקינג",
+            "title": "העלאת תיק העבודות לרשת ופנייה יזומה ל-5 מגייסים ומעצבים בכירים",
+            "desc": "פרסום מקרי הבוחן באתר אישי (Webflow / Framer / Notion / Behance), אופטימיזציה של פרופיל ה-LinkedIn ופנייה אישית ל-5 חברות מתאימות.",
+            "action_hint": "💡 צרף קישור ישיר למקרה הבוחן המתאים ביותר לדרישות החברה בכל פנייה.",
+        })
+
+    # 2. Data Analyst / BI
+    elif any(k in role_lower for k in ["data", "analyst", "bi", "נתונים", "דאטה"]):
+        proj_name = project.project_name if project else "לוח מחוונים עסקי לניתוח מדדי פעילות"
+        primary_skill = high_skills[0] if high_skills else (med_skills[0] if med_skills else "SQL מתקדם & Power BI")
+
+        milestones.append({
+            "id": "ms_data_dashboard",
+            "category": "📊 לוח מחוונים ו-BI אינטראקטיבי",
+            "title": f"בניית לוח מחוונים עסקי אינטראקטיבי: {proj_name}",
+            "desc": f"פיתוח דשבורד מקיף ב-PowerBI / Tableau / Python עבור {proj_name}, הכולל ויזואליזציות מתקדמות, מדדי ביצוע (KPIs) עסקיים ופילוחים דינמיים.",
+            "action_hint": "💡 הדגש תובנות עסקיות מניעות לפעולה (Actionable Insights) ולא רק גרפים יפים.",
+        })
+
+        milestones.append({
+            "id": "ms_data_primary_skill",
+            "category": "🛠️ סגירת פער מיומנות חובה",
+            "title": f"סגירת פער טכנולוגי: שליטה מעשית ב-{primary_skill}",
+            "desc": f"תרגול שאילתות מורכבות, ניקוי והכנת נתונים (Data Wrangling) ושימוש מעשי ב-{primary_skill} על גבי מערכי נתונים אמיתיים.",
+            "action_hint": f"💡 עיין במסלולי הלמידה המומלצים בלשונית ניתוח הפערים עבור {primary_skill}.",
+        })
+
+        if len(high_skills) > 1:
+            second_skill = high_skills[1]
+            milestones.append({
+                "id": "ms_data_second_skill",
+                "category": "🛠️ סגירת פער מיומנות קריטי",
+                "title": f"שליטה במיומנות ליבה נוספת: {second_skill}",
+                "desc": f"ביצוע מודול מעשי ב-{second_skill} להוכחת היכולת הטכנולוגית מול דרישות המשרה.",
+                "action_hint": "💡 חברות דורשות שילוב של SQL, כלי BI ושפת ניתוח כמו Python/R.",
+            })
+
+        milestones.append({
+            "id": "ms_data_eda",
+            "category": "🧹 חקר נתונים ו-Storytelling",
+            "title": "ביצוע ניתוח נתונים חקרני ותיעוד ממצאים (Data Storytelling)",
+            "desc": "חקירת קורלציות, זיהוי חריגים, הסקת מסקנות עסקיות מנומקות והצגתן כמסמך תובנות עסקיות.",
+            "action_hint": "💡 מראיינים מחפשים מועמדים שיודעים להסביר מספרים בשפה עסקית פשוטה שמנהלים מבינים.",
+        })
+
+        milestones.append({
+            "id": "ms_data_cv_ats",
+            "category": "✍️ שדרוג קורות חיים ל-ATS",
+            "title": "שכתוב סעיפי קורות החיים בדגש על השפעה עסקית ומדדים",
+            "desc": "הבלטת חיסכון בשעות עבודה, אופטימיזציה של תהליכים, גילוי צווארי בקבוק וקבלת החלטות מבוססות נתונים.",
+            "action_hint": "💡 השתמש בסעיפים המוכנים מתוך לשונית 'שדרוג קורות חיים'.",
+        })
+
+        milestones.append({
+            "id": "ms_data_certification",
+            "category": "🎓 הסמכה מקצועית מהקטלוג",
+            "title": "השלמת הסמכה רשמית ב-Data Analytics / BI",
+            "desc": "קבלת תעודת Google Data Analytics Professional Certificate או Microsoft Power BI Data Analyst Associate.",
+            "action_hint": "💡 הוספת תג ההסמכה הרשמי מעלה משמעותית את שיעור הפניות היזומות ממגייסים ב-LinkedIn.",
+        })
+
+        milestones.append({
+            "id": "ms_data_launch",
+            "category": "🚀 פרסום ונטוורקינג",
+            "title": "פרסום ניתוח הדאטה ב-LinkedIn ופנייה יזומה למנהלי צוותי אנליטיקס",
+            "desc": "שיתוף תובנות מהדשבורד בפוסט מקצועי ופנייה ממוקדת ל-5 מגייסים ומובילי תחום ה-Data בחברות היעד.",
+            "action_hint": "💡 צרף קישור ללוח המחוונים החי (Interactive Dashboard) בכל פנייה.",
+        })
+
+    # 3. Developer / Frontend / Fullstack / DevOps / Cyber / QA
+    else:
+        proj_name = project.project_name if project else "מערכת תוכנה מתקדמת מקצה לקצה"
+        primary_skill = high_skills[0] if high_skills else (med_skills[0] if med_skills else "כלי/ספריית חובה")
+
+        milestones.append({
+            "id": "ms_dev_repo",
+            "category": "💻 פרויקט קוד מלא ל-GitHub",
+            "title": f"פיתוח והעלאת פרויקט קצה-לקצה ל-GitHub: {proj_name}",
+            "desc": "מימוש ארכיטקטורת המערכת בקוד נקי, מודולרי ומתועד, כולל בדיקות יחידה (Unit Tests) והוראות התקנה ברורות.",
+            "action_hint": "💡 מגייסים ומראיינים טכניים בודקים את היסטוריית הקומיטים (Commit History) ואיכות הארכיטקטורה.",
+        })
+
+        milestones.append({
+            "id": "ms_dev_primary_skill",
+            "category": "🛠️ סגירת פער טכנולוגי קריטי",
+            "title": f"הטמעה מעשית של כלי/שפת החובה: {primary_skill}",
+            "desc": f"שילוב מודול מעשי הממחיש שליטה ב-{primary_skill} כחלק מליבת הארכיטקטורה של הפרויקט.",
+            "action_hint": f"💡 ראה מסלול למידה והסמכה מותאם בלשונית ניתוח הפערים עבור {primary_skill}.",
+        })
+
+        if len(high_skills) > 1:
+            second_skill = high_skills[1]
+            milestones.append({
+                "id": "ms_dev_second_skill",
+                "category": "🛠️ סגירת פער טכנולוגי נוסף",
+                "title": f"שליטה במיומנות ליבה נוספת: {second_skill}",
+                "desc": f"אינטגרציה של {second_skill} במערכת או פיתוח שירות ייעודי המשתמש בה.",
+                "action_hint": "💡 סגירת פערי ה-High מאפשרת לעבור את שלב הסינון הראשוני של הטק-ליד.",
+            })
+
+        milestones.append({
+            "id": "ms_dev_deploy_readme",
+            "category": "☁️ פריסה לענן ותיעוד מקצועי",
+            "title": "פריסה לסביבת ענן חיה (Live Demo) והעלאת קובץ README.md מושלם",
+            "desc": "פריסת האפליקציה לענן (Vercel / AWS / Render / Docker) עם קישור פעיל להדגמה וקובץ README מקצועי עם דיאגרמת ארכיטקטורה.",
+            "action_hint": "💡 שלד קובץ ה-README המלא זמין להורדה מטה בלשונית זו.",
+        })
+
+        milestones.append({
+            "id": "ms_dev_cv_ats",
+            "category": "✍️ אופטימיזציה של קורות החיים ל-ATS",
+            "title": "המרת סעיפי הניסיון בקו\"ח לנוסחת Action-Impact הנדסית",
+            "desc": "שדרוג סעיפי הפיתוח עם מדדי ביצוע טכנולוגיים (שיפור מהירות טעינה, צמצום זמני ריצה, חיסכון במשאבים).",
+            "action_hint": "💡 היעזר בסעיפים המנוסחים בלשונית 'שדרוג קורות חיים'.",
+        })
+
+        milestones.append({
+            "id": "ms_dev_certification",
+            "category": "🎓 הסמכה טכנולוגית מובילה מהקטלוג",
+            "title": "השלמת מסלול הסמכה טכנולוגי מוכר",
+            "desc": "סיום קורס רשמי מחברות טכנולוגיה מובילות (כגון AWS Certified Cloud Practitioner או Meta Frontend Developer).",
+            "action_hint": "💡 הסמכה רשמית מאשררת את הידע התאורטי מול מסנני ה-ATS.",
+        })
+
+        milestones.append({
+            "id": "ms_dev_launch",
+            "category": "🚀 הגשות ממוקדות ונטוורקינג פעיל",
+            "title": "הגשת מועמדות ל-10 משרות מתאימות ופנייה ישירה לראשי צוותים",
+            "desc": "שליחת קורות החיים המותאמים וקישור ישיר לפרויקט הפורטפוליו ו-GitHub לפרופילים של מנהלי פיתוח רלוונטיים.",
+            "action_hint": "💡 פנייה ישירה למנהל מגייס עם הצגת פרויקט מעשי מגדילה משמעותית את הסיכוי לראיון ראשון.",
+        })
+
+    return milestones
+
+
+# אתחול Session State
+if "app_step" not in st.session_state:
+    st.session_state.app_step = 1  # 1 = ברוכים הבאים וערך, 2 = בחירת תפקיד וקלט, 3 = לוח תוצאות
+
+if "target_role" not in st.session_state:
+    st.session_state.target_role = "UX/UI Designer"
+
+if "quick_role_choice" not in st.session_state:
+    st.session_state.quick_role_choice = "🎨 מעצב/ת UX/UI"
+
+if "data_source" not in st.session_state:
+    st.session_state.data_source = "demo"  # "demo" | "upload"
 
 if "resume_text" not in st.session_state:
     st.session_state.resume_text = ""
+
 if "job_text" not in st.session_state:
     st.session_state.job_text = ""
+
 if "analysis_result" not in st.session_state:
     st.session_state.analysis_result = None
+
 if "cache_hit" not in st.session_state:
     st.session_state.cache_hit = False
-if "pii_stats" not in st.session_state:
-    st.session_state.pii_stats = None
-if "active_preset_name" not in st.session_state:
-    st.session_state.active_preset_name = None
 
-# אבני דרך מובנות למעקב התקדמות (UX/UI Job Search Tracker)
-if "ux_ui_milestones" not in st.session_state:
-    st.session_state.ux_ui_milestones = {
-        "cv_scanned": False,
-        "bullet_rewriting": False,
-        "figma_mastery": False,
-        "case_study_project": False,
-        "portfolio_launch": False,
-        "job_applications": False,
-    }
+if "gemini_api_key" not in st.session_state:
+    st.session_state.gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY", "")
 
-# עדכון אוטומטי של שלב סריקת קו"ח ברגע שיש ניתוח תוצאה
-if st.session_state.analysis_result:
-    st.session_state.ux_ui_milestones["cv_scanned"] = True
+if "force_mock_mode" not in st.session_state:
+    st.session_state.force_mock_mode = False
+
+if "completed_milestones" not in st.session_state:
+    st.session_state.completed_milestones = set()
+
+if "balloons_shown" not in st.session_state:
+    st.session_state.balloons_shown = False
 
 
 # ==============================================================================
-# תהליך ONBOARDING רב-שלבי (Mobile-App Style Flow)
+# מסך 1: ברוכים הבאים וערך מוסף (WELCOME & VALUE PROPOSITION - SLACK HERO STYLE)
 # ==============================================================================
-if st.session_state.onboarding_active:
-    st.markdown('<div class="onboarding-container">', unsafe_allow_html=True)
+if st.session_state.app_step == 1:
+    # הורדת אזור ה-Hero לכיוון מרכז העמוד + ביטול כפתור הגדלת תמונה בעת ריחוף
+    st.markdown(
+        """
+        <style>
+        .block-container {
+            padding-top: clamp(60px, 9vh, 110px) !important;
+            padding-bottom: 3rem !important;
+        }
+        /* ביטול כפתור הגדלת תמונה למסך מלא בעת ריחוף */
+        [data-testid="stImage"] button,
+        [data-testid="StyledFullScreenButton"],
+        [data-testid="stElementToolbar"],
+        button[title*="fullscreen" i],
+        button[title*="Fullscreen" i],
+        button[title*="מסך מלא" i],
+        button[title*="הגדלה" i] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        /* הגדלת כפתור ה-CTA בהתאם לקנה המידה המוגדל של ה-Hero */
+        div.stButton > button[kind="primary"] {
+            font-size: 16.5px !important;
+            font-weight: 800 !important;
+            padding: 12px 36px !important;
+            border-radius: 9999px !important;
+            box-shadow: 0 4px 18px rgba(108, 99, 255, 0.28) !important;
+            transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0) !important;
+        }
+        div.stButton > button[kind="primary"]:hover {
+            box-shadow: 0 6px 22px rgba(108, 99, 255, 0.4) !important;
+            transform: translateY(-1px) !important;
+        }
+        /* עיצוב והגדלת איור ה-Hero להתאמה מושלמת מול הפיצ'רים */
+        [data-testid="stImage"] img {
+            border-radius: 20px !important;
+            box-shadow: 0 12px 36px rgba(15, 23, 42, 0.07) !important;
+            margin-top: 6px !important;
+            transition: transform 0.3s ease !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    # ----------------------------------------------------
-    # שלב 1: מסך פתיחה והשראה (Welcome Screen)
-    # ----------------------------------------------------
-    if st.session_state.onboarding_step == 1:
-        st.markdown(
+    col_hero, col_img = st.columns([1, 1.12], gap="large", vertical_alignment="center")
+
+    with col_hero:
+        render_clean_html(
             """
-            <div class="onboarding-card">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
-            <span style="background: #ede9fe; color: #3730a3; border: 1.5px solid #c7d2fe; border-radius: 9999px; padding: 5px 16px; font-size: 13px; font-weight: 800;">
-            🚀 שלב 1 מתוך 3 • ברוכים הבאים
-            </span>
-            <div class="status-server-online">
-            <span class="status-dot-pulse"></span>
-            <span>● Server Online</span>
-            </div>
-            </div>
+            <div style="direction: rtl; text-align: right;">
+                <!-- לוגו GetAJob מיושר בפינה הימנית העליונה כעוגן מותג מוביל בהתאם למקובל במוצרי SaaS ב-RTL -->
+                <div style="display: flex; justify-content: flex-start; margin-bottom: 22px;">
+                    <div style="display: inline-flex; align-items: center; gap: 10px; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 9999px; padding: 9px 24px; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);">
+                        <span style="font-size: 22px;">🎯</span>
+                        <span style="font-size: 19px; font-weight: 900; color: #0f172a; font-family: 'Outfit', sans-serif; letter-spacing: -0.3px;"><bdi>GetAJob</bdi></span>
+                    </div>
+                </div>
 
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-            <div style="width: 58px; height: 58px; border-radius: 18px; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 16px rgba(79, 70, 229, 0.25); border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0;">
-            🎯
-            </div>
-            <div>
-            <h1 style="margin: 0; font-size: 30px; font-weight: 800; color: #0f172a;">GetAJob</h1>
-            <p style="margin: 4px 0 0 0; color: #4f46e5; font-size: 16px; font-weight: 700;">
-            Find your skill gap. Build what you're missing.
-            </p>
-            </div>
-            </div>
+                <!-- כותרת ראשית בעברית: 2 שורות מודגשות בגווני המותג ללא גלישת מילים מיותרת -->
+                <div style="margin-bottom: 24px;">
+                    <div style="font-family: 'Rubik', 'Heebo', sans-serif; font-size: clamp(26px, 3vw, 36px); font-weight: 900; line-height: 1.22; color: #0f172a; letter-spacing: -0.3px; white-space: nowrap;">
+                        זהה את פערי הידע שלך.
+                    </div>
+                    <div style="font-family: 'Rubik', 'Heebo', sans-serif; font-size: clamp(26px, 3vw, 36px); font-weight: 900; line-height: 1.22; background: linear-gradient(135deg, #6C63FF 0%, #4338ca 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.3px; white-space: nowrap;">
+                        ובנה בדיוק את מה שחסר לך.
+                    </div>
+                </div>
 
-            <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 20px; padding: 24px; margin: 24px 0;">
-            <h3 style="margin-top: 0; margin-bottom: 14px; font-size: 18px; color: #0f172a; font-weight: 800;">
-            איך המערכת הופכת אותך לג'וניור שאי אפשר להתעלם ממנו?
-            </h3>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
-            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
-            <div style="font-size: 26px; margin-bottom: 6px;">🔍</div>
-            <strong style="color: #0f172a; font-size: 15.5px; display: block; margin-bottom: 4px;">איתור פערי מיומנויות</strong>
-            <p style="color: #475569; font-size: 13.5px; margin: 0; line-height: 1.5;">סריקה קפדנית מול דרישות המשרה לאיתור הטכנולוגיות החסרות בקו"ח.</p>
-            </div>
-
-            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
-            <div style="font-size: 26px; margin-bottom: 6px;">✍️</div>
-            <strong style="color: #0f172a; font-size: 15.5px; display: block; margin-bottom: 4px;">שכתוב סעיפים ל-ATS</strong>
-            <p style="color: #475569; font-size: 13.5px; margin: 0; line-height: 1.5;">הפיכת סעיפים גנריים לסעיפי הישגים מדידים (Action + Scale + Impact) שפותחים דלתות.</p>
-            </div>
-
-            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
-            <div style="font-size: 26px; margin-bottom: 6px;">🚀</div>
-            <strong style="color: #0f172a; font-size: 15.5px; display: block; margin-bottom: 4px;">מחולל פרויקט ל-GitHub</strong>
-            <p style="color: #475569; font-size: 13.5px; margin: 0; line-height: 1.5;">מפרט פרויקט מעשי ושלד README מקצועי לסגירת הפער בדיוק מול המשרה.</p>
-            </div>
-            </div>
-            </div>
-
-            <p style="color: #334155; font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 24px;">
-            בחר את מסלול היעד שלך (בראשם <strong>מסלול הדגל UX/UI</strong>) וקבל סקירת עומק על דרישות השוק!
-            </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        st.markdown(render_onboarding_progress(1, 3, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-        col_start, col_skip = st.columns([2, 1])
-        with col_start:
-            if st.button("בוא נבחר את מסלול היעד שלך 👈", type="primary", use_container_width=True):
-                st.session_state.onboarding_step = 2
-                st.rerun()
-        with col_skip:
-            if st.button("דלג ישירות למנוע הניתוח ⏩", use_container_width=True):
-                st.session_state.onboarding_active = False
-                st.rerun()
-
-    # ----------------------------------------------------
-    # שלב 2: בחירת תחום היעד המקצועי (Choose Career Domain)
-    # ----------------------------------------------------
-    elif st.session_state.onboarding_step == 2:
-        st.markdown(
-            """
-            <div class="onboarding-card">
-            <span class="onboarding-step-badge">💼 שלב 2 מתוך 3 • בחירת מסלול יעד</span>
-            <h2 style="margin: 0; font-size: 26px; font-weight: 800; color: #0f172a;">
-            לאיזה תפקיד בהייטק אתה שואף להגיע?
-            </h2>
-            <p style="margin: 6px 0 16px 0; color: #475569; font-size: 15.5px;">
-            הקלד את המקצוע הרצוי בתיבה למטה, או בחר בלחיצה אחת מאחד המסלולים המובילים (בראשם <strong>מסלול הדגל UX/UI</strong>):
-            </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        # תיבת הקלדה חופשית למקצוע המבוקש
-        st.markdown("<label style='font-size: 16px; font-weight: 800; color: #0f172a; display: block; margin-bottom: 8px;'>✍️ הקלד את המקצוע המבוקש שלך:</label>", unsafe_allow_html=True)
-        typed_job = st.text_input(
-            "שם התפקיד הרצוי:",
-            value=st.session_state.custom_profession_name,
-            placeholder="למשל: UX/UI Designer, Fullstack Developer, QA אוטומציה, Data Analyst, Cloud Engineer...",
-            label_visibility="collapsed",
-            help="תוכל להקליד כל מקצוע, לבחור ממסלולי הדגל למטה, או לפתוח את מאגר 21 התפקידים המלא."
-        )
-        if typed_job != st.session_state.custom_profession_name:
-            st.session_state.custom_profession_name = typed_job
-            matched_key = None
-            for k, d in CAREER_DOMAINS.items():
-                if d["title"].lower() in typed_job.lower() or typed_job.lower() in d["title"].lower() or k in typed_job.lower():
-                    matched_key = k
-                    break
-            st.session_state.selected_domain_id = matched_key if matched_key else "custom"
-
-        # כותרת למקצועות המוצעים
-        st.markdown(
-            """
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 24px; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
-            <h4 style="margin: 0; color: #0f172a; font-weight: 800; font-size: 17px;">
-            ✨ מסלולי היעד המובילים (בראשם מסלול הדגל UX/UI):
-            </h4>
-            <span style="font-size: 13px; color: #64748b; font-weight: 600;">(לחיצה תמלא את התפקיד ותסמן את המסלול)</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        for domain_key, domain in CAREER_DOMAINS.items():
-            is_selected = (
-                st.session_state.selected_domain_id == domain_key or 
-                st.session_state.custom_profession_name.strip() == domain["title"].strip()
-            )
-            is_flagship = domain.get("is_flagship", False)
-            
-            if is_flagship:
-                border_color = "#e11d48" if is_selected else "#fda4af"
-                bg_color = "#fff1f2" if is_selected else "#ffffff"
-                shadow_style = "box-shadow: 0 4px 18px rgba(225, 29, 72, 0.18);" if is_selected else "box-shadow: 0 2px 8px rgba(225, 29, 72, 0.06);"
-                flagship_badge = '<span style="background: #ffe4e6; color: #9f1239; border: 1.5px solid #fda4af; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 800; direction: rtl;"><bdi>⭐ מסלול הדגל הראשי</bdi></span>'
-            else:
-                border_color = "#4f46e5" if is_selected else "#cbd5e1"
-                bg_color = "#f5f3ff" if is_selected else "#ffffff"
-                shadow_style = "box-shadow: 0 4px 18px rgba(79, 70, 229, 0.15);" if is_selected else "box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);"
-                flagship_badge = ""
-
-            domain_card_html = f"""
-            <div style="background: {bg_color}; border: 2px solid {border_color}; border-radius: 20px; padding: 20px 24px; margin-bottom: 12px; direction: rtl !important; text-align: right !important; {shadow_style}">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; direction: rtl !important;">
-            <div style="display: flex; align-items: center; gap: 14px; direction: rtl !important; text-align: right !important;">
-            <span style="font-size: 32px; flex-shrink: 0;">{domain['icon']}</span>
-            <div style="text-align: right !important; direction: rtl !important;">
-            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; direction: rtl !important;">
-            <h3 style="margin: 0; font-size: 18.5px; font-weight: 800; color: #0f172a; text-align: right !important; direction: rtl !important;"><bdi>{domain['title']}</bdi></h3>
-            {flagship_badge}
-            </div>
-            <p style="margin: 4px 0 0 0; color: #475569; font-size: 14px; font-weight: 500; text-align: right !important; direction: rtl !important;"><bdi>{domain['short_desc']}</bdi></p>
-            </div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; direction: rtl !important;">
-            <span style="background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>{domain['demand_level']}</bdi></span>
-            <span style="background: #ede9fe; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700; direction: rtl !important;"><bdi>💰 {domain['salary_range']}</bdi></span>
-            </div>
-            </div>
+                <!-- בולטים תמציתיים מוגדלים ביישור ימין מלא -->
+                <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
+                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
+                            <strong>איתור פערי מיומנויות:</strong> מיפוי מדויק של הטכנולוגיות וכלי החובה שחסרים לך מול דרישות השוק.
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
+                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
+                            <strong>שדרוג קורות חיים ל-<bdi>ATS</bdi>:</strong> המרת ניסוחים לסעיפי הישגים מדידים בפורמט <bdi dir="ltr" style="color: #6C63FF; font-weight: 700;">Action-Impact</bdi>.
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
+                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
+                            <strong>צ'קליסט אינטראקטיבי ומעקב התקדמות:</strong> זיהוי החוסרים לקראת תפקיד היעד והצגתם כרשימת משימות לסימון, עם מעקב שוטף ומד מוכנות לגיוס.
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
+                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
+                            <strong>מסלולי למידה והסמכות:</strong> קורסים מומלצים מחברות טכנולוגיה מובילות (<bdi dir="ltr">Google, AWS, Meta, Figma</bdi>).
+                        </div>
+                    </div>
+                </div>
             </div>
             """
-            st.markdown(textwrap.dedent(domain_card_html).strip(), unsafe_allow_html=True)
+        )
 
-            btn_label = f"👈 בחר ב{domain['title']}" if not is_selected else f"✔ {domain['title']} נבחר"
-            btn_type = "primary" if is_selected else "secondary"
-            if st.button(btn_label, key=f"select_dom_{domain_key}", type=btn_type, use_container_width=True):
-                st.session_state.selected_domain_id = domain_key
-                st.session_state.custom_profession_name = domain["title"]
-                st.rerun()
+        # כפתור CTA מיושר לצד ימין של הטקסט מעליו, עם רוחב מותאם אישית
+        if st.button("בוא נתחיל: בחר את תפקיד היעד שלך", type="primary", use_container_width=False, key="btn_start_wizard"):
+            st.session_state.app_step = 2
+            st.rerun()
 
-            st.markdown("<div style='margin-bottom: 10px;'></div>", unsafe_allow_html=True)
-
-        # הרחבה למאגר המלא של 21 תפקידי התעשייה מה-Excel
-        with st.expander("📚 מאגר מורחב: צפה בכל 21 תפקידי היעד מהתעשייה (לחץ לבחירה ישירה)"):
-            st.markdown("<p style='font-size: 13.5px; color: #475569; margin-bottom: 12px;'>מבוסס על מאגר מסלולי הלימוד וה-Skills הרשמי שנלמד מה-Excel:</p>", unsafe_allow_html=True)
-            all_role_names = get_all_roles()
-            role_cols = st.columns(3)
-            for r_idx, r_name in enumerate(all_role_names):
-                with role_cols[r_idx % 3]:
-                    if st.button(f"🎯 {r_name}", key=f"cat_role_{r_idx}", use_container_width=True):
-                        st.session_state.custom_profession_name = r_name
-                        matched_key = None
-                        for k, d in CAREER_DOMAINS.items():
-                            if d["title"].lower() in r_name.lower() or r_name.lower() in d["title"].lower():
-                                matched_key = k
-                                break
-                        st.session_state.selected_domain_id = matched_key if matched_key else "catalog_role"
-                        st.rerun()
-
-        st.markdown(render_onboarding_progress(2, 3, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-        nav_col1, nav_col2, nav_col3 = st.columns([1, 2, 1])
-        with nav_col1:
-            if st.button("⬅ חזור", use_container_width=True):
-                st.session_state.onboarding_step = 1
-                st.rerun()
-        with nav_col2:
-            if st.button("הבא: קבל סקירת עומק על המקצוע 👈", type="primary", use_container_width=True):
-                st.session_state.onboarding_step = 3
-                st.rerun()
-        with nav_col3:
-            if st.button("דלג לאנלייזר ⏩", use_container_width=True):
-                st.session_state.onboarding_active = False
-                st.rerun()
-
-    # ----------------------------------------------------
-    # שלב 3: סקירת המקצוע והדרישות בשוק (Career Deep Dive)
-    # ----------------------------------------------------
-    elif st.session_state.onboarding_step == 3:
-        if st.session_state.selected_domain_id in CAREER_DOMAINS:
-            selected_dom = CAREER_DOMAINS[st.session_state.selected_domain_id]
+    with col_img:
+        # הצגת איור המערכת בסגנון נקי ומודרני
+        if os.path.exists("assets/hero_illustration.jpg"):
+            st.image("assets/hero_illustration.jpg", use_container_width=True)
         else:
-            cat_role = get_role_data(st.session_state.custom_profession_name)
-            if cat_role:
-                selected_dom = {
-                    "id": "catalog_role",
-                    "title": cat_role["role_name"],
-                    "icon": "💼",
-                    "short_desc": f"תפקיד מוגדר מתוך מאגר 21 מקצועות התעשייה: {cat_role['role_name']}",
-                    "demand_level": "תפקיד ממופה במאגר",
-                    "salary_range": "בהתאם לוותק ולחברה",
-                    "must_have_skills": cat_role.get("main_skills", []),
-                    "good_to_have_skills": cat_role.get("common_tools", []),
-                    "market_reality": f"דרישת הוכחה מינימלית: {cat_role.get('minimum_evidence', '')}. {cat_role.get('education_note', '')}",
-                    "ats_winning_formula": f"Delivered robust engineering outcomes in {cat_role['role_name']}, utilizing {', '.join(cat_role.get('common_tools', [])[:3])} to optimize workflow velocity.",
-                    "recommended_project_type": f"פרויקט מעשי המוכיח: {cat_role.get('minimum_evidence', 'בניית מערכת מודולרית מתועדת')}",
-                    "matching_preset_id": "fullstack_preset"
-                }
-            else:
-                custom_title = st.session_state.custom_profession_name.strip() or "מקצוע הייטק מותאם אישית"
-                selected_dom = {
-                    "id": "custom",
-                    "title": custom_title,
-                    "icon": "🎯",
-                    "short_desc": f"מסלול קריירה מותאם אישית עבור {custom_title}",
-                    "demand_level": "מסלול מותאם אישית (Custom Track)",
-                    "salary_range": "בהתאם לדרישות המשרה והוותק",
-                    "must_have_skills": ["דרישות סף מרכזיות מהמשרה", "קוד נקי ומבני נתונים", "Git & Source Control", "אינטגרציית APIs"],
-                    "good_to_have_skills": ["Docker & Containers", "בדיקות אוטומטיות (Testing)", "ארכיטקטורת ענן", "אופטימיזציית ביצועים"],
-                    "market_reality": f"עבור תפקידי {custom_title}, מעסיקים ומגייסים מחפשים מועמדים שמוכיחים עשייה פרקטית ועצמאות: פרויקט ייעודי שמציג עבודה לפי סטנדרטים מקובלים בתעשייה, פתרון אתגרים מוחשיים וקוד מאורגן וקריא.",
-                    "ats_winning_formula": f"Architected robust solutions for {custom_title}, enhancing operational efficiency and applying modern engineering best practices.",
-                    "recommended_project_type": f"פרויקט מקצועי וממוקד לתפקיד {custom_title} המוכיח שליטה בארכיטקטורה, שילוב טכנולוגיות מתאימות ותיעוד README מקצועי עם פקודות הרצה.",
-                    "matching_preset_id": "fullstack_preset"
-                }
-        
-        st.markdown(
-            f"""
-            <div class="onboarding-card" style="margin-bottom: 20px;">
-            <span class="onboarding-step-badge">📊 שלב 3 מתוך 3 • סקירת שוק מקצועית</span>
-            <h2 style="margin: 0; font-size: 26px; font-weight: 800; color: #0f172a;">
-            סקירת מקצוע: {selected_dom['title']}
-            </h2>
-            <p style="margin: 6px 0 0 0; color: #475569; font-size: 15.5px;">
-            הנה כל מה שאתה חייב לדעת כג'וניור כדי לעבור את שלב הסינון הראשוני ולהגיע לראיון:
-            </p>
+            render_clean_html(
+                """
+                <div style="background: #f1f5f9; border-radius: 20px; padding: 40px; text-align: center; color: #64748b;">
+                    <span style="font-size: 60px;">🚀</span>
+                </div>
+                """
+            )
+
+
+# ==============================================================================
+# מסך 2: בחירת תפקיד והזנת נתוני מועמד (ROLE SELECTION & INPUT)
+# ==============================================================================
+elif st.session_state.app_step == 2:
+    # סרגל חזרה עליון
+    nav_col1, nav_col2 = st.columns([1.2, 4], vertical_alignment="center")
+    with nav_col1:
+        if st.button("⬅ חזרה למסך הבית", use_container_width=True, key="btn_back_to_welcome"):
+            st.session_state.app_step = 1
+            st.rerun()
+    with nav_col2:
+        render_clean_html(
+            """
+            <div style="direction: rtl; text-align: left;">
+                <span style="background: #EDE9FE; color: #3730A3; border-radius: 9999px; padding: 6px 18px; font-size: 13.5px; font-weight: 800; border: 1px solid #C7D2FE;">
+                    שלב 2 מתוך 3 • בחירת תפקיד והזנת קורות חיים
+                </span>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
-        # כרטיס סקירה מעמיקה
-        st.markdown(render_career_intel(selected_dom), unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 14px;'></div>", unsafe_allow_html=True)
 
-        st.markdown(render_onboarding_progress(3, 3, theme=st.session_state.theme_mode), unsafe_allow_html=True)
+    # ----------------------------------------------------
+    # 1. בחירת תפקיד מהירה (Pills / Quick Buttons + Selectbox)
+    # ----------------------------------------------------
+    st.markdown("<h3 style='color: #0F172A; font-size: 19px; font-weight: 800; margin-bottom: 10px;'>🎯 1. בחר תפקיד יעד בהייטק</h3>", unsafe_allow_html=True)
 
-        bot_col1, bot_col2 = st.columns([1, 2])
-        with bot_col1:
-            if st.button("⬅ שנה מקצוע / מסלול", use_container_width=True):
-                st.session_state.onboarding_step = 2
-                st.rerun()
-        with bot_col2:
-            finish_btn = st.button(
-                f"🚀 מעולה! בוא ננתח קו\"ח מותאמים ל{selected_dom['title']}",
-                type="primary",
-                use_container_width=True,
-            )
-            if finish_btn:
-                st.session_state.onboarding_active = False
-                # התאמת תרחיש דמו ראשוני בהתאם לתחום
-                matching_id = selected_dom.get("matching_preset_id")
-                matching_preset = next((p for p in presets if p["id"] == matching_id), None)
-                if matching_preset and not st.session_state.resume_text:
-                    st.session_state.resume_text = matching_preset["cv_text"]
-                    st.session_state.job_text = matching_preset["job_text"]
-                    st.session_state.analysis_result = JobMatchAnalysis.model_validate(matching_preset["result"])
-                    st.session_state.cache_hit = True
-                    st.session_state.active_preset_name = matching_preset["id"]
-                st.rerun()
+    quick_options = list(POPULAR_ROLES_MAP.keys()) + ["🔍 תפקיד אחר ממאגר התעשייה..."]
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    chosen_pill = st.pills(
+        "תפקידים פופולריים:",
+        options=quick_options,
+        default=st.session_state.quick_role_choice,
+        key="pills_popular_roles",
+        label_visibility="collapsed",
+    )
 
+    all_catalog_roles = get_all_roles()
+    popular_catalog_names = list(POPULAR_ROLES_MAP.values())
+    other_catalog_roles = [r for r in all_catalog_roles if r not in popular_catalog_names]
 
-# ==============================================================================
-# המערכת הראשית (Main Analyzer Dashboard)
-# ==============================================================================
-else:
-    if st.session_state.selected_domain_id in CAREER_DOMAINS:
-        curr_domain = CAREER_DOMAINS[st.session_state.selected_domain_id]
+    if chosen_pill in POPULAR_ROLES_MAP:
+        st.session_state.quick_role_choice = chosen_pill
+        st.session_state.target_role = POPULAR_ROLES_MAP[chosen_pill]
     else:
-        custom_title = st.session_state.custom_profession_name.strip() or "מסלול מותאם אישית"
-        curr_domain = {"title": custom_title, "icon": "🎯"}
-
-    # ----------------------------------------------------
-    # כותרת עליונה (Hero Banner) עם צ'יפ החלפת מסלול
-    # ----------------------------------------------------
-    hero_html = f"""
-    <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 24px; padding: 22px 28px; margin-bottom: 24px; box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05); direction: rtl; text-align: right;">
-    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; direction: rtl;">
-    <div style="display: flex; align-items: center; gap: 16px; direction: rtl;">
-    <div style="width: 52px; height: 52px; border-radius: 16px; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25); border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0;">
-    🎯
-    </div>
-    <div style="text-align: right; direction: rtl;">
-    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; direction: rtl;">
-    <h1 style="margin: 0; font-size: 28px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">
-    GetAJob
-    </h1>
-    <div class="status-server-online">
-    <span class="status-dot-pulse"></span>
-    <span>● Server Online</span>
-    </div>
-    <span style="background: #ede9fe; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 9999px; padding: 4px 14px; font-size: 13px; font-weight: 700;">
-    {curr_domain['icon']} מסלול יעד: {curr_domain['title']}
-    </span>
-    </div>
-    <p style="color: #4f46e5; font-size: 14.5px; margin: 4px 0 0 0; line-height: 1.5; font-weight: 700;">
-    Find your skill gap. Build what you're missing.
-    <span style="color: #475569; font-weight: 500; padding-right: 6px;">— איתור פערי מיומנויות מדויקים, שכתוב סעיפי קו"ח לפי Action-Impact, ומחולל פרויקט מעשי.</span>
-    </p>
-    </div>
-    </div>
-    <div style="direction: ltr; text-align: left; display: flex; gap: 8px; align-items: center;">
-    <span style="background: #f0f9ff; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 9999px; padding: 4px 12px; font-size: 12.5px; font-weight: 700;">
-    ⚡ SLA: &lt; 15s | 0s Cache
-    </span>
-    </div>
-    </div>
-    </div>
-    """
-    st.markdown(textwrap.dedent(hero_html).strip(), unsafe_allow_html=True)
-
-    # סרגל בקרה עליון: סטטוס מודל, מתג מצב כהה/בהיר והחלפת מסלול
-    top_ctrl1, top_ctrl2, top_ctrl3 = st.columns([2, 1, 1], gap="small")
-    with top_ctrl1:
-        if st.session_state.gemini_api_key.strip():
-            st.markdown(
-                '<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); '
-                'border: 1px solid #10b981; color: #34d399; padding: 6px 16px; border-radius: 9999px; font-weight: 700; font-size: 13.5px;">'
-                '<span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>'
-                '🟢 מחובר למודל Google Gemini (חי בזמן אמת)</div>',
-                unsafe_allow_html=True
-            )
-        else:
-            st.markdown(
-                '<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(108, 99, 255, 0.15); '
-                'border: 1px solid var(--primary-accent); color: var(--text-primary); padding: 6px 16px; border-radius: 9999px; font-weight: 700; font-size: 13.5px;">'
-                '<span style="width: 8px; height: 8px; border-radius: 50%; background: var(--primary-accent); display: inline-block;"></span>'
-                '🛡️ מנוע היוריסטי דינמי + מגן הזרקות פעיל</div>',
-                unsafe_allow_html=True
-            )
-    with top_ctrl2:
-        theme_btn_label = "☀️ מצב בהיר" if st.session_state.theme_mode == "dark" else "🌙 מצב כהה (אפיון)"
-        if st.button(theme_btn_label, key="btn_theme_switcher", use_container_width=True):
-            st.session_state.theme_mode = "light" if st.session_state.theme_mode == "dark" else "dark"
-            st.rerun()
-    with top_ctrl3:
-        if st.button("🔄 שנה מסלול / סקירה", use_container_width=True):
-            st.session_state.onboarding_active = True
-            st.session_state.onboarding_step = 2
-            st.rerun()
-
-    with st.expander("🔑 חיבור למפתח Google Gemini API (אופציונלי לניתוח חי בענן)", expanded=False):
-        st.markdown(
-            "<p style='color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;'>"
-            "המערכת מגיעה עם מנוע ניתוח היוריסטי חכם דינמי וחסינות Prompt Injection פעילה ללא צורך במפתח. "
-            "אם תרצה להתחבר ישירות למודל Google Gemini 2.5 Flash, הדבק את המפתח כאן:"
-            "</p>",
-            unsafe_allow_html=True
+        st.session_state.quick_role_choice = "🔍 תפקיד אחר ממאגר התעשייה..."
+        selected_from_catalog = st.selectbox(
+            "בחר תפקיד מתוך מאגר 21 התפקידים:",
+            options=other_catalog_roles,
+            index=0 if st.session_state.target_role not in other_catalog_roles else other_catalog_roles.index(st.session_state.target_role),
+            key="select_other_catalog_role",
         )
-        api_input = st.text_input(
-            "מפתח Gemini API:",
-            value=st.session_state.gemini_api_key,
-            type="password",
-            placeholder="AIzaSy...",
-            key="gemini_key_input",
-            help="המפתח נשמר בסשן הדפדפן בלבד לצורך קריאה מאובטחת."
-        )
-        if api_input != st.session_state.gemini_api_key:
-            st.session_state.gemini_api_key = api_input
-            st.rerun()
+        st.session_state.target_role = selected_from_catalog
 
-    # סרגל שלבים להנחיית המשתמש (M3 Segmented Pills)
-    current_step = 2 if st.session_state.analysis_result else 1
-    st.markdown(render_step_bar(current_step, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-    # כרטיס טיפ מקצועי לעמידה ב-ATS (M3 Callout)
-    st.markdown(render_ats_tip(theme=st.session_state.theme_mode), unsafe_allow_html=True)
+    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
 
     # ----------------------------------------------------
-    # כפתורי תרחישי דמו מהירים (M3 Expressive Segmented Presets)
+    # 2. מקור נתוני המועמד (דמו מהיר / העלאת קורות חיים)
     # ----------------------------------------------------
-    st.markdown("<h4 style='color: #0f172a; font-weight: 800; margin-bottom: 12px;'>⚡ תרחישי הדגמה מוכנים מראש (קליק אחד לטעינה):</h4>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #0F172A; font-size: 19px; font-weight: 800; margin-bottom: 10px;'>📄 2. מקור נתוני המועמד</h3>", unsafe_allow_html=True)
 
-    preset_cols = st.columns(len(presets))
-    preset_icons = ["🎨", "🛡️", "💻", "📊"]
+    source_selection = st.radio(
+        "בחר כיצד להזין את נתוני המועמד:",
+        options=["⚡ פרופיל דמו מהיר (הדגמה בקליק אחד)", "📁 העלאת קורות חיים (קובץ PDF או DOCX)"],
+        index=0 if st.session_state.data_source == "demo" else 1,
+        horizontal=True,
+        key="radio_source_selection",
+        label_visibility="collapsed",
+    )
 
-    for idx, p in enumerate(presets):
-        with preset_cols[idx]:
-            is_selected = st.session_state.active_preset_name == p["id"]
-            icon = preset_icons[idx] if idx < len(preset_icons) else "🎯"
-            btn_label = f"{icon} {p['title'].split(':')[1].strip()}"
-            if is_selected:
-                btn_label = f"✔ {btn_label} (פעיל)"
+    matched_preset_id = map_role_to_preset(st.session_state.target_role)
+    matched_preset = next((p for p in PRESETS if p["id"] == matched_preset_id), PRESETS[0] if PRESETS else None)
 
-            if st.button(btn_label, key=f"btn_preset_{idx}", use_container_width=True):
-                st.session_state.resume_text = p["cv_text"]
-                st.session_state.job_text = p["job_text"]
-                st.session_state.analysis_result = JobMatchAnalysis.model_validate(p["result"])
-                st.session_state.cache_hit = True
-                st.session_state.pii_stats = {"phones": 1, "emails": 1, "ids": 0}
-                st.session_state.active_preset_name = p["id"]
-                st.rerun()
-
-    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
-
-    # ----------------------------------------------------
-    # אזור הקלט הכפול (Input Hub - Side-by-Side)
-    # ----------------------------------------------------
-    col_cv, col_job = st.columns([1, 1], gap="large")
-
-    with col_cv:
-        st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>📄 1. קורות חיים של המועמד</h3>", unsafe_allow_html=True)
-        
-        cv_tabs = st.tabs(["📁 העלאת קובץ PDF", "✍️ הזנה / עריכת טקסט"])
-        
-        with cv_tabs[0]:
+    if "⚡ פרופיל דמו מהיר" in source_selection:
+        st.session_state.data_source = "demo"
+        with st.container(border=True):
+            if matched_preset:
+                render_clean_html(
+                    f"""
+                    <div style="direction: rtl; text-align: right; padding: 4px 2px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 22px;">⚡</span>
+                            <strong style="color: #0F172A; font-size: 16px; font-weight: 800;">{matched_preset['title']}</strong>
+                        </div>
+                        <p style="color: #475569; font-size: 14px; margin: 0 0 12px 0; line-height: 1.6;">
+                            {matched_preset['description']}
+                        </p>
+                        <div style="display: inline-flex; align-items: center; gap: 8px; background: #EDE9FE; color: #3730A3; border-radius: 9999px; padding: 5px 16px; font-size: 13px; font-weight: 700; border: 1px solid #C7D2FE;">
+                            ✔ נתוני קורות החיים ודרישות המשרה מוכנים לניתוח מיידי בלחיצה אחת
+                        </div>
+                    </div>
+                    """
+                )
+    else:
+        st.session_state.data_source = "upload"
+        with st.container(border=True):
             uploaded_file = st.file_uploader(
-                "בחר קובץ PDF של קורות החיים (עד 10MB)",
-                type=["pdf"],
-                help="קריאת הטקסט מתבצעת ישירות בזיכרון. פרטים אישיים מוסרים אוטומטית לפני הניתוח.",
+                "העלה קובץ קורות חיים בפורמט PDF או Word (.docx)",
+                type=["pdf", "docx"],
+                help="הטקסט יחולץ ישירות בזיכרון. הפרטים המזהים יטוהרו אוטומטית.",
+                key="cv_file_uploader_input",
             )
             if uploaded_file is not None:
                 try:
-                    pdf_bytes = uploaded_file.read()
-                    raw_text, page_count = extract_text_from_pdf(pdf_bytes)
-                    clean_text, stats = sanitize_pii(raw_text)
-                    st.session_state.resume_text = clean_text
-                    st.session_state.pii_stats = stats
-                    st.session_state.active_preset_name = None
-                    
-                    st.success(f"✔ הקובץ נקרא בהצלחה ({page_count} עמודים, {len(clean_text):,} תווים).")
-                except PDFExtractionError as e:
-                    st.error(f"⚠️ {str(e)}")
-                except Exception as e:
-                    st.error(f"שגיאה בעיבוד הקובץ: {str(e)}")
+                    file_bytes = uploaded_file.read()
+                    extracted_text, _ = extract_text_from_file(file_bytes, uploaded_file.name)
+                    st.session_state.resume_text = extracted_text
+                    st.success(f"✔ הקובץ '{uploaded_file.name}' נטען בהצלחה ({len(extracted_text)} תווים).")
+                except DocumentExtractionError as err:
+                    st.error(f"שגיאה בטעינת הקובץ: {err}")
 
-        with cv_tabs[1]:
-            manual_cv = st.text_area(
-                "ערוך או הדבק טקסט קו\"ח:",
-                value=st.session_state.resume_text,
-                height=160,
-                placeholder="הדבק כאן את תוכן קורות החיים שלך...",
-            )
-            if manual_cv != st.session_state.resume_text:
-                clean_text, stats = sanitize_pii(manual_cv)
-                st.session_state.resume_text = clean_text
-                st.session_state.pii_stats = stats
+            with st.expander("✍️ צפייה ועריכה של טקסט קורות החיים ותיאור המשרה (אופציונלי)", expanded=False):
+                col_c1, col_c2 = st.columns(2)
+                with col_c1:
+                    cv_val = st.text_area(
+                        "טקסט קורות החיים:",
+                        value=st.session_state.resume_text,
+                        height=160,
+                        placeholder="הדבק כאן את טקסט קורות החיים אם לא העלית קובץ...",
+                        key="direct_cv_text_area",
+                    )
+                    st.session_state.resume_text = cv_val
+                with col_c2:
+                    default_job_desc = ""
+                    role_info = get_role_data(st.session_state.target_role)
+                    if role_info:
+                        default_job_desc = (
+                            f"דרוש/ה {role_info.get('role_name', st.session_state.target_role)}.\n"
+                            f"דרישות חובה: {', '.join(role_info.get('main_skills', []))}.\n"
+                            f"כלים וטכנולוגיות: {', '.join(role_info.get('common_tools', []))}."
+                        )
+                    job_val = st.text_area(
+                        "דרישות משרת היעד:",
+                        value=st.session_state.job_text or default_job_desc,
+                        height=160,
+                        placeholder="הדבק כאן את דרישות המשרה...",
+                        key="direct_job_text_area",
+                    )
+                    st.session_state.job_text = job_val
 
-        # הצגת חיווי PII במידה וסונן
-        if st.session_state.pii_stats:
-            stats = st.session_state.pii_stats
-            if stats["phones"] or stats["emails"] or stats["ids"]:
-                pii_html = f"""
-                <div style="background: #e0f2fe; border: 1.5px solid #7dd3fc; border-radius: 9999px; padding: 8px 20px; font-size: 14px; color: #0369a1; margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
-                🔒 <strong>אבטחת פרטיות (PII Sanitized):</strong> סוננו {stats['phones']} טלפונים, {stats['emails']} כתובות מייל ו-{stats['ids']} תעודות זהות.
+    st.markdown("<div style='margin-top: 24px;'></div>", unsafe_allow_html=True)
+
+    # ----------------------------------------------------
+    # 3. פעולה יחידה: כפתור בולט ברוחב מלא
+    # ----------------------------------------------------
+    analyze_clicked = st.button(
+        "🚀 נתח התאמה לתפקיד",
+        type="primary",
+        use_container_width=True,
+        key="btn_main_analyze_role",
+    )
+
+    if analyze_clicked:
+        if st.session_state.data_source == "demo":
+            if matched_preset:
+                st.session_state.resume_text = matched_preset["cv_text"]
+                st.session_state.job_text = matched_preset["job_text"]
+                st.session_state.analysis_result = JobMatchAnalysis.model_validate(matched_preset["result"])
+                st.session_state.cache_hit = True
+                st.session_state.app_step = 3
+                st.rerun()
+            else:
+                st.error("לא נמצא תרחיש דמו מתאים.")
+        else:
+            # מצב העלאה עצמאית
+            if not st.session_state.resume_text.strip():
+                st.warning("⚠️ יש להעלות קובץ קורות חיים או להדביק טקסט לפני ביצוע הניתוח.")
+            else:
+                # מילוי דרישות משרה ברירת מחדל אם ריק
+                if not st.session_state.job_text.strip():
+                    role_info = get_role_data(st.session_state.target_role)
+                    if role_info:
+                        st.session_state.job_text = (
+                            f"דרוש/ה {role_info.get('role_name', st.session_state.target_role)}.\n"
+                            f"דרישות חובה: {', '.join(role_info.get('main_skills', []))}.\n"
+                            f"כלים וטכנולוגיות: {', '.join(role_info.get('common_tools', []))}."
+                        )
+                    else:
+                        st.session_state.job_text = f"דרוש/ה {st.session_state.target_role} עם מיומנויות תעשייתיות רלוונטיות."
+
+                with st.spinner("מבצע טיהור פרטים מזהים (PII) וניתוח התאמה מול דרישות השוק..."):
+                    clean_cv, _ = sanitize_pii(st.session_state.resume_text)
+                    clean_job = truncate_job_description(st.session_state.job_text)
+
+                    if st.session_state.force_mock_mode:
+                        st.session_state.analysis_result = load_mock_response()
+                        st.session_state.cache_hit = False
+                    else:
+                        cached = global_cache.get(clean_cv, clean_job)
+                        if cached:
+                            st.session_state.analysis_result = cached
+                            st.session_state.cache_hit = True
+                        else:
+                            res = analyze_job_match(clean_cv, clean_job, api_key=st.session_state.gemini_api_key)
+                            global_cache.set(clean_cv, clean_job, res)
+                            st.session_state.analysis_result = res
+                            st.session_state.cache_hit = False
+
+                    st.session_state.app_step = 3
+                    st.rerun()
+
+
+# ==============================================================================
+# מסך 3: לוח תוצאות (RESULTS DASHBOARD)
+# ==============================================================================
+elif st.session_state.app_step == 3:
+    res: JobMatchAnalysis = st.session_state.analysis_result
+    if not res:
+        st.warning("לא נמצאו תוצאות ניתוח. חוזר לבחירת תפקיד...")
+        st.session_state.app_step = 2
+        st.rerun()
+
+    # סרגל ניווט עליון
+    top_col_back, top_col_role = st.columns([1.2, 3], vertical_alignment="center")
+    with top_col_back:
+        if st.button("⬅ חזור לבחירת תפקיד", use_container_width=True, key="btn_back_to_role_selection"):
+            st.session_state.app_step = 2
+            st.rerun()
+    with top_col_role:
+        render_clean_html(
+            f"""
+            <div style="direction: rtl; text-align: left; display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+                <span style="font-size: 13.5px; color: #64748B; font-weight: 600;">תפקיד היעד:</span>
+                <span style="background: #EDE9FE; color: #3730A3; border: 1.5px solid #C7D2FE; border-radius: 9999px; padding: 5px 18px; font-weight: 800; font-size: 14px; box-shadow: var(--md-sys-elevation-1);">
+                    🎯 {st.session_state.target_role}
+                </span>
+            </div>
+            """
+        )
+
+    st.markdown("<div style='margin-top: 14px;'></div>", unsafe_allow_html=True)
+
+    # ----------------------------------------------------
+    # 1. חיווי עליון רוחבי (KPI Header)
+    # ----------------------------------------------------
+    st.markdown(render_score_gauge(res.match_score, res.match_summary, theme="light"), unsafe_allow_html=True)
+
+    if st.session_state.cache_hit:
+        render_clean_html(
+            """
+            <div style="background: #ECFDF5; border: 1.5px solid #6EE7B7; border-radius: 9999px; padding: 5px 18px; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #065F46; font-weight: 800; box-shadow: var(--md-sys-elevation-1);">
+                ⚡ נשלף מיידית משכבת המטמון (Cache Hit)
+            </div>
+            """
+        )
+
+    # ----------------------------------------------------
+    # 2. חלוקה ל-3 לשוניות עבודה בלבד
+    # ----------------------------------------------------
+    tab_gaps, tab_cv, tab_checklist = st.tabs([
+        "🎯 ניתוח פערים ומסלולי למידה",
+        "✍️ שדרוג קורות חיים (ATS Optimizer)",
+        "📋 צ'קליסט ומעקב התקדמות ליעד (Career Progress Tracker)",
+    ])
+
+    # ----------------------------------------------------
+    # לשונית א': ניתוח פערים ומסלולי למידה
+    # ----------------------------------------------------
+    with tab_gaps:
+        col_missing, col_paths = st.columns([1, 1], gap="large")
+
+        with col_missing:
+            render_clean_html(
+                """
+                <div style="border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 18px;">
+                    <h3 style="margin: 0; color: #0F172A; font-weight: 800; font-size: 19px;">
+                        🎯 מיומנויות חסרות לפי רמת חומרה
+                    </h3>
+                    <p style="margin: 4px 0 0 0; color: #64748B; font-size: 13.5px;">
+                        הפערים הקריטיים שמונעים מקורות החיים שלך לעבור את סינון המגייסים
+                    </p>
                 </div>
                 """
-                st.markdown(textwrap.dedent(pii_html).strip(), unsafe_allow_html=True)
+            )
 
-    with col_job:
-        st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>💼 2. תיאור המשרה המבוקשת</h3>", unsafe_allow_html=True)
-        job_input = st.text_area(
-            "הדבק כאן את תיאור המשרה ודרישות התפקיד:",
-            value=st.session_state.job_text,
-            height=210,
-            placeholder="למשל: דרוש/ה Junior Developer. דרישות חובה: Python, Git, Docker. יתרון: AWS, CI/CD...",
+            # פילוח מיומנויות חסרות לפי High, Medium, Low
+            high_list = [s for s in res.missing_skills if s.importance == "High"]
+            med_list = [s for s in res.missing_skills if s.importance == "Medium"]
+            low_list = [s for s in res.missing_skills if s.importance == "Low"]
+
+            if high_list:
+                render_clean_html(
+                    """
+                    <div style="margin-bottom: 14px;">
+                        <span style="font-size: 14.5px; font-weight: 800; color: #EF4444; display: flex; align-items: center; gap: 6px;">
+                            🔴 פערי חובה קריטיים (Must-Have)
+                        </span>
+                    </div>
+                    """
+                )
+                for s in high_list:
+                    render_clean_html(
+                        f"""
+                        <div style="background: #FEF2F2; border: 1px solid #FECACA; border-radius: 14px; padding: 12px 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; direction: rtl; box-shadow: var(--md-sys-elevation-1);">
+                            <strong style="color: #991B1B; font-size: 14.5px;">{s.skill}</strong>
+                            <span style="background: #EF4444; color: #FFFFFF; padding: 3px 12px; border-radius: 9999px; font-size: 11px; font-weight: 800;">HIGH</span>
+                        </div>
+                        """
+                    )
+
+            if med_list:
+                render_clean_html(
+                    """
+                    <div style="margin-top: 20px; margin-bottom: 14px;">
+                        <span style="font-size: 14.5px; font-weight: 800; color: #F59E0B; display: flex; align-items: center; gap: 6px;">
+                            🟡 פערים מהותיים שכדאי לגשר (Medium)
+                        </span>
+                    </div>
+                    """
+                )
+                for s in med_list:
+                    render_clean_html(
+                        f"""
+                        <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 14px; padding: 12px 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; direction: rtl; box-shadow: var(--md-sys-elevation-1);">
+                            <strong style="color: #92400E; font-size: 14.5px;">{s.skill}</strong>
+                            <span style="background: #F59E0B; color: #FFFFFF; padding: 3px 12px; border-radius: 9999px; font-size: 11px; font-weight: 800;">MEDIUM</span>
+                        </div>
+                        """
+                    )
+
+            if low_list:
+                render_clean_html(
+                    """
+                    <div style="margin-top: 20px; margin-bottom: 14px;">
+                        <span style="font-size: 14.5px; font-weight: 800; color: #0284C7; display: flex; align-items: center; gap: 6px;">
+                            🔵 מיומנויות יתרון ובונוס (Low)
+                        </span>
+                    </div>
+                    """
+                )
+                for s in low_list:
+                    render_clean_html(
+                        f"""
+                        <div style="background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 14px; padding: 12px 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; direction: rtl; box-shadow: var(--md-sys-elevation-1);">
+                            <strong style="color: #0369A1; font-size: 14.5px;">{s.skill}</strong>
+                            <span style="background: #0284C7; color: #FFFFFF; padding: 3px 12px; border-radius: 9999px; font-size: 11px; font-weight: 800;">LOW</span>
+                        </div>
+                        """
+                    )
+
+        with col_paths:
+            render_clean_html(
+                """
+                <div style="border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 18px;">
+                    <h3 style="margin: 0; color: #0F172A; font-weight: 800; font-size: 19px;">
+                        🎓 מסלולי למידה והסמכות מותאמים
+                    </h3>
+                    <p style="margin: 4px 0 0 0; color: #64748B; font-size: 13.5px;">
+                        הסמכות וקורסים מובילים מהקטלוג לסגירת הפערים שזוהו
+                    </p>
+                </div>
+                """
+            )
+
+            missing_skill_names = [s.skill for s in res.missing_skills]
+            matched_lps = get_learning_paths_for_skills(missing_skill_names)
+            st.markdown(render_learning_paths(matched_lps, theme="light"), unsafe_allow_html=True)
+
+    # ----------------------------------------------------
+    # לשונית ב': שדרוג קורות חיים (ATS Optimizer)
+    # ----------------------------------------------------
+    with tab_cv:
+        render_clean_html(
+            """
+            <div style="border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 18px;">
+                <h3 style="margin: 0; color: #0F172A; font-weight: 800; font-size: 19px;">
+                    ✍️ שדרוג סעיפי הישגים בקורות החיים (Before / After)
+                </h3>
+                <p style="margin: 4px 0 0 0; color: #64748B; font-size: 13.5px;">
+                    הפיכת ניסוחים פסיביים לסעיפי הישגים מנצחים בשיטת Action + Scale + Impact המותאמים למסנני ה-ATS
+                </p>
+            </div>
+            """
         )
-        if job_input != st.session_state.job_text:
-            st.session_state.job_text = job_input
-            st.session_state.active_preset_name = None
 
-        char_count = len(st.session_state.job_text)
-        col_counter, col_reset = st.columns([3, 1])
-        with col_counter:
-            st.caption(f"תווים שהוזנו: {char_count} / 3,000 (קיצוץ חכם מסנן שיווק ומתמקד בדרישות)")
-        with col_reset:
-            if st.button("🧹 נקה קלט", use_container_width=True):
-                st.session_state.resume_text = ""
-                st.session_state.job_text = ""
-                st.session_state.analysis_result = None
-                st.session_state.cache_hit = False
-                st.session_state.pii_stats = None
-                st.session_state.active_preset_name = None
+        with st.expander("💡 טיפים קריטיים למעבר מערכות סינון ATS", expanded=False):
+            st.markdown(render_ats_tip(theme="light"), unsafe_allow_html=True)
+
+        st.markdown(render_bullet_comparison([b.model_dump() for b in res.cv_bullet_improvements], theme="light"), unsafe_allow_html=True)
+
+    # ----------------------------------------------------
+    # לשונית ג': צ'קליסט ומעקב התקדמות ליעד (Career Progress Tracker)
+    # ----------------------------------------------------
+    with tab_checklist:
+        proj = res.portfolio_project
+        milestones = generate_role_milestones(st.session_state.target_role, res.missing_skills, proj)
+        total_milestones = len(milestones)
+
+        # עדכון סטטוס המשימות שהושלמו
+        completed_ids = set()
+        for m in milestones:
+            if st.session_state.get(f"chk_{m['id']}", False):
+                completed_ids.add(m["id"])
+        st.session_state.completed_milestones = completed_ids
+        completed_count = len(completed_ids)
+
+        progress_pct = int((completed_count / total_milestones) * 100) if total_milestones > 0 else 0
+        base_score = res.match_score
+        current_readiness = min(100, int(base_score + (100 - base_score) * (completed_count / total_milestones))) if total_milestones > 0 else base_score
+        score_delta = current_readiness - base_score
+
+        # חיווי שלב המוכנות
+        if current_readiness >= 100:
+            stage_label = "🎉 מוכן/ה לגיוס והגשות לשוק!"
+            stage_badge_style = "background: #ECFDF5; color: #065F46; border: 1.5px solid #10B981;"
+            bar_gradient = "linear-gradient(90deg, #10B981 0%, #059669 100%)"
+        elif current_readiness >= 80:
+            stage_label = "🔥 כמעט שם - ליטושים אחרונים"
+            stage_badge_style = "background: #F0FDF4; color: #15803D; border: 1.5px solid #86EFAC;"
+            bar_gradient = "linear-gradient(90deg, #34D399 0%, #10B981 100%)"
+        elif current_readiness >= 65:
+            stage_label = "⚡ בתהליך בנייה מתקדם"
+            stage_badge_style = "background: #EDE9FE; color: #3730A3; border: 1.5px solid #C7D2FE;"
+            bar_gradient = "linear-gradient(90deg, #5A45FF 0%, #4F46E5 100%)"
+        else:
+            stage_label = "🌱 שלב גישור פערים ראשוני"
+            stage_badge_style = "background: #FFFBEB; color: #92400E; border: 1.5px solid #FCD34D;"
+            bar_gradient = "linear-gradient(90deg, #F59E0B 0%, #D97706 100%)"
+
+        # בלון חגיגי בעת הגעה ל-100%
+        if current_readiness >= 100:
+            if not st.session_state.get("balloons_shown", False):
+                st.balloons()
+                st.session_state.balloons_shown = True
+        else:
+            st.session_state.balloons_shown = False
+
+        # כרטיס מד התקדמות עליון (Live Tracker Header)
+        delta_pill = f'<span style="background: #ECFDF5; color: #065F46; font-size: 12px; font-weight: 800; padding: 2px 10px; border-radius: 9999px; border: 1px solid #6EE7B7; margin-right: 8px;">+{score_delta}% שיפור</span>' if score_delta > 0 else ''
+        render_clean_html(
+            f"""
+            <div style="background: var(--md-sys-color-surface-container-lowest); border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-extra-large); padding: 26px 32px; margin-bottom: 22px; box-shadow: var(--md-sys-elevation-1); direction: rtl; text-align: right;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 18px;">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 26px;">📋</span>
+                            <h3 style="margin: 0; font-size: 20px; font-weight: 900; color: #0F172A;">
+                                צ'קליסט ומעקב התקדמות אישי: בדרך למשרת {st.session_state.target_role}
+                            </h3>
+                        </div>
+                        <p style="margin: 6px 0 0 0; color: #64748B; font-size: 14px; line-height: 1.5;">
+                            סמן/י את אבני הדרך שהשלמת כדי לגשר על פערי המיומנויות ולהעלות את מד המוכנות לגיוס בזמן אמת.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="padding: 6px 18px; border-radius: 9999px; font-size: 13.5px; font-weight: 800; {stage_badge_style}">
+                            {stage_label}
+                        </span>
+                        <span style="background: #F8FAFC; color: #0F172A; padding: 6px 18px; border-radius: 9999px; font-size: 14px; font-weight: 800; border: 1.5px solid #CBD5E1;">
+                            {completed_count} מתוך {total_milestones} הושלמו ({progress_pct}%)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- סרגל התקדמות גרפי רספונסיבי M3 Linear Indicator -->
+                <div style="background: #F1F5F9; border-radius: 9999px; height: 16px; overflow: hidden; margin-bottom: 16px; border: 1px solid #E2E8F0;">
+                    <div style="background: {bar_gradient}; width: {progress_pct}%; height: 100%; border-radius: 9999px; transition: width 0.6s cubic-bezier(0.2, 0.0, 0, 1.0);"></div>
+                </div>
+
+                <!-- חיווי מד מוכנות לגיוס -->
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #475569; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>מד מוכנות לגיוס מעודכן:</span>
+                        <strong style="font-size: 18px; color: #0F172A;">{current_readiness}%</strong>
+                        {delta_pill}
+                    </div>
+                    <div style="font-size: 13px; color: #94A3B8;">
+                        ציון בסיס מקורי מקורות החיים: {base_score}%
+                    </div>
+                </div>
+            </div>
+            """
+        )
+
+        # באנר הצלחה וחגיגה בעת השלמת 100%
+        if current_readiness >= 100:
+            render_clean_html(
+                f"""
+                <div style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 2px solid #34D399; border-radius: 20px; padding: 20px 26px; margin-bottom: 22px; direction: rtl; text-align: right; box-shadow: var(--md-sys-elevation-2);">
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        <span style="font-size: 34px;">🏆</span>
+                        <div>
+                            <h4 style="margin: 0; color: #065F46; font-weight: 900; font-size: 17px;">
+                                כל הכבוד! הגעת ל-100% מוכנות לתפקיד {st.session_state.target_role}!
+                            </h4>
+                            <p style="margin: 4px 0 0 0; color: #047857; font-size: 13.5px; line-height: 1.55;">
+                                סגרת בהצלחה את פערי הידע הקריטיים, שדרגת את קורות החיים ל-ATS והכנת תיק עבודות מרשים. הפרופיל שלך עומד כעת ברף הגבוה ביותר של המגייסים.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                """
+            )
+
+        # כפתורי פעולה מהירים (איפוס והדגמה)
+        col_act_space, col_act_demo, col_act_reset = st.columns([2, 1.5, 1], vertical_alignment="center")
+        with col_act_demo:
+            if st.button("✨ סמן הכל (הדגמת 100% מוכנות)", use_container_width=True, key="btn_check_all_demo"):
+                for m in milestones:
+                    st.session_state[f"chk_{m['id']}"] = True
+                st.session_state.completed_milestones = {m["id"] for m in milestones}
+                st.rerun()
+        with col_act_reset:
+            if st.button("🔄 אפס צ'קליסט", use_container_width=True, key="btn_reset_milestones"):
+                for m in milestones:
+                    st.session_state[f"chk_{m['id']}"] = False
+                st.session_state.completed_milestones = set()
                 st.rerun()
 
-    # כפתור הפעלה ראשי (M3 Elevated Pill CTA)
-    st.markdown("<div style='margin-top: 16px; margin-bottom: 24px;'></div>", unsafe_allow_html=True)
-    analyze_btn = st.button("🚀 נתח התאמה והפק תוכנית עבודה", type="primary", use_container_width=True)
+        st.markdown("<div style='margin-top: 16px;'></div>", unsafe_allow_html=True)
 
-    if analyze_btn:
-        if not st.session_state.resume_text.strip():
-            st.warning("אנא העלה קובץ קורות חיים או בחר תרחיש הדגמה מוכן.")
-        elif not st.session_state.job_text.strip():
-            st.warning("אנא הזן תיאור משרה לניתוח.")
-        else:
-            truncated_job = truncate_job_description(st.session_state.job_text)
-            cache_key = global_cache.generate_key(st.session_state.resume_text, truncated_job)
-            
-            # בדיקה ב-Cache (0 שניות מענה)
-            cached_result = global_cache.get(cache_key)
-            if cached_result:
-                st.session_state.analysis_result = cached_result
-                st.session_state.cache_hit = True
-            else:
-                with st.spinner("🧠 מנתח התאמה מול דרישות המשרה, שוקל סעיפים ומחולל פרויקט..."):
-                    result = analyze_job_match(st.session_state.resume_text, truncated_job, api_key=st.session_state.gemini_api_key)
-                    global_cache.set(cache_key, result)
-                    st.session_state.analysis_result = result
-                    st.session_state.cache_hit = False
-            st.rerun()
+        # הצגת כרטיסי המשימות
+        for idx, m in enumerate(milestones, 1):
+            is_done = m["id"] in st.session_state.completed_milestones
 
-    # ----------------------------------------------------
-    # הצגת תוצאות הניתוח (Main Dashboard)
-    # ----------------------------------------------------
-    if st.session_state.analysis_result:
-        res = st.session_state.analysis_result
-        
-        st.markdown("<hr style='border-color: #cbd5e1; margin-top: 36px; margin-bottom: 28px;'>", unsafe_allow_html=True)
-        
-        # חיווי מטמון מהיר
-        if st.session_state.cache_hit:
-            cache_html = """
-            <div style="background: #ecfdf5; border: 1.5px solid #6ee7b7; border-radius: 9999px; padding: 8px 22px; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: #065f46; font-weight: 700;">
-            ⚡ <strong>זמן תגובה: 0 שניות!</strong> התוצאה נשלפה ישירות משכבת המטמון (In-Memory Cache) ללא צורך בקריאת רשת.
-            </div>
-            """
-            st.markdown(textwrap.dedent(cache_html).strip(), unsafe_allow_html=True)
+            with st.container(border=True):
+                col_chk, col_info = st.columns([0.05, 0.95], gap="small", vertical_alignment="top")
 
-        # הכנת נתוני אבני הדרך למעקב התקדמות (UX/UI Job Search Tracker)
-        milestones_list = [
-            {
-                "id": "cv_scanned",
-                "title": "1. סריקה וניתוח קו\"ח מול המשרה",
-                "category": "שלב 1: הערכת פערים",
-                "desc": "ניתוח קורות החיים מול דרישות המשרה, איתור פערי מיומנויות וקביעת ציון התאמה ראשוני.",
-                "completed": bool(st.session_state.ux_ui_milestones.get("cv_scanned", False)),
-            },
-            {
-                "id": "bullet_rewriting",
-                "title": "2. שכתוב סעיפי ניסיון לפי נוסחת XYZ",
-                "category": "שלב 2: שדרוג קו\"ח",
-                "desc": "הפיכת סעיפים גנריים לסעיפי הישגים מדידים המשלבים בדיקות שמישות ו-Design Systems.",
-                "completed": bool(st.session_state.ux_ui_milestones.get("bullet_rewriting", False)),
-            },
-            {
-                "id": "figma_mastery",
-                "title": "3. השלמת מיומנויות סף ב-Figma",
-                "category": "שלב 3: כלי חובה",
-                "desc": "שליטה מעשית ב-Auto-layout, רכיבים מודולריים, Design Tokens ו-Variables.",
-                "completed": bool(st.session_state.ux_ui_milestones.get("figma_mastery", False)),
-            },
-            {
-                "id": "case_study_project",
-                "title": "4. בניית פרויקט דגל מקיף (Case Study)",
-                "category": "שלב 4: פרויקט פורטפוליו",
-                "desc": "אפיון ועיצוב מערכת SaaS או אפליקציית מובייל: מחקר משתמשים, ארכיטקטורת מידע ואב-טיפוס אינטראקטיבי.",
-                "completed": bool(st.session_state.ux_ui_milestones.get("case_study_project", False)),
-            },
-            {
-                "id": "portfolio_launch",
-                "title": "5. הקמת תיק עבודות חי (Portfolio Launch)",
-                "category": "שלב 5: תיק עבודות",
-                "desc": "פרסום 2-3 מקרי בוחן איכותיים ב-Behance, Dribbble או אתר אישי ב-Framer/Webflow.",
-                "completed": bool(st.session_state.ux_ui_milestones.get("portfolio_launch", False)),
-            },
-            {
-                "id": "job_applications",
-                "title": "6. הגשת מועמדויות ממוקדת ומעקב ראיונות",
-                "category": "שלב 6: ראיונות והשמה",
-                "desc": "הגשה ישירה לחברות רלוונטיות, ביצוע משימות בית והכנה לראיון HR וראיון מקצועי.",
-                "completed": bool(st.session_state.ux_ui_milestones.get("job_applications", False)),
-            },
-        ]
-        completed_count = sum(1 for m in milestones_list if m["completed"])
-        progress_pct = int((completed_count / len(milestones_list)) * 100)
-
-        # 1. מד ציון ויזואלי וסיכום משוקלל (M3 Score Gauge)
-        st.markdown(render_score_gauge(res.match_score, res.match_summary, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-        # 2. כרטיס גרף התקדמות ומעקב יעדים (UX/UI Job Search Tracker)
-        st.markdown(render_job_search_tracker(milestones_list, progress_pct, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-        # 3. טאבים לתצוגה מפורטת וממוקדת
-        tab_tracker, tab_gaps, tab_project, tab_learning, tab_checklist = st.tabs([
-            "📈 עדכון התקדמות אישי",
-            "📊 פערי מיומנויות ושכתוב סעיפים",
-            "🛠️ מפרט פרויקט ו-README ל-GitHub",
-            "🎓 מסלולי לימוד והסמכות (49 מסלולים)",
-            "📋 צ'קליסט מוכנות לגיוס (ATS Checklist)",
-        ])
-
-        with tab_tracker:
-            st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>🎯 סמן את השלבים שהשלמת בדרך לקבלה לעבודה:</h3>", unsafe_allow_html=True)
-            st.markdown("<p style='color: #475569; font-size: 15px; margin-bottom: 20px;'>כל שלב שאתה מסמן מעדכן מידית את גרף המוכנות ואת אחוז ההתקדמות בראש הדף:</p>", unsafe_allow_html=True)
-            
-            chk_cols = st.columns(2)
-            for idx, m in enumerate(milestones_list):
-                with chk_cols[idx % 2]:
-                    current_val = st.session_state.ux_ui_milestones.get(m["id"], False)
-                    new_val = st.checkbox(
-                        f"{m['title']} • {m['category']}",
-                        value=current_val,
-                        key=f"chk_milestone_{m['id']}",
-                        help=m["desc"]
+                with col_chk:
+                    checked = st.checkbox(
+                        label=f"סימון משימה: {m['title']}",
+                        value=is_done,
+                        key=f"chk_{m['id']}",
+                        label_visibility="collapsed",
                     )
-                    if new_val != current_val:
-                        st.session_state.ux_ui_milestones[m["id"]] = new_val
+                    if checked != is_done:
+                        if checked:
+                            st.session_state.completed_milestones.add(m["id"])
+                        else:
+                            st.session_state.completed_milestones.discard(m["id"])
                         st.rerun()
-                    st.markdown(f"<p style='color: #64748b; font-size: 13.5px; margin: -4px 0 16px 28px; line-height: 1.45;'>{m['desc']}</p>", unsafe_allow_html=True)
 
-        with tab_gaps:
-            st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>🎯 ניתוח פערי מיומנויות (Skill Gap Breakdown)</h3>", unsafe_allow_html=True)
-            st.markdown(
-                "<p style='color: #334155; font-size: 15px; font-weight: 500;'>פילוח הטכנולוגיות המרכזיות הנדרשות במשרה שאינן מודגשות מספיק בקורות החיים:</p>",
-                unsafe_allow_html=True,
-            )
-            st.markdown(
-                render_skill_badges([s.model_dump() for s in res.missing_skills], theme=st.session_state.theme_mode),
-                unsafe_allow_html=True,
-            )
+                with col_info:
+                    if is_done:
+                        status_badge = '<span style="background: #ECFDF5; color: #065F46; border: 1px solid #6EE7B7; border-radius: 9999px; padding: 3px 12px; font-size: 11.5px; font-weight: 800;">✅ הושלם בהצלחה</span>'
+                        title_color = "#15803D"
+                    else:
+                        status_badge = f'<span style="background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; border-radius: 9999px; padding: 3px 12px; font-size: 11.5px; font-weight: 700;">משימה {idx} מתוך {total_milestones}</span>'
+                        title_color = "#0F172A"
 
-            st.markdown("<div style='margin-top: 28px;'></div>", unsafe_allow_html=True)
-            st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>✍️ שכתוב סעיפי קורות חיים (Impact-Action Optimizer)</h3>", unsafe_allow_html=True)
-            st.markdown(
-                "<p style='color: #334155; font-size: 15px; font-weight: 500;'>הפיכת סעיפים גנריים לסעיפי הישגים מדידים המשלבים את הטכנולוגיות הנדרשות במשרה:</p>",
-                unsafe_allow_html=True,
-            )
-            st.markdown(
-                render_bullet_comparison([b.model_dump() for b in res.cv_bullet_improvements], theme=st.session_state.theme_mode),
-                unsafe_allow_html=True,
-            )
+                    render_clean_html(
+                        f"""
+                        <div style="direction: rtl; text-align: right; padding: 2px 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;">
+                                <div style="font-size: 16px; font-weight: 800; color: {title_color};">
+                                    {m['title']}
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="background: #EDE9FE; color: #3730A3; border-radius: 9999px; padding: 3px 14px; font-size: 12px; font-weight: 800; border: 1px solid #C7D2FE;">
+                                        {m['category']}
+                                    </span>
+                                    {status_badge}
+                                </div>
+                            </div>
+                            <p style="margin: 0 0 10px 0; color: #334155; font-size: 14px; line-height: 1.6;">
+                                {m['desc']}
+                            </p>
+                            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 8px 16px; font-size: 13px; color: #475569; display: inline-block;">
+                                {m['action_hint']}
+                            </div>
+                        </div>
+                        """
+                    )
 
-        with tab_project:
-            proj = res.portfolio_project
-            st.markdown(f"<h3 style='color: #0f172a; font-weight: 800;'>🚀 פרויקט מומלץ לסגירת הפער: <strong>{proj.project_name}</strong></h3>", unsafe_allow_html=True)
-            
-            # כרטיס סקירה עסקית
-            context_html = f"""
-            <div class="custom-card">
-            <div style="font-weight: 800; color: #4338ca; margin-bottom: 8px; font-size: 16px;">
-            💡 הצורך העסקי והרציונל ההנדסי:
-            </div>
-            <div style="color: #1e293b; font-size: 15.5px; line-height: 1.65; font-weight: 500;">
-            {proj.business_context}
-            </div>
-            </div>
-            """
-            st.markdown(textwrap.dedent(context_html).strip(), unsafe_allow_html=True)
 
-            proj_col1, proj_col2 = st.columns([1, 1], gap="medium")
-            with proj_col1:
-                st.markdown("<h4 style='color: #0f172a; font-weight: 800;'>🎯 מיומנויות מרכזיות שהפרויקט מוכיח:</h4>", unsafe_allow_html=True)
-                skills_html = "<div style='display: flex; flex-wrap: wrap; gap: 8px; direction: ltr; margin-top: 8px;'>"
-                for sk in proj.targeted_skills:
-                    skills_html += f"<span class='m3-tag' style='color: #0369a1; border-color: #7dd3fc; background-color: #f0f9ff;'>{sk}</span>"
-                skills_html += "</div>"
-                st.markdown(skills_html, unsafe_allow_html=True)
-
-            with proj_col2:
-                st.markdown("<h4 style='color: #0f172a; font-weight: 800;'>🏗️ ארכיטקטורה וסטאק טכנולוגי:</h4>", unsafe_allow_html=True)
-                stack_html = "<div style='display: flex; flex-wrap: wrap; gap: 8px; direction: ltr; margin-top: 8px;'>"
-                for tech in proj.architecture_stack:
-                    stack_html += f"<span class='m3-tag' style='color: #4338ca; border-color: #c7d2fe; background-color: #ede9fe;'>{tech}</span>"
-                stack_html += "</div>"
-                st.markdown(stack_html, unsafe_allow_html=True)
-
-            st.markdown("<div style='margin-top: 24px;'></div>", unsafe_allow_html=True)
-            st.markdown("<h4 style='color: #0f172a; font-weight: 800;'>📋 שלבי ביצוע הנדסיים מומלצים:</h4>", unsafe_allow_html=True)
-            for idx, step in enumerate(proj.implementation_steps, 1):
-                step_card = f"""
-                <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 12px 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);">
-                <span style="background: #ede9fe; color: #4338ca; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13.5px; font-family: 'Outfit', sans-serif; flex-shrink: 0;">{idx}</span>
-                <span style="color: #0f172a; font-size: 15px; font-weight: 600;">{step}</span>
-                </div>
-                """
-                st.markdown(textwrap.dedent(step_card).strip(), unsafe_allow_html=True)
-
-            st.markdown("<div style='margin-top: 28px;'></div>", unsafe_allow_html=True)
-            
-            # אזור הורדה ותצוגת README
-            readme_head_col1, readme_head_col2 = st.columns([3, 1])
-            with readme_head_col1:
-                st.markdown("<h4 style='color: #0f172a; font-weight: 800;'>📄 שלד README.md מוכן ל-GitHub (קריאה משמאל לימין - LTR):</h4>", unsafe_allow_html=True)
-            with readme_head_col2:
-                st.download_button(
-                    label="📥 הורד README.md",
-                    data=proj.readme_content,
-                    file_name=f"README_{proj.project_name.replace(' ', '_')}.md",
-                    mime="text/markdown",
-                    use_container_width=True,
-                )
-
-            # תצוגת Markdown מלאה בקוד LTR מונגש (TC-07)
-            st.markdown(render_readme_block(proj.readme_content, proj.project_name, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-        with tab_learning:
-            st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>🎓 מסלולי לימוד והסמכות מומלצים לסגירת הפער</h3>", unsafe_allow_html=True)
-            st.markdown(
-                """
-                <div style="background: #ede9fe; border: 1.5px solid #c7d2fe; border-radius: 16px; padding: 16px 20px; margin-bottom: 20px;">
-                <div style="color: #3730a3; font-weight: 700; font-size: 14.5px; margin-bottom: 4px;">
-                💡 מנוע ההמלצות לפי Skills (מבוסס מאגר 49 מסלולים רשמיים):
-                </div>
-                <p style="margin: 0; color: #1e1b4b; font-size: 14px; line-height: 1.5;">
-                המלצות אלו נשלפות ישירות מתוך מאגר מסלולי הלימוד וההסמכות (ACM, ABET, Figma, MDN, Cisco, AWS, Microsoft, Red Hat). 
-                המסלולים מדורגים על פי חוזק הוכחה מעשית, דרישות תפקיד וצמצום זמן להגעה לראיון.
-                </p>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-            missing_skills_list = [s.skill for s in res.missing_skills]
-            matched_lps = get_learning_paths_for_skills(missing_skills_list)
-            st.markdown(render_learning_paths(matched_lps, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-        with tab_checklist:
-            st.markdown("<h3 style='color: #0f172a; font-weight: 800;'>📋 צ'קליסט מוכנות להגשת מועמדות (ATS Readiness Checklist)</h3>", unsafe_allow_html=True)
-            st.markdown(
-                "<p style='color: #334155; font-size: 15px; font-weight: 500;'>מערכות ATS ומגייסים טכנולוגיים בוחנים 5 קריטריונים מרכזיים. בדוק את הסטטוס שלך:</p>",
-                unsafe_allow_html=True,
-            )
-            
-            checks = [
-                ("טיהור פרטים מזהים (PII)", True, "שמירה על פרטיות מלאה ללא חשיפת טלפון ות\"ז לספקי צד שלישי."),
-                ("שילוב מילות מפתח מדויקות מהמשרה", True, "המיומנויות החסרות שולבו בסעיפים המשודרגים ובפרויקט."),
-                ("נוסח מונחה הישגים (Action-Scale-Impact)", True, "הסעיפים כוללים פעלים חזקים, מסגרת עבודה ומדדים כמותיים."),
-                ("פרויקט ייעודי ומובחן בפורטפוליו", True, f"הוגדר פרויקט '{proj.project_name}' המחליף פרויקטי מדריך גנריים."),
-                ("שלד README מקצועי עם פקודות הרצה", True, "קובץ README.md כולל הוראות הרצה, ארכיטקטורה ודרישות קונטיינר."),
-            ]
-            
-            for title, status, desc in checks:
-                icon = "✔" if status else "⚠️"
-                item_card = f"""
-                <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 16px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 14px; direction: rtl; text-align: right; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
-                <div style="width: 32px; height: 32px; border-radius: 50%; background: #ecfdf5; color: #065f46; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0; border: 1.5px solid #6ee7b7;">
-                {icon}
-                </div>
-                <div style="flex: 1;">
-                <strong style="color: #0f172a; font-size: 16px; font-weight: 800;">{title}</strong>
-                <p style="margin: 4px 0 0 0; color: #475569; font-size: 14px; line-height: 1.5; font-weight: 500;">{desc}</p>
-                </div>
-                </div>
-                """
-                st.markdown(textwrap.dedent(item_card).strip(), unsafe_allow_html=True)
-
-        # ==============================================================================
-        # בלוק ייצוא והורדת קובץ README.md מוכן ל-GitHub בתחתית מסך התוצאות (TC-07)
-        # ==============================================================================
-        st.markdown("<div style='margin-top: 36px;'></div>", unsafe_allow_html=True)
-        st.markdown(f"""
-        <div class="custom-card" style="border: 2px solid var(--primary-accent);">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
-        <div>
-        <div style="display: flex; align-items: center; gap: 10px;">
-        <span style="font-size: 24px;">📦</span>
-        <h3 style="margin: 0; font-size: 20px; font-weight: 800; color: var(--text-primary);">ייצוא פרויקט ושלד README.md ל-GitHub (One-Click Export)</h3>
-        </div>
-        <p style="margin: 4px 0 0 0; color: var(--text-muted); font-size: 14px;">
-        בלוק תצוגת קוד Markdown מלא ומדויק לפני ההורדה – מוכן להעתקה מיידית או להורדה ישירה:
-        </p>
-        </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown(render_readme_block(res.portfolio_project.readme_content, res.portfolio_project.project_name, theme=st.session_state.theme_mode), unsafe_allow_html=True)
-
-        bt_col1, bt_col2 = st.columns([1, 1], gap="medium")
-        with bt_col1:
-            st.download_button(
-                label="📥 הורד עכשיו את קובץ ה-README.md ל-GitHub",
-                data=res.portfolio_project.readme_content,
-                file_name=f"README_{res.portfolio_project.project_name.replace(' ', '_')}.md",
-                mime="text/markdown",
-                use_container_width=True,
-                key="bottom_download_readme_btn",
-            )
-        with bt_col2:
-            st.info("💡 קובץ ה-README כולל את כל ארכיטקטורת המערכת, תרשימי הזרימה ושלבי ההרצה הדרושים למגייסים.")
-
-        st.markdown("</div>", unsafe_allow_html=True)

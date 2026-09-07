@@ -84,14 +84,32 @@ SKILL_DICTIONARY = {
     "Node.js": ["node.js", "nodejs", "נוד"],
     "Docker": ["docker", "דוקר", "container", "containers"],
     "Kubernetes": ["kubernetes", "k8s"],
+    "Terraform": ["terraform", "iac"],
     "AWS": ["aws", "amazon web services", "cloud"],
     "PostgreSQL": ["postgresql", "postgres", "sql"],
     "MongoDB": ["mongodb", "nosql"],
     "RESTful APIs": ["rest api", "restful", "api", "apis"],
     "GraphQL": ["graphql"],
     "CI/CD": ["ci/cd", "github actions", "pipeline", "jenkins"],
+    "Prometheus & Grafana": ["prometheus", "grafana", "monitoring"],
     "Git": ["git", "github", "gitlab"],
     "Linux": ["linux", "bash", "shell"],
+    # QA & Automation
+    "Selenium": ["selenium", "selenium webdriver"],
+    "Playwright": ["playwright"],
+    "PyTest": ["pytest"],
+    "Cypress": ["cypress"],
+    "Postman & API Testing": ["postman", "api testing", "requests"],
+    "Page Object Model": ["pom", "page object model"],
+    # Data & Analytics
+    "Pandas & NumPy": ["pandas", "numpy"],
+    "Power BI & Tableau": ["power bi", "powerbi", "tableau"],
+    "ETL Pipelines": ["etl", "pipeline", "data ingestion", "airflow"],
+    "Data Modeling": ["data modeling", "normalization", "star schema"],
+    # Cyber & Security
+    "Wireshark & PCAP": ["wireshark", "pcap", "packet analysis"],
+    "SIEM & Splunk": ["siem", "splunk", "elastic", "qradar"],
+    "Network Protocols": ["tcp/ip", "dns", "firewall", "ids/ips"],
 }
 
 
@@ -196,48 +214,177 @@ def calculate_dynamic_analysis(resume_text: str, job_text: str) -> JobMatchAnaly
             if len(missing_skills_list) >= 3:
                 break
 
+    # זיהוי תחום המשרה להתאמת שכתוב קורות החיים והפרויקט
+    combined_text = (job_text + " " + resume_text).lower()
+    if any(k in combined_text for k in ["qa", "testing", "selenium", "playwright", "automation", "pytest", "cypress", "בדיקות"]):
+        domain_type = "qa"
+    elif any(k in combined_text for k in ["devops", "cloud", "docker", "kubernetes", "k8s", "terraform", "aws", "תשתיות", "ענן"]):
+        domain_type = "devops"
+    elif any(k in combined_text for k in ["data", "sql", "bi", "pandas", "analytics", "power bi", "tableau", "דאטה", "אנליסט"]):
+        domain_type = "data"
+    elif any(k in combined_text for k in ["cyber", "soc", "wireshark", "siem", "splunk", "security", "סייבר", "אבטחת מידע"]):
+        domain_type = "cyber"
+    elif any(k in combined_text for k in ["ux", "ui", "figma", "wireframe", "prototype", "עיצוב", "אפיון", "חוויית משתמש"]):
+        domain_type = "ux_ui"
+    else:
+        domain_type = "software"
+
     # שכתוב סעיפי קורות חיים מותאמים (Impact-Action)
-    first_missing = missing_skills_list[0].skill if missing_skills_list else "Figma"
-    second_missing = missing_skills_list[1].skill if len(missing_skills_list) > 1 else "Design Systems"
+    first_missing = missing_skills_list[0].skill if missing_skills_list else "Git"
+    second_missing = missing_skills_list[1].skill if len(missing_skills_list) > 1 else "CI/CD"
 
-    bullets: List[CVBulletImprovement] = [
-        CVBulletImprovement(
-            original="עבודה על אפיון ועיצוב ממשקי משתמש וסיוע לצוות הפיתוח.",
-            improved=f"הובלת תהליך אפיון E2E ב-{first_missing}, הגדרת מעל 35 רכיבי ממשק מונגשים ויצירת קיצור של 25% בזמן ההטמעה של צוות הפיתוח.",
-            reason=f"שילוב מיומנות הליבה {first_missing} עם מדד מספרי ברור והוכחת השפעה על פרודוקטיביות הפיתוח."
-        ),
-        CVBulletImprovement(
-            original="בניית מסכים ותחזוקת ספריית קומפוננטות.",
-            improved=f"תכנון והקמת {second_missing} מרכזי שכלל היררכיית Tokens מדויקת, תיעוד מלא והפחתת שגיאות UI ב-40% בספרינטים הראשונים.",
-            reason=f"הפיכת משימה שגרתית להישג הנדסי מדיד עם שילוב ישיר של {second_missing}."
-        ),
-    ]
+    if domain_type == "qa":
+        bullets = [
+            CVBulletImprovement(
+                original="ביצוע בדיקות ידניות וכתיבת תרחישים.",
+                improved=f"פיתוח תשתית בדיקות E2E באוטומציה מבוססת {first_missing}, המכסה 35 תרחישי ליבה וקיצרה את סבב ה-Regression ב-60%.",
+                reason=f"הדגשת מעבר מאוטומציה ידנית לפיתוח קוד ב-{first_missing} והצגת חיסכון זמנים מדיד."
+            ),
+            CVBulletImprovement(
+                original="אימות תוצאות מול מסדי נתונים ו-API.",
+                improved=f"בניית חליפת בדיקות אוטומטית ב-{second_missing} עם אימות סכמות JSON ואינטגרציה לצינור ה-CI/CD.",
+                reason=f"שילוב כלי אוטומציה מתקדם ({second_missing}) עם חיבור ישיר ל-CI."
+            ),
+        ]
+        proj_name = f"{first_missing} Automated E2E & API Test Suite"
+        proj_context = f"בניית תשתית בדיקות שלמה ב-{first_missing} המדמה סביבת ייצור, מייצרת דוחות HTML גרפיים ורצה אוטומטית ב-CI."
+        proj_stack = [first_missing, second_missing, "PyTest / Playwright", "Postman / Requests", "GitHub Actions CI"]
+        proj_steps = [
+            f"הגדרת ארכיטקטורת הבדיקות ותבנית Page Object Model ב-{first_missing}",
+            f"פיתוח חליפת בדיקות E2E למסכי רישום, סליקה ורכישה",
+            f"אינטגרציית בדיקות API אוטומטיות ב-{second_missing}",
+            "הפקת דוחות בדיקה גרפיים וסריקת לוגים ב-GitHub Actions"
+        ]
+    elif domain_type == "devops":
+        bullets = [
+            CVBulletImprovement(
+                original="תחזוקת שרתים וכתיבת סקריפטים בסיסיים.",
+                improved=f"אוטומציה מלאה של פריסות מבוססות {first_missing}, צמצום זמני השבתה ב-40% והטמעת תהליכי Rollback אוטומטיים.",
+                reason=f"הדגשת היקף המערכת ומעבר מפקודות ידניות לאוטומציית תשתיות ב-{first_missing}."
+            ),
+            CVBulletImprovement(
+                original="הרמת קונטיינרים וניהול סביבות.",
+                improved=f"תכנון ארכיטקטורת ענן מודולרית באמצעות {second_missing}, חיסכון של 30% במשאבים והטמעת ניטור רציף.",
+                reason=f"הפיכת משימה שגרתית להישג הנדסי מדיד עם שילוב ישיר של {second_missing}."
+            ),
+        ]
+        proj_name = f"{first_missing} Cloud Infrastructure & Automated GitOps Pipeline"
+        proj_context = f"פרויקט תשתיות מודרני המוכיח שליטה מעשית ב-{first_missing}, ניהול קונטיינרים ופריסה מאובטחת בענן."
+        proj_stack = [first_missing, second_missing, "Docker", "GitHub Actions CI/CD", "Linux", "Prometheus"]
+        proj_steps = [
+            f"הקמת תשתית ענן מבודדת ומוגדרת כקוד ב-{first_missing}",
+            "בניית קונטיינרים ממוטבים וסריקת אבטחה ב-Docker",
+            f"חיבור צינור CI/CD רב-שלבי ב-{second_missing}",
+            "הטמעת מוניטורינג של משאבים והתרעות בזמן אמת"
+        ]
+    elif domain_type == "data":
+        bullets = [
+            CVBulletImprovement(
+                original="שליפת נתונים ובניית דוחות באקסל.",
+                improved=f"פיתוח צינורות ETL אוטומטיים באמצעות {first_missing}, קיצור זמני עיבוד נתונים ב-70% ושיפור דיוק המדדים.",
+                reason=f"מעבר מעבודה ידנית לאוטומציה של צינורות נתונים ב-{first_missing} עם חיסכון זמנים מדיד."
+            ),
+            CVBulletImprovement(
+                original="יצירת גרפים וניתוח מדדים שבועי.",
+                improved=f"הקמת דשבורד BI אינטראקטיבי המשלב {second_missing}, המשרת מנהלים ומזהה מגמות עסקיות בזמן אמת.",
+                reason=f"הדגשת יכולת עסקית והשפעה רוחבית על מקבלי החלטות בארגון."
+            ),
+        ]
+        proj_name = f"{first_missing} Business Intelligence & Automated Data Pipeline"
+        proj_context = f"פרויקט דאטה מעשי המוכיח יכולת שאיבת נתונים, עיבוד מתקדם ב-{first_missing} והצגת תובנות עסקיות מוחשיות."
+        proj_stack = [first_missing, second_missing, "SQL", "Python", "ETL Pipeline", "Data Modeling"]
+        proj_steps = [
+            f"שאיבת נתוני גלם מרובי מקורות ועיבודם באמצעות {first_missing}",
+            "בניית מודל נתונים מנורמל ב-SQL / מסד נתונים",
+            f"תכנון דשבורד אינטראקטיבי וויזואליזציה ב-{second_missing}",
+            "אוטומציה מלאה של תהליך השאיבה והרענון התקופתי"
+        ]
+    elif domain_type == "cyber":
+        bullets = [
+            CVBulletImprovement(
+                original="ניטור התראות ובדיקת לוגים במערכת.",
+                improved=f"תחקור תעבורת רשת ואירועי אבטחה באמצעות {first_missing}, הגדרת חוקי קורלציה אוטומטיים וקיצור זמני תגובה (MTTR) ב-45%.",
+                reason=f"הדגשת מתודולוגיית SOC מקצועית עם שימוש בכלים פרקטיים כמו {first_missing}."
+            ),
+            CVBulletImprovement(
+                original="בדיקת חולשות וסקירת תצורות אבטחה.",
+                improved=f"מיפוי חולשות רשת מול תקן MITRE ATT&CK תוך שימוש ב-{second_missing} ושיפור תצורת ההגנה ההיקפית.",
+                reason=f"קישור לתקנים בינלאומיים מוכרים והוכחת הבנה מעמיקה בהגנת סייבר."
+            ),
+        ]
+        proj_name = f"{first_missing} Security Incident Detection & Automated Response Lab"
+        proj_context = f"מעבדת אבטחת מידע ו-SOC מוכחת המוכיחה יכולת ניתוח פאקטות, ניטור אירועים ב-{first_missing} וכתיבת אוטומציות בלינוקס."
+        proj_stack = [first_missing, second_missing, "Wireshark", "SIEM / Elastic", "Linux CLI", "Python Scripting"]
+        proj_steps = [
+            f"הקמת סביבת ניטור רשת מבוזרת ואיסוף לוגים ב-{first_missing}",
+            "סימולציית תקיפות רשת וניתוח תעבורה באמצעות PCAP",
+            f"כתיבת חוקי התראה וקורלציה אוטומטיים ב-{second_missing}",
+            "פיתוח סקריפט אוטומציה לתגובה מהירה לחסימת כתובות חשודות"
+        ]
+    elif domain_type == "ux_ui":
+        bullets = [
+            CVBulletImprovement(
+                original="עבודה על אפיון ועיצוב ממשקי משתמש וסיוע לצוות הפיתוח.",
+                improved=f"הובלת תהליך אפיון E2E ב-{first_missing}, הגדרת מעל 35 רכיבי ממשק מונגשים ויצירת קיצור של 25% בזמן ההטמעה של צוות הפיתוח.",
+                reason=f"שילוב מיומנות הליבה {first_missing} עם מדד מספרי ברור והוכחת השפעה על פרודוקטיביות הפיתוח."
+            ),
+            CVBulletImprovement(
+                original="בניית מסכים ותחזוקת ספריית קומפוננטות.",
+                improved=f"תכנון והקמת {second_missing} מרכזי שכלל היררכיית Tokens מדויקת, תיעוד מלא והפחתת שגיאות UI ב-40% בספרינטים הראשונים.",
+                reason=f"הפיכת משימה שגרתית להישג הנדסי מדיד עם שילוב ישיר של {second_missing}."
+            ),
+        ]
+        proj_name = f"{first_missing} Accessible Product Design System & Interactive Prototype"
+        proj_context = f"סגירת פער מעשי במיומנויות {first_missing} ו-{second_missing} על ידי בניית Case Study שלם עם תיעוד מושלם ל-Dev Hand-off."
+        proj_stack = [first_missing, second_missing, "Figma Variables", "Usability Testing", "WCAG Accessibility"]
+        proj_steps = [
+            f"ביצוע מחקר משתמשים ומיפוי ארכיטקטורת מידע ב-{first_missing}",
+            f"הקמת ספריית רכיבים ומשתני עיצוב ב-{second_missing}",
+            "בניית פרוטוטייפ אינטראקטיבי וביצוע בדיקות שמישות",
+            "הכנת תיעוד מפורט למפתחים כולל מפרטי ריווח ו-Responsive Design"
+        ]
+    else:  # software
+        bullets = [
+            CVBulletImprovement(
+                original="פיתוח רכיבים ותיקון באגים במערכת.",
+                improved=f"תכנון ומימוש מודולים מלאים ב-{first_missing}, שיפור ביצועי טעינה ב-35% וכיסוי בדיקות יחידה של 85%.",
+                reason=f"הדגשת הישגים הנדסיים מבוססי מדדים ב-{first_missing} ולא רק משימות תחזוקה שגרתיות."
+            ),
+            CVBulletImprovement(
+                original="חיבור לשרתי API וכתיבת שאילתות.",
+                improved=f"בניית שירותי Backend מאובטחים ב-{second_missing}, אופטימיזציית שאילתות ואינטגרציה לצינור CI/CD מלא.",
+                reason=f"הצגת שליטה בארכיטקטורת צד שרת ופרקטיקות ענן ב-{second_missing}."
+            ),
+        ]
+        proj_name = f"{first_missing} Fullstack Web Application with Cloud Architecture"
+        proj_context = f"פרויקט תוכנה מלא המוכיח יכולת פיתוח מקצה לקצה ב-{first_missing}, חיבור למסד נתונים ופריסה מודרנית בענן."
+        proj_stack = [first_missing, second_missing, "TypeScript", "PostgreSQL", "Docker", "CI/CD"]
+        proj_steps = [
+            f"תכנון ארכיטקטורת המערכת ומסד הנתונים ב-{first_missing}",
+            f"פיתוח ממשקי API מאובטחים ושכבת שירותים ב-{second_missing}",
+            "בניית ממשק משתמש רספונסיבי ואינטראקטיבי",
+            "קונטיינריזציה ב-Docker והרמת בדיקות אוטומטיות ב-GitHub Actions"
+        ]
 
-    # יצירת מפרט פרויקט מותאם אישית
     top_skills_for_proj = [m.skill for m in missing_skills_list[:4]]
     if not top_skills_for_proj:
-        top_skills_for_proj = ["Figma", "Design Systems", "User Research"]
-
-    primary_skill = top_skills_for_proj[0]
-    proj_name = f"{primary_skill} Enterprise Dashboard & Design System"
+        top_skills_for_proj = [first_missing, second_missing]
 
     readme_body = f"""# {proj_name}
 
-> A production-grade, accessible web system and design suite closing critical engineering gaps for entry-level roles.
+> A production-ready, hands-on portfolio project demonstrating practical mastery in {', '.join(top_skills_for_proj)}.
 
-## 🚀 Overview & Business Problem
-In modern tech environments, candidates often lack hands-on experience in **{', '.join(top_skills_for_proj)}**.
-This project delivers an enterprise-level showcase solving real-world friction:
-- End-to-end component tokens and reusable system architecture.
-- Full compliance with WCAG AAA accessibility standards.
-- High-contrast Dark/Light dual themes and automated CI quality gates.
+## 🚀 Overview & Problem Statement
+Entry-level candidates frequently face rejections due to lack of production-grade proof of work in **{', '.join(top_skills_for_proj)}**.
+This project bridges that gap by implementing a complete, documented solution:
+- Real-world architecture addressing scale, reliability, and code quality.
+- Automated quality gates, tests, and CI/CD pipelines.
+- Production-standard documentation with clear setup and execution steps.
 
 ## 🛠️ Architecture & Tech Stack
-- **Core Technologies:** {', '.join(top_skills_for_proj)}
-- **Design & Prototyping:** Figma Component Library, Auto-layout v5, Design Tokens
-- **Frontend / Prototyping:** TypeScript / React 19 / Vite / Tailwind CSS
-- **Testing & Verification:** Jest, Accessibility Linters, Storybook
-- **DevOps:** GitHub Actions Automated Workflows
+- **Core Skills:** {', '.join(top_skills_for_proj)}
+- **Stack Components:** {', '.join(proj_stack)}
+- **Verification:** Automated tests, linting, and continuous integration
 
 ## 📦 Quick Start & Run Instructions
 
@@ -245,33 +392,25 @@ This project delivers an enterprise-level showcase solving real-world friction:
 # 1. Clone the repository
 git clone https://github.com/your-username/{proj_name.lower().replace(' ', '-')}.git
 
-# 2. Navigate into project
+# 2. Navigate to project directory
 cd {proj_name.lower().replace(' ', '-')}
 
-# 3. Install dependencies
-npm install
-
-# 4. Start local development server
-npm run dev
+# 3. Setup dependencies and run
+# Follow domain-specific run commands in the repo
 ```
 
 ## 🧪 Verification & Proof of Work
-- [x] Tested against automated accessibility scanners (0 critical violations).
-- [x] Verified token propagation across desktop and mobile viewports.
-- [x] Built specifically to showcase mastery in `{primary_skill}`.
+- [x] Tested and verified against real-world scenarios.
+- [x] Zero critical security or quality issues.
+- [x] Built specifically to showcase practical capability in `{first_missing}`.
 """
 
     project = PortfolioProject(
         project_name=proj_name,
         targeted_skills=top_skills_for_proj,
-        business_context=f"סגירת פער מעשי במיומנויות {', '.join(top_skills_for_proj)} על ידי בניית פרויקט מערכתי מלא עם תיעוד מושלם לקוד פתוח.",
-        architecture_stack=top_skills_for_proj + ["TypeScript", "Tailwind CSS", "Storybook", "CI/CD"],
-        implementation_steps=[
-            f"הגדרת ארכיטקטורת המערכת ומיפוי צרכי ה-UI ב-{primary_skill}",
-            "בניית ספריית Tokens ורכיבי ממשק מונגשים לפי תקן WCAG",
-            "יישום דשבורד מגיב (Responsive) עם תמיכה מובנית ב-Dark Mode",
-            "העלאת הפרויקט ל-GitHub וכתיבת תיעוד README מלא למגייסים",
-        ],
+        business_context=proj_context,
+        architecture_stack=proj_stack,
+        implementation_steps=proj_steps,
         readme_content=readme_body.strip(),
     )
 
@@ -284,16 +423,31 @@ npm run dev
     )
 
 
+def load_mock_response() -> JobMatchAnalysis:
+    """טוען ישירות את תשובת ה-Mock מקובץ data/mock_response.json לבדיקות מהירות ויציבות מוחלטת"""
+    mock_path = os.path.join(os.path.dirname(__file__), "data", "mock_response.json")
+    try:
+        with open(mock_path, "r", encoding="utf-8") as f:
+            return JobMatchAnalysis.model_validate_json(f.read())
+    except Exception as e:
+        print(f"[LLM Engine] Error loading mock_response.json: {e}")
+        return calculate_dynamic_analysis("", "")
+
+
 def analyze_job_match(
     sanitized_resume_text: str,
     job_description_text: str,
     api_key: Optional[str] = None,
+    force_mock: bool = False,
 ) -> JobMatchAnalysis:
     """
     מנתח את ההתאמה באמצעות LLM חי (Gemini 2.5 Flash) במידה וקיים מפתח API.
-    אם אין מפתח API, או במקרה של שגיאת רשת/חסימה - מופעל מנוע הניתוח ההיוריסטי הדינמי,
-    המחשב ציונים מותאמים לקלט וחוסם מתקפות Prompt Injection (לעולם לא 72% סטטי קבוע!).
+    אם נבחר force_mock או אין מפתח API, מופעל מצב Mock / מנוע הניתוח ההיוריסטי הדינמי,
+    המבטיח חזרה יציבה של מודל JobMatchAnalysis ללא תלות ברשת.
     """
+    if force_mock:
+        return load_mock_response()
+
     effective_api_key = (
         api_key
         or os.environ.get("GEMINI_API_KEY")
@@ -301,9 +455,12 @@ def analyze_job_match(
         or os.environ.get("OPENAI_API_KEY")
     )
 
-    # אם אין מפתח API - שימוש במנוע הדינמי החכם
+    # אם אין מפתח API - שימוש במנוע הדינמי החכם (או ב-Mock במידה ויש שגיאה)
     if not effective_api_key:
-        return calculate_dynamic_analysis(sanitized_resume_text, job_description_text)
+        try:
+            return calculate_dynamic_analysis(sanitized_resume_text, job_description_text)
+        except Exception:
+            return load_mock_response()
 
     user_prompt = f"""להלן נתוני הקלט לניתוח:
 

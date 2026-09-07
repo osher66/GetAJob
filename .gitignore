@@ -11,3 +11,4 @@ uxui_package_dump.txt
 .streamlit/secrets.toml
 publish_repo.py
 token.tmp
+scratch/
