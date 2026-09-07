@@ -7,7 +7,11 @@ extractor.py - מודול חילוץ טקסט מקובצי קורות חיים (
 import io
 from typing import Tuple
 from pypdf import PdfReader
-import docx
+
+try:
+    import docx
+except ImportError:
+    docx = None
 
 
 class DocumentExtractionError(Exception):
@@ -60,6 +64,11 @@ def extract_text_from_docx(file_bytes: bytes) -> Tuple[str, int]:
     """
     if not file_bytes:
         raise DocumentExtractionError("הקובץ שהועלה ריק.")
+
+    if docx is None:
+        raise DocumentExtractionError(
+            "ספריית python-docx אינה מותקנת בשרת. אנא העלה קובץ בפורמט PDF."
+        )
 
     try:
         doc_stream = io.BytesIO(file_bytes)
