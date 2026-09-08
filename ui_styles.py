@@ -16,123 +16,94 @@ def get_custom_css(theme: str = "light") -> str:
     """
     css = """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
     :root {
         /* ==========================================================================
-           1. Google Material Design 3 (M3) Color Roles (Light Theme)
+           1. פלטת צבעים — GetAJob Design Handoff v1.0 (8 בספטמבר 2026)
            ========================================================================== */
-        --md-sys-color-primary: #5A45FF;
-        --md-sys-color-on-primary: #FFFFFF;
-        --md-sys-color-primary-container: #EDE9FE;
-        --md-sys-color-on-primary-container: #3730A3;
-        --md-sys-color-primary-hover: #4C37F5;
+        /* 1.1 רקעים ומשטחים */
+        --bg-base: #FBF9F4;
+        --surface: linear-gradient(180deg, #FFFFFF, #FDFCF9);
+        --surface-sunken: linear-gradient(180deg, #FCFAF6, #F5F1E7);
+        --surface-glass: rgba(255, 255, 255, 0.72);
+        --surface-dark: #111114;
+        --border: #EEE8DA;
+        --border-input: #E4DED0;
+        --border-hairline: #F2EDE1;
 
-        --md-sys-color-secondary: #4F46E5;
-        --md-sys-color-on-secondary: #FFFFFF;
-        --md-sys-color-secondary-container: #F3F0FF;
-        --md-sys-color-on-secondary-container: #312E81;
+        /* 1.3 אקסנט */
+        --accent: #4F46E5;
+        --accent-light: #6C63FF;
+        --accent-deep: #4338CA;
+        --accent-tint: linear-gradient(180deg, #F4F2FF, #EAE6FF);
+        --accent-ring: rgba(79, 70, 229, 0.14);
 
-        --md-sys-color-tertiary: #0284C7;
-        --md-sys-color-tertiary-container: #E0F2FE;
-        --md-sys-color-on-tertiary-container: #0369A1;
+        /* 1.4 טקסט */
+        --text: #17171C;
+        --text-body: #4A4A55;
+        --text-muted: #6B6B74;
+        --text-on-dark: #FBF9F4;
+        --text-on-dark-body: #A9A9B4;
+        --text-placeholder: #9A9AA4;
 
-        --md-sys-color-surface: #F8FAFC;
-        --md-sys-color-on-surface: #0F172A;
-        --md-sys-color-on-surface-variant: #475569;
+        /* 1.5 סמנטיים (נתונים ומצבי מערכת בלבד — לא לכפתורים!) */
+        --semantic-error: #B42318;
+        --semantic-error-bg: #FEE2E2;
+        --semantic-warning: #92400E;
+        --semantic-warning-bg: #FEF3C7;
+        --semantic-success: #166534;
+        --semantic-success-bg: #DCFCE7;
+        --state-dot: #16A34A;
 
-        --md-sys-color-surface-container-lowest: #FFFFFF;
-        --md-sys-color-surface-container-low: #F8FAFC;
-        --md-sys-color-surface-container: #F1F5F9;
-        --md-sys-color-surface-container-high: #E2E8F0;
-        --md-sys-color-surface-container-highest: #CBD5E1;
+        /* 4. צללים ואפקטים מדויקים */
+        --sh-card: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);
+        --sh-panel: 0 1px 2px rgba(23, 23, 28, 0.035), 0 24px 50px -32px rgba(23, 23, 28, 0.45);
+        --sh-nav: 0 1px 2px rgba(23, 23, 28, 0.04), 0 18px 40px -28px rgba(23, 23, 28, 0.45);
+        --sh-accent: 0 1px 0 rgba(255, 255, 255, 0.28) inset, 0 14px 30px -12px rgba(79, 70, 229, 0.75);
+        --sh-selected: 0 0 0 4px rgba(79, 70, 229, 0.13), 0 22px 46px -30px rgba(79, 70, 229, 0.85);
+        --sh-inset: 0 1px 2px rgba(23, 23, 28, 0.06) inset;
+        --sh-dark: 0 40px 90px -50px rgba(23, 23, 28, 0.85);
 
-        --md-sys-color-outline: #94A3B8;
-        --md-sys-color-outline-variant: #E2E8F0;
-
-        --md-sys-color-success: #006C4C;
-        --md-sys-color-success-container: #ECFDF5;
-        --md-sys-color-on-success-container: #065F46;
-
-        --md-sys-color-warning: #B45309;
-        --md-sys-color-warning-container: #FFFBEB;
-        --md-sys-color-on-warning-container: #92400E;
-
-        --md-sys-color-error: #BA1A1A;
-        --md-sys-color-error-container: #FEF2F2;
-        --md-sys-color-on-error-container: #991B1B;
-
-        /* Legacy mapping for backward compatibility */
-        --bg-main: var(--md-sys-color-surface);
-        --surface-card: var(--md-sys-color-surface-container-lowest);
-        --surface-secondary: var(--md-sys-color-surface-container);
-        --surface-elevated: var(--md-sys-color-surface-container-lowest);
-        --primary-accent: var(--md-sys-color-primary);
-        --primary-hover: var(--md-sys-color-primary-hover);
-        --primary-glow: rgba(90, 69, 255, 0.22);
-        --text-primary: var(--md-sys-color-on-surface);
-        --text-secondary: var(--md-sys-color-on-surface-variant);
-        --text-muted: #64748B;
-        --border-color: var(--md-sys-color-outline-variant);
-        --border-focus: var(--md-sys-color-primary);
-        --card-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
-
-        /* ==========================================================================
-           2. M3 Tonal Elevation System (Soft ambient shadows + surface separation)
-           ========================================================================== */
-        --md-sys-elevation-0: none;
-        --md-sys-elevation-1: 0 1px 3px 1px rgba(15, 23, 42, 0.05), 0 1px 2px 0 rgba(15, 23, 42, 0.08);
-        --md-sys-elevation-2: 0 2px 6px 2px rgba(15, 23, 42, 0.06), 0 1px 2px 0 rgba(15, 23, 42, 0.10);
-        --md-sys-elevation-3: 0 4px 12px 3px rgba(15, 23, 42, 0.08), 0 1px 3px 0 rgba(15, 23, 42, 0.12);
-        --md-sys-elevation-4: 0 6px 16px 4px rgba(15, 23, 42, 0.08), 0 2px 4px 0 rgba(15, 23, 42, 0.12);
-
-        /* ==========================================================================
-           3. M3 Shape Scale (Distinct rounded corners)
-           ========================================================================== */
-        --md-sys-shape-corner-full: 9999px;
-        --md-sys-shape-corner-extra-large: 28px;
-        --md-sys-shape-corner-large: 18px;
-        --md-sys-shape-corner-medium: 12px;
-        --md-sys-shape-corner-small: 8px;
-
-        /* ==========================================================================
-           4. M3 Motion & State Layers
-           ========================================================================== */
-        --md-sys-motion-easing-standard: cubic-bezier(0.2, 0.0, 0, 1.0);
-        --md-sys-motion-duration-short: 0.2s;
-        --md-sys-motion-duration-medium: 0.35s;
-
-        /* ==========================================================================
-           5. Typography Hierarchy
-           ========================================================================== */
-        --font-sans: 'Rubik', 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
-        --font-brand: 'Outfit', sans-serif;
+        /* טיפוגרפיה — Heebo בלבד בממשק */
+        --font-sans: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
         --font-mono: 'JetBrains Mono', monospace;
+
+        /* תאימות למערכת הכללית */
+        --md-sys-color-primary: var(--accent);
+        --md-sys-color-on-primary: #FFFFFF;
+        --md-sys-color-surface: var(--bg-base);
+        --md-sys-color-on-surface: var(--text);
+        --md-sys-color-on-surface-variant: var(--text-body);
+        --md-sys-color-outline: var(--border-input);
+        --md-sys-color-outline-variant: var(--border);
     }
 
-    /* Base Body & App View - Full RTL Enforcement */
+    /* 1.2 שכבת ה-Gradient (חתימה ויזואלית — חובה) על ה-body והמכולה הראשית */
     html, body, [data-testid="stAppViewContainer"], .main {
-        background-color: var(--md-sys-color-surface) !important;
-        color: var(--md-sys-color-on-surface);
-        font-family: var(--font-sans) !important;
+        background-color: #FBF9F4 !important;
+        background-image:
+            radial-gradient(1100px 620px at 78% -8%, #E9E6FF 0%, rgba(233, 230, 255, 0) 62%),
+            radial-gradient(900px 520px at 8% 4%, #FFF3E4 0%, rgba(255, 243, 228, 0) 58%) !important;
+        background-attachment: fixed !important;
+        background-repeat: no-repeat !important;
+        color: #4A4A55 !important;
+        font-family: 'Heebo', sans-serif !important;
         direction: rtl !important;
         text-align: right !important;
         -webkit-font-smoothing: antialiased;
     }
 
     [data-testid="stMarkdownContainer"],
-    .stMarkdown, .stText {
-        color: var(--md-sys-color-on-surface);
-        font-family: var(--font-sans) !important;
-        direction: rtl !important;
-        text-align: right !important;
+    .stMarkdown, .stText, p, span, label, div {
+        font-family: 'Heebo', sans-serif !important;
     }
 
     bdi, [dir="rtl"] {
         unicode-bidi: isolate !important;
     }
 
-    /* Hide Sidebar completely */
+    /* הסתרת סרגל צד */
     [data-testid="stSidebar"],
     [data-testid="collapsedControl"],
     section[data-testid="stSidebar"] {
@@ -141,13 +112,17 @@ def get_custom_css(theme: str = "light") -> str:
         width: 0 !important;
     }
 
-    /* Remove hover anchor link icons on headers */
+    /* החלקת גלילה */
+    html {
+        scroll-behavior: smooth;
+    }
+
     [data-testid="stHeaderActionElements"],
     [data-testid="stHeaderActionElements"] *,
     .st-emotion-cache-15zrgzn,
     .st-emotion-cache-gi04ae,
     a.anchorjs-link,
-    [data-testid="stMarkdownContainer"] a[href^="#"],
+    [data-testid="stMarkdownContainer"] a[href^="#"]:not(.m3-nav-link),
     h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
     h1:hover a, h2:hover a, h3:hover a, h4:hover a {
         display: none !important;
@@ -156,7 +131,7 @@ def get_custom_css(theme: str = "light") -> str:
         pointer-events: none !important;
     }
 
-    /* Suppress image fullscreen/zoom button and element toolbars on hover */
+    /* הסרת כפתורי מסך מלא על תמונות */
     [data-testid="stImage"] button,
     [data-testid="StyledFullScreenButton"],
     [data-testid="stElementToolbar"],
@@ -172,185 +147,187 @@ def get_custom_css(theme: str = "light") -> str:
 
     [data-testid="stHeader"] {
         background: transparent !important;
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        pointer-events: none !important;
+        visibility: hidden !important;
     }
 
-    /* Container Spacing & Maximum Width */
+    /* 5.6 ניווט צף — Floating Frosted Glass Navbar */
+    .m3-landing-navbar {
+        position: fixed !important;
+        top: 14px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: min(1180px, calc(100% - 36px)) !important;
+        z-index: 99999 !important;
+        display: grid !important;
+        grid-template-columns: 1fr auto 1fr !important;
+        align-items: center !important;
+        padding: 12px 24px !important;
+        background: rgba(255, 255, 255, 0.72) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border: 1px solid rgba(23, 23, 28, 0.07) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 1px 2px rgba(23, 23, 28, 0.04), 0 18px 40px -28px rgba(23, 23, 28, 0.45) !important;
+        transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
+    }
+
+    /* כפתור חזרה לראש העמוד — סעיף 5.6 */
+    #back-to-top-btn {
+        position: fixed !important;
+        left: 24px !important;
+        bottom: 28px !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 14px !important;
+        background: #FFFFFF !important;
+        border: 1px solid #EEE8DA !important;
+        box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4) !important;
+        color: #4A4A55 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        z-index: 99999 !important;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.2s ease !important;
+    }
+    #back-to-top-btn:hover {
+        background: linear-gradient(180deg, #6C63FF, #4F46E5) !important;
+        border-color: #4338CA !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset, 0 14px 30px -12px rgba(79, 70, 229, 0.75) !important;
+        transform: translateY(-2px) !important;
+    }
+
+    /* היסט עוגן גלילה עבור ניווט קבוע */
+    #how-it-works, #sample-output, #faq, #bottom-cta {
+        scroll-margin-top: 96px !important;
+    }
+
+    /* מכולה ראשית — סעיף 3 (max-width: 1180px, padding-inline: 32px) */
     .block-container {
-        padding-top: 1.5rem !important;
-        padding-bottom: 3.5rem !important;
-        max-width: 1200px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        max-width: 1180px !important;
+        padding-inline: 32px !important;
+        margin-inline: auto !important;
+        padding-top: 96px !important;
+        padding-bottom: 64px !important;
         direction: rtl !important;
         text-align: right !important;
     }
 
-    /* Horizontal layout (st.columns) - Enforce RTL row ordering */
     [data-testid="stHorizontalBlock"] {
         direction: rtl !important;
         text-align: right !important;
     }
 
-    /* Typography Hierarchy */
-    h1, h2, h3 {
-        font-family: var(--font-sans) !important;
-        color: var(--md-sys-color-on-surface) !important;
+    /* 2. טיפוגרפיה — Heebo בלבד, text-wrap: pretty על כל הכותרות */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Heebo', sans-serif !important;
+        color: #17171C !important;
         font-weight: 800 !important;
-        letter-spacing: -0.02em;
+        text-wrap: pretty !important;
         text-align: right !important;
         direction: rtl !important;
     }
-    h1 { font-size: 30px !important; }
-    h2 { font-size: 24px !important; }
-    h3 { font-size: 19px !important; }
-    h4, h5, h6 {
-        color: var(--md-sys-color-on-surface) !important;
-        font-weight: 700 !important;
-        text-align: right !important;
-        direction: rtl !important;
+    h1 {
+        font-size: clamp(28px, 3.7vw, 44px) !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.03em !important;
+    }
+    h2 {
+        font-size: clamp(28px, 3.4vw, 42px) !important;
+        line-height: 1.14 !important;
+        letter-spacing: -0.025em !important;
+    }
+    h3 {
+        font-size: 18px !important;
+        line-height: 1.3 !important;
+        letter-spacing: -0.01em !important;
     }
 
-    /* ==========================================================================
-       6. Material Design 3 Buttons (Filled, Tonal, Outlined & Download)
-       ========================================================================== */
-    /* Button base reset & typography */
+    /* 5.1 כפתורים */
     .stButton > button,
     [data-testid="baseButton-primary"],
     [data-testid="baseButton-secondary"],
     div.stButton > button {
-        border-radius: var(--md-sys-shape-corner-full) !important;
-        font-family: var(--font-sans) !important;
+        font-family: 'Heebo', sans-serif !important;
         font-weight: 700 !important;
-        font-size: 14.5px !important;
-        transition: all var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard) !important;
+        transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         cursor: pointer !important;
-        letter-spacing: -0.2px !important;
+        min-height: 44px !important;
     }
 
-    /* Remove text wrapper artifacts inside buttons */
     .stButton > button p,
     .stButton > button span,
-    .stButton > button div,
     [data-testid="baseButton-primary"] p,
     [data-testid="baseButton-primary"] span,
     [data-testid="baseButton-secondary"] p,
     [data-testid="baseButton-secondary"] span {
         background: transparent !important;
-        background-color: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
         color: inherit !important;
     }
 
-    /* M3 Filled Button (Primary CTA) */
+    /* כפתור ראשי (Primary) — גרדיאנט אינדיגו, מסגרת 4338CA, רדיוס 12px */
     [data-testid="baseButton-primary"],
     div.stButton > button[kind="primary"] {
-        background-color: var(--md-sys-color-primary) !important;
-        background: var(--md-sys-color-primary) !important;
-        color: var(--md-sys-color-on-primary) !important;
-        border: none !important;
-        border-radius: var(--md-sys-shape-corner-full) !important;
-        padding: 10px 28px !important;
-        min-height: 46px !important;
-        box-shadow: var(--md-sys-elevation-1) !important;
+        background: linear-gradient(180deg, #6C63FF, #4F46E5) !important;
+        border: 1px solid #4338CA !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset, 0 14px 30px -12px rgba(79, 70, 229, 0.75) !important;
+        border-radius: 12px !important;
+        padding: 16px 30px !important;
+        font-size: 16.5px !important;
     }
     [data-testid="baseButton-primary"]:hover,
     div.stButton > button[kind="primary"]:hover {
-        background-color: var(--md-sys-color-primary-hover) !important;
-        background: var(--md-sys-color-primary-hover) !important;
-        color: var(--md-sys-color-on-primary) !important;
-        box-shadow: var(--md-sys-elevation-2) !important;
+        background: linear-gradient(180deg, #5F56FF, #4338CA) !important;
         transform: translateY(-1px) !important;
-    }
-    [data-testid="baseButton-primary"]:active,
-    div.stButton > button[kind="primary"]:active {
-        box-shadow: var(--md-sys-elevation-1) !important;
-        transform: scale(0.98) !important;
-    }
-    [data-testid="baseButton-primary"] p,
-    div.stButton > button[kind="primary"] p {
-        color: #FFFFFF !important;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 16px 34px -10px rgba(79, 70, 229, 0.85) !important;
     }
 
-    /* M3 Tonal / Outlined Button (Secondary) */
+    /* כפתור משני (Secondary) — רקע לבן, מסגרת EEE8DA, רדיוס 12px */
     [data-testid="baseButton-secondary"],
-    div.stButton > button[kind="secondary"] {
-        background-color: var(--md-sys-color-surface-container-lowest) !important;
-        background: var(--md-sys-color-surface-container-lowest) !important;
-        color: var(--md-sys-color-on-surface-variant) !important;
-        border: 1.5px solid var(--md-sys-color-outline-variant) !important;
-        border-radius: var(--md-sys-shape-corner-full) !important;
-        padding: 8px 22px !important;
-        min-height: 42px !important;
-        box-shadow: var(--md-sys-elevation-1) !important;
+    div.stButton > button[kind="secondary"],
+    div.stButton > button:not([kind="primary"]) {
+        background: #FFFFFF !important;
+        border: 1px solid #EEE8DA !important;
+        color: #17171C !important;
+        border-radius: 12px !important;
+        padding: 14px 22px !important;
+        font-size: 15.5px !important;
     }
     [data-testid="baseButton-secondary"]:hover,
-    div.stButton > button[kind="secondary"]:hover {
-        background-color: var(--md-sys-color-surface-container-low) !important;
-        background: var(--md-sys-color-surface-container-low) !important;
-        border-color: var(--md-sys-color-primary) !important;
-        color: var(--md-sys-color-primary) !important;
-        box-shadow: var(--md-sys-elevation-2) !important;
+    div.stButton > button:not([kind="primary"]):hover {
+        border-color: #17171C !important;
         transform: translateY(-1px) !important;
     }
-    [data-testid="baseButton-secondary"]:active,
-    div.stButton > button[kind="secondary"]:active {
-        box-shadow: var(--md-sys-elevation-0) !important;
-        transform: scale(0.98) !important;
+
+    /* focus-visible חובה על כל שדה וכפתור */
+    button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
+        outline: none !important;
+        border-color: #4F46E5 !important;
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.14) !important;
     }
 
-    /* M3 Download Button */
-    [data-testid="stDownloadButton"] > button {
-        background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
-        color: #FFFFFF !important;
-        border: none !important;
-        border-radius: var(--md-sys-shape-corner-full) !important;
-        padding: 10px 26px !important;
-        font-weight: 800 !important;
-        box-shadow: var(--md-sys-elevation-1) !important;
-        transition: all var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard) !important;
-    }
-    [data-testid="stDownloadButton"] > button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: var(--md-sys-elevation-2) !important;
-    }
-
-    /* ==========================================================================
-       7. M3 Elevated Cards & Streamlit Containers
-       ========================================================================== */
+    /* 5.2 כרטיסים ופנלים */
+    .custom-card,
     [data-testid="stVerticalBlockBorderWrapper"] {
-        border-radius: var(--md-sys-shape-corner-large) !important;
-        border: 1px solid var(--md-sys-color-outline-variant) !important;
-        background-color: var(--md-sys-color-surface-container-lowest) !important;
-        box-shadow: var(--md-sys-elevation-1) !important;
-        transition: all var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard) !important;
-        padding: 16px 22px !important;
-        margin-bottom: 16px !important;
-    }
-    [data-testid="stVerticalBlockBorderWrapper"]:hover {
-        border-color: #CBD5E1 !important;
-        box-shadow: var(--md-sys-elevation-2) !important;
-    }
-
-    .custom-card {
-        background: var(--md-sys-color-surface-container-lowest);
-        border: 1px solid var(--md-sys-color-outline-variant);
-        border-radius: var(--md-sys-shape-corner-extra-large);
-        padding: 24px 28px;
-        margin-bottom: 20px;
-        box-shadow: var(--md-sys-elevation-1);
-        transition: all var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard);
-        direction: rtl;
-        text-align: right;
-    }
-    .custom-card:hover {
-        border-color: var(--md-sys-color-primary);
-        box-shadow: var(--md-sys-elevation-2);
+        background: linear-gradient(180deg, #FFFFFF 0%, #FDFCF9 100%) !important;
+        border: 1px solid #EEE8DA !important;
+        border-radius: 18px !important;
+        padding: 22px !important;
+        box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4) !important;
+        transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
+        direction: rtl !important;
+        text-align: right !important;
     }
 
     /* ==========================================================================
@@ -935,3 +912,381 @@ def render_readme_block(readme_content: str, project_name: str, theme: str = "li
     </div>
     """
     return textwrap.dedent(html).strip()
+
+
+def render_landing_navbar() -> str:
+    """
+    סרגל ניווט עליון מודרני מותאם לפי מפרט מערכת עיצוב GetAJob v1.0 (סעיף 5.6):
+    - מקובע בראש הדף עם אפקט זכוכית מטושטשת (surface-glass: blur 14px + rgba(255,255,255,.72)).
+    - מרכוז מושלם באמצעות CSS Grid (1fr auto 1fr) ללא space-between (סעיף 5.6).
+    - טיפוגרפיה: Heebo בלבד, ללא אימוג'י.
+    """
+    html = """
+    <div class="m3-landing-navbar" style="direction: rtl;">
+        <!-- צד ימין: לוגו מותג עם ריבוע G אינדיגו (justify-self: start) -->
+        <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; justify-self: start;">
+            <div style="width: 32px; height: 32px; background: linear-gradient(180deg, #6C63FF, #4F46E5); border: 1px solid #4338CA; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 800; font-size: 16.5px; font-family: 'Heebo', sans-serif;">
+                G
+            </div>
+            <span style="font-size: 19px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.02em;"><bdi dir="ltr">GetAJob</bdi></span>
+        </a>
+
+        <!-- מרכז: קישורי ניווט עדינים (justify-self: center) -->
+        <div style="display: flex; align-items: center; gap: 28px; justify-self: center;">
+            <a href="#how-it-works" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">איך זה עובד</a>
+            <a href="#sample-output" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">דוגמת ניתוח</a>
+            <a href="#faq" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">שאלות</a>
+        </div>
+
+        <!-- צד שמאל: כפתורי פעולה לפי סעיף 5.1 (justify-self: end) -->
+        <div style="display: flex; align-items: center; gap: 14px; justify-self: end;">
+            <a href="?step=2" target="_self" style="color: #4F46E5; font-size: 14.5px; font-weight: 700; padding: 8px 12px; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">
+                הירשם
+            </a>
+            <a href="?step=2" target="_self" style="background: #111114; color: #FFFFFF; font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 11px; text-decoration: none; transition: all 0.18s ease; font-family: 'Heebo', sans-serif; border: none;">
+                היכנס
+            </a>
+        </div>
+    </div>
+
+    <!-- כפתור חזרה לראש העמוד (סעיף 5.6) — מופיע מעל 320px גלילה -->
+    <button id="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" aria-label="חזרה לראש העמוד">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+    <script>
+    (function() {
+        function checkScroll() {
+            var btn = document.getElementById('back-to-top-btn');
+            if (btn) {
+                if (window.scrollY > 320) {
+                    btn.style.opacity = '1';
+                    btn.style.pointerEvents = 'auto';
+                } else {
+                    btn.style.opacity = '0';
+                    btn.style.pointerEvents = 'none';
+                }
+            }
+        }
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        window.addEventListener('DOMContentLoaded', checkScroll);
+        setTimeout(checkScroll, 500);
+    })();
+    </script>
+    """
+    return textwrap.dedent(html).strip()
+
+
+def render_how_it_works() -> str:
+    """
+    סקשן 'איך זה עובד' לפי מפרט מערכת עיצוב GetAJob v1.0:
+    - מרווח סקשן: 96px (סעיף 3)
+    - טור ימין: Eyebrow (#4F46E5), כותרת H2 (pretty text-wrap), 3 שלבים עם תגיות accent-tint
+    - טור שמאל: מיכל המחשה גרפי (surface-sunken, ללא אימוג'י)
+    - שלב 3: ממוקד בבניית פרויקט לפורטפוליו (ללא README).
+    """
+    html = """
+    <div id="how-it-works" style="direction: rtl; text-align: right; margin-top: 96px; margin-bottom: 96px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 44px; align-items: center;">
+            <!-- טור ימין: כותרת, הסבר ו-3 השלבים הממוספרים (flex: 1 1 360px) -->
+            <div style="flex: 1 1 360px; min-width: 0;">
+                <!-- כותרת ראשית וקטגוריה -->
+                <div style="margin-bottom: 32px;">
+                    <span style="color: #4F46E5; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; margin-bottom: 8px; font-family: 'Heebo', sans-serif;">
+                        איך זה עובד
+                    </span>
+                    <h2 style="margin: 0 0 12px 0; font-size: clamp(28px, 3.4vw, 42px); font-weight: 800; color: #17171C; line-height: 1.14; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty;">
+                        שלוש פעולות בין קורות החיים שלך לראיון
+                    </h2>
+                    <p style="margin: 0; color: #4A4A55; font-size: 16px; line-height: 1.6; font-weight: 400; font-family: 'Heebo', sans-serif;">
+                        אין כאן טיפים כלליים. כל פלט נגזר מהמשרה הספציפית שהעלית.
+                    </p>
+                </div>
+
+                <!-- 3 השלבים הממוספרים -->
+                <div style="display: flex; flex-direction: column; gap: 26px;">
+                    <!-- שלב 1 -->
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Heebo', sans-serif;">
+                            1
+                        </div>
+                        <div>
+                            <h3 style="margin: 0 0 4px 0; font-size: 17.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em;">
+                                איתור פערי מיומנויות
+                            </h3>
+                            <p style="margin: 0; color: #4A4A55; font-size: 15px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                                סריקה קפדנית של דרישות המשרה מול קורות החיים, ודירוג כל פער לפי חומרה.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- שלב 2 -->
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Heebo', sans-serif;">
+                            2
+                        </div>
+                        <div>
+                            <h3 style="margin: 0 0 4px 0; font-size: 17.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em;">
+                                שכתוב סעיפים למדידים
+                            </h3>
+                            <p style="margin: 0; color: #4A4A55; font-size: 15px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                                כל סעיף גנרי הופך לפעולה, היקף ותוצאה — בניסוח שעובר גם סינון אוטומטי.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- שלב 3 (הסרת README והדגשת בניית פרויקט לפורטפוליו) -->
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Heebo', sans-serif;">
+                            3
+                        </div>
+                        <div>
+                            <h3 style="margin: 0 0 4px 0; font-size: 17.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em;">
+                                בניית פרויקט לפורטפוליו
+                            </h3>
+                            <p style="margin: 0; color: #4A4A55; font-size: 15px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                                מפרט פרויקט מעשי שסוגר בדיוק את הפער שנמצא, עם דגש על הצגת תוצרים מוכחים בתיק העבודות למגייסים.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- טור שמאל: מיכל המחשה גרפי (surface-sunken, ללא אימוג'י) -->
+            <div style="flex: 1 1 340px; min-width: 0; background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EEE8DA; border-radius: 22px; min-height: 420px; display: flex; align-items: center; justify-content: center; padding: 32px;">
+                <div style="background: #FFFFFF; border: 1px solid #EEE8DA; border-radius: 12px; padding: 10px 22px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4A4A55; font-weight: 600; direction: ltr; display: inline-flex; align-items: center; gap: 8px;">
+                    <span>product shot — analysis flow</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    """
+    return textwrap.dedent(html).strip()
+
+
+def render_sample_showcase() -> str:
+    """
+    סקשן 'דוגמת פלט לניתוח אמיתי' לפי מפרט מערכת עיצוב GetAJob v1.0:
+    - כרטיסי פערים עם Badges מדויקים (חוסם: #B42318/#FEE2E2, חשוב: #92400E/#FEF3C7, קיים: #166534/#DCFCE7) (סעיף 1.5, 5.3)
+    - מד התאמה אופקי מדויק (גובה 12px, מספר 38px, מילוי אינדיגו בלבד) (סעיף 5.4)
+    - השוואת שכתוב סעיף (לפני / אחרי) בכרטיסים פנימיים (סעיף 5.2)
+    """
+    html = """
+    <div id="sample-output" style="direction: rtl; text-align: right; margin-top: 96px; margin-bottom: 96px;">
+        <!-- כותרת ראשית וקטגוריה -->
+        <div style="margin-bottom: 32px;">
+            <span style="color: #4F46E5; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; margin-bottom: 8px; font-family: 'Heebo', sans-serif;">
+                דוגמת פלט
+            </span>
+            <h2 style="margin: 0 0 10px 0; font-size: clamp(28px, 3.4vw, 42px); font-weight: 800; color: #17171C; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty;">
+                ככה נראה ניתוח אמיתי
+            </h2>
+            <p style="margin: 0; color: #4A4A55; font-size: 16px; font-weight: 400; font-family: 'Heebo', sans-serif;">
+                משרת Junior UX/UI Designer מול קורות חיים של בוגר בוטקאמפ.
+            </p>
+        </div>
+
+        <!-- גריד עליון: ימין (פערים), שמאל (מדדים) -->
+        <div style="display: flex; flex-wrap: wrap; gap: 26px; align-items: stretch; margin-bottom: 26px;">
+            <!-- טור כרטיסי פערים (בצד ימין ב-RTL, flex: 1 1 320px) -->
+            <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px;">
+                <!-- כרטיס חוסם (#B42318 על #FEE2E2) -->
+                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <h3 style="margin: 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
+                            אין תיק עבודות עם תהליך מלא
+                        </h3>
+                        <span style="background: #FEE2E2; color: #B42318; border-radius: 9px; padding: 6px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
+                            חוסם
+                        </span>
+                    </div>
+                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                        המשרה דורשת הצגת end-to-end case study. בקורות החיים מופיעים רק מסכים סופיים.
+                    </p>
+                </div>
+
+                <!-- כרטיס חשוב (#92400E על #FEF3C7) -->
+                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <h3 style="margin: 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
+                            ניסוח ללא מדידה
+                        </h3>
+                        <span style="background: #FEF3C7; color: #92400E; border-radius: 9px; padding: 6px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
+                            חשוב
+                        </span>
+                    </div>
+                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                        כל הסעיפים מתארים מה עשית, אף אחד לא מתאר מה זה שינה.
+                    </p>
+                </div>
+
+                <!-- כרטיס קיים (#166534 על #DCFCE7) -->
+                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <h3 style="margin: 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
+                            שליטה בכלי העבודה
+                        </h3>
+                        <span style="background: #DCFCE7; color: #166534; border-radius: 9px; padding: 6px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
+                            קיים
+                        </span>
+                    </div>
+                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                        Figma, מערכות עיצוב ופרוטוטייפינג — כולם מכוסים ומופיעים בבירור.
+                    </p>
+                </div>
+            </div>
+
+            <!-- טור מדדים (סעיף 5.4, flex: 1 1 300px) -->
+            <div style="flex: 1 1 300px; min-width: 0; background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 22px; padding: 26px 28px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                        <span style="font-size: 15px; font-weight: 700; color: #4A4A55; font-family: 'Heebo', sans-serif;">
+                            מד התאמה למשרה
+                        </span>
+                        <div style="display: flex; align-items: baseline; gap: 2px;">
+                            <span style="font-size: 38px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; line-height: 1; letter-spacing: -0.035em;">
+                                64
+                            </span>
+                            <span style="font-size: 18px; color: #6B6B74; font-weight: 600; font-family: 'Heebo', sans-serif;">%</span>
+                        </div>
+                    </div>
+
+                    <!-- פס התקדמות אופקי — Track & Fill לפי סעיף 5.4 -->
+                    <div role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="מד התאמה למשרה" style="background: linear-gradient(180deg, #E7E2D2, #F1EDE1); border-radius: 999px; height: 12px; overflow: hidden; margin-bottom: 6px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.06) inset; direction: ltr;">
+                        <div style="background: linear-gradient(90deg, #8B84FF, #4F46E5); width: 64%; height: 100%; border-radius: 999px; box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2), 0 6px 14px -6px rgba(79, 70, 229, 0.7);"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #6B6B74; font-weight: 500; margin-bottom: 22px; direction: ltr; font-family: 'Heebo', sans-serif;">
+                        <span>0</span>
+                        <span>100</span>
+                    </div>
+                </div>
+
+                <!-- מדדי סיכום מספריים עם מפריד פנימי F2EDE1 (סעיף 1.1) -->
+                <div style="display: flex; flex-direction: column; gap: 14px; border-top: 1px solid #F2EDE1; padding-top: 18px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #4A4A55; font-size: 14.5px; font-weight: 500; font-family: 'Heebo', sans-serif;">כישורים שקיימים</span>
+                        <strong style="color: #17171C; font-size: 17px; font-weight: 800; font-family: 'Heebo', sans-serif;">7</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #4A4A55; font-size: 14.5px; font-weight: 500; font-family: 'Heebo', sans-serif;">פערים שזוהו</span>
+                        <strong style="color: #17171C; font-size: 17px; font-weight: 800; font-family: 'Heebo', sans-serif;">4</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #4A4A55; font-size: 14.5px; font-weight: 500; font-family: 'Heebo', sans-serif;">סעיפים לשכתוב</span>
+                        <strong style="color: #17171C; font-size: 17px; font-weight: 800; font-family: 'Heebo', sans-serif;">5</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- כרטיס שכתוב סעיף רוחבי מלא (Before / After) לפי סעיף 5.2 -->
+        <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 22px 26px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+            <div style="margin-bottom: 14px;">
+                <span style="font-size: 13.5px; font-weight: 800; color: #6B6B74; font-family: 'Heebo', sans-serif;">
+                    שכתוב סעיף
+                </span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+                <!-- לפני (כרטיס פנימי surface-sunken ללא צל) -->
+                <div style="flex: 1 1 260px; min-width: 0; background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EFEADD; border-radius: 14px; padding: 16px 18px;">
+                    <span style="color: #B42318; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif; background: #FEE2E2; padding: 3px 8px; border-radius: 6px;">
+                        לפני
+                    </span>
+                    <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                        עיצבתי מסכים לאפליקציית מסחר בקורס.
+                    </p>
+                </div>
+
+                <!-- אחרי (כרטיס פנימי accent-tint) -->
+                <div style="flex: 1 1 260px; min-width: 0; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; border-radius: 14px; padding: 16px 18px;">
+                    <span style="color: #4338CA; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif; background: #E0D9FF; padding: 3px 8px; border-radius: 6px;">
+                        אחרי
+                    </span>
+                    <p style="margin: 0; color: #17171C; font-size: 14.5px; line-height: 1.55; font-weight: 500; font-family: 'Heebo', sans-serif;">
+                        עיצבתי מחדש תהליך צ'קאאוט ב-4 מסכים, וקיצרתי אותו מ-6 שלבים ל-3 בבדיקת שימושיות עם 8 משתתפים.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    """
+    return textwrap.dedent(html).strip()
+
+
+def render_faq_section() -> str:
+    """
+    סקשן שאלות נפוצות (FAQ) לפי מפרט מערכת עיצוב GetAJob v1.0:
+    - מרווח סקשן 96px (סעיף 3)
+    - ללא אימוג'י כלל (כלל איסור סעיף 7)
+    - טיפוגרפיה: Heebo, כותרות pretty text-wrap
+    """
+    html = """
+    <div id="faq" style="direction: rtl; text-align: right; margin-top: 96px; margin-bottom: 96px;">
+        <div style="margin-bottom: 32px;">
+            <span style="color: #4F46E5; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; margin-bottom: 8px; font-family: 'Heebo', sans-serif;">
+                שאלות נפוצות
+            </span>
+            <h2 style="margin: 0 0 10px 0; font-size: clamp(28px, 3.4vw, 42px); font-weight: 800; color: #17171C; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty;">
+                שאלות שאולי יש לכם
+            </h2>
+            <p style="margin: 0; color: #4A4A55; font-size: 16px; font-weight: 400; font-family: 'Heebo', sans-serif;">
+                כל מה שחשוב לדעת על הפלטפורמה ואיך היא מכינה אותך לגיוס.
+            </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 22px 24px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                <h3 style="margin: 0 0 8px 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
+                    למי GetAJob מיועדת?
+                </h3>
+                <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                    הפלטפורמה נבנתה במיוחד עבור ג'וניורים, בוגרי בוטקאמפים וקורסים מקצועיים, ומועמדים ששולחים עשרות קורות חיים ונתקעים בשלב הסינון הראשוני ללא משוב ברור.
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 22px 24px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                <h3 style="margin: 0 0 8px 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
+                    איך המערכת מזהה פערי מיומנויות?
+                </h3>
+                <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                    מנוע המערכת מנתח את הדרישות הספציפיות של משרת היעד שלך מול קורות החיים שהעלית, ומסווג את החוסרים לרמות חומרה (חובה קריטית, דרישה מהותית או יתרון) כדי שתדע בדיוק על מה כדאי לעבוד.
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 22px 24px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                <h3 style="margin: 0 0 8px 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
+                    האם השימוש במערכת כרוך בתשלום?
+                </h3>
+                <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                    לא. GetAJob פתוחה לשימוש חופשי כחלק מפרויקט הגמר, במטרה לסייע למועמדים לסגור פערי ידע ולהשתלב בתעשיית ההייטק.
+                </p>
+            </div>
+        </div>
+    </div>
+    """
+    return textwrap.dedent(html).strip()
+
+
+def render_bottom_cta_banner() -> str:
+    """
+    באנר כהה יוקרתי בתחתית העמוד לפי סעיף 5.7 במפרט:
+    background-color: #111114;
+    radial-gradient(700px 340px at 50% -10%, rgba(108,99,255,.42) 0%, rgba(108,99,255,0) 70%),
+    linear-gradient(180deg, #1B1B22 0%, #101014 100%);
+    border-radius: 26px; padding: clamp(40px, 6vw, 72px);
+    box-shadow: 0 40px 90px -50px rgba(23,23,28,.85);
+    title: #FBF9F4 · body: #A9A9B4
+    """
+    html = """
+    <div id="bottom-cta" style="background-color: #111114; background-image: radial-gradient(700px 340px at 50% -10%, rgba(108, 99, 255, 0.42) 0%, rgba(108, 99, 255, 0) 70%), linear-gradient(180deg, #1B1B22 0%, #101014 100%); border-radius: 26px; padding: clamp(40px, 6vw, 72px); text-align: center; color: #FBF9F4; margin-top: 96px; margin-bottom: 24px; box-shadow: 0 40px 90px -50px rgba(23, 23, 28, 0.85); direction: rtl;">
+        <h2 style="margin: 0 0 14px 0; font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; color: #FBF9F4; font-family: 'Heebo', sans-serif; letter-spacing: -0.025em; text-wrap: pretty;">
+            תגלו מה חסר לפני שהמגייס יגלה
+        </h2>
+        <p style="margin: 0 auto 28px auto; color: #A9A9B4; font-size: 16px; max-width: 600px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+            העלו קורות חיים ומשרה אחת. הניתוח הראשון לוקח פחות מדקה.
+        </p>
+    </div>
+    """
+    return textwrap.dedent(html).strip()
+

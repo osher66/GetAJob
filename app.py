@@ -27,6 +27,11 @@ from ui_styles import (
     render_bullet_comparison,
     render_learning_paths,
     render_ats_tip,
+    render_landing_navbar,
+    render_how_it_works,
+    render_sample_showcase,
+    render_faq_section,
+    render_bottom_cta_banner,
 )
 
 # הגדרות עמוד ראשיות
@@ -290,6 +295,14 @@ def generate_role_milestones(target_role: str, missing_skills: list, project=Non
 if "app_step" not in st.session_state:
     st.session_state.app_step = 1  # 1 = ברוכים הבאים וערך, 2 = בחירת תפקיד וקלט, 3 = לוח תוצאות
 
+# תמיכה במעבר שלבים מקישורי Navbar (הירשם / היכנס)
+if st.query_params.get("step") == "2":
+    st.session_state.app_step = 2
+    try:
+        del st.query_params["step"]
+    except Exception:
+        pass
+
 if "target_role" not in st.session_state:
     st.session_state.target_role = "UX/UI Designer"
 
@@ -328,13 +341,13 @@ if "balloons_shown" not in st.session_state:
 # מסך 1: ברוכים הבאים וערך מוסף (WELCOME & VALUE PROPOSITION - SLACK HERO STYLE)
 # ==============================================================================
 if st.session_state.app_step == 1:
-    # הורדת אזור ה-Hero לכיוון מרכז העמוד + ביטול כפתור הגדלת תמונה בעת ריחוף
+    # ביטול כפתור הגדלת תמונה בעת ריחוף והגדרת מרווחי עמוד עליונים מותאמים
     st.markdown(
         """
         <style>
         .block-container {
-            padding-top: clamp(60px, 9vh, 110px) !important;
-            padding-bottom: 3rem !important;
+            padding-top: 96px !important;
+            padding-bottom: 4rem !important;
         }
         /* ביטול כפתור הגדלת תמונה למסך מלא בעת ריחוף */
         [data-testid="stImage"] button,
@@ -349,79 +362,106 @@ if st.session_state.app_step == 1:
             opacity: 0 !important;
             pointer-events: none !important;
         }
-        /* הגדלת כפתור ה-CTA בהתאם לקנה המידה המוגדל של ה-Hero */
+        /* כפתור ה-CTA התחתון — סעיף 5.1 במפרט העיצוב */
         div.stButton > button[kind="primary"] {
+            font-family: 'Heebo', sans-serif !important;
             font-size: 16.5px !important;
-            font-weight: 800 !important;
-            padding: 12px 36px !important;
-            border-radius: 9999px !important;
-            box-shadow: 0 4px 18px rgba(108, 99, 255, 0.28) !important;
-            transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0) !important;
+            font-weight: 700 !important;
+            padding: 16px 30px !important;
+            border-radius: 12px !important;
+            background: linear-gradient(180deg, #6C63FF, #4F46E5) !important;
+            border: 1px solid #4338CA !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset, 0 14px 30px -12px rgba(79, 70, 229, 0.75) !important;
+            transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
+            min-height: 48px !important;
         }
         div.stButton > button[kind="primary"]:hover {
-            box-shadow: 0 6px 22px rgba(108, 99, 255, 0.4) !important;
+            background: linear-gradient(180deg, #5F56FF, #4338CA) !important;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 16px 34px -10px rgba(79, 70, 229, 0.85) !important;
             transform: translateY(-1px) !important;
         }
-        /* עיצוב והגדלת איור ה-Hero להתאמה מושלמת מול הפיצ'רים */
+        /* עיצוב איור ה-Hero בהתאם לפלטת המשטחים (סעיף 1.1) */
         [data-testid="stImage"] img {
-            border-radius: 20px !important;
-            box-shadow: 0 12px 36px rgba(15, 23, 42, 0.07) !important;
-            margin-top: 6px !important;
-            transition: transform 0.3s ease !important;
+            border-radius: 18px !important;
+            border: 1px solid #EEE8DA !important;
+            box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4) !important;
+            transition: transform 0.2s ease !important;
         }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
+    # ----------------------------------------------------
+    # 1. סרגל ניווט עליון קבוע עם אפקט טשטוש (Fixed Frosted Navbar - סעיף 5.6)
+    # ----------------------------------------------------
+    render_clean_html(render_landing_navbar())
+
+    # ----------------------------------------------------
+    # 2. סקשן מרכזי (Hero Section: Illustration + Value Props - סעיף 2, 3, 5)
+    # ----------------------------------------------------
     col_hero, col_img = st.columns([1, 1.12], gap="large", vertical_alignment="center")
 
     with col_hero:
         render_clean_html(
             """
             <div style="direction: rtl; text-align: right;">
-                <!-- לוגו GetAJob מיושר בפינה הימנית העליונה כעוגן מותג מוביל בהתאם למקובל במוצרי SaaS ב-RTL -->
-                <div style="display: flex; justify-content: flex-start; margin-bottom: 22px;">
-                    <div style="display: inline-flex; align-items: center; gap: 10px; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 9999px; padding: 9px 24px; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);">
-                        <span style="font-size: 22px;">🎯</span>
-                        <span style="font-size: 19px; font-weight: 900; color: #0f172a; font-family: 'Outfit', sans-serif; letter-spacing: -0.3px;"><bdi>GetAJob</bdi></span>
-                    </div>
-                </div>
-
-                <!-- כותרת ראשית בעברית: 2 שורות מודגשות בגווני המותג ללא גלישת מילים מיותרת -->
+                <!-- כותרת ראשית לפי סעיף 2 במפרט: Hero clamp, משקל 800, line-height 1.02, letter-spacing -.035em, text-wrap: pretty -->
                 <div style="margin-bottom: 24px;">
-                    <div style="font-family: 'Rubik', 'Heebo', sans-serif; font-size: clamp(26px, 3vw, 36px); font-weight: 900; line-height: 1.22; color: #0f172a; letter-spacing: -0.3px; white-space: nowrap;">
+                    <h1 style="margin: 0; font-family: 'Heebo', sans-serif; font-size: clamp(34px, 4.2vw, 54px); font-weight: 800; line-height: 1.08; color: #17171C; letter-spacing: -0.035em; text-wrap: pretty;">
                         זהה את פערי הידע שלך.
-                    </div>
-                    <div style="font-family: 'Rubik', 'Heebo', sans-serif; font-size: clamp(26px, 3vw, 36px); font-weight: 900; line-height: 1.22; background: linear-gradient(135deg, #6C63FF 0%, #4338ca 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.3px; white-space: nowrap;">
+                    </h1>
+                    <div style="font-family: 'Heebo', sans-serif; font-size: clamp(34px, 4.2vw, 54px); font-weight: 800; line-height: 1.08; background: linear-gradient(180deg, #6C63FF 0%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.035em; text-wrap: pretty;">
                         ובנה בדיוק את מה שחסר לך.
                     </div>
                 </div>
 
-                <!-- בולטים תמציתיים מוגדלים ביישור ימין מלא -->
-                <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
-                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
-                            <strong>איתור פערי מיומנויות:</strong> מיפוי מדויק של הטכנולוגיות וכלי החובה שחסרים לך מול דרישות השוק.
+                <!-- משפט הסבר משני Lead לפי סעיף 2: 17-19px, line-height 1.6, צבע #4A4A55 -->
+                <p style="margin: 0 0 28px 0; color: #4A4A55; font-size: clamp(16px, 1.8vw, 18px); line-height: 1.6; font-weight: 400; max-width: 520px; font-family: 'Heebo', sans-serif;">
+                    העלו קורות חיים ותיאור משרה — ותקבלו מפת פערים מדויקת, סעיפים משוכתבים, ופרויקט פורטפוליו שסוגר את החסר.
+                </p>
+
+                <!-- בולטים תמציתיים מוגדלים ביישור ימין מלא עם ריווח נושם וללא אימוג'י (סעיף 7) -->
+                <div style="display: flex; flex-direction: column; gap: 18px; margin-bottom: 16px;">
+                    <div style="display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; border-radius: 9px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; color: #4A4A55; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                            <strong style="color: #17171C; font-weight: 700;">איתור פערי מיומנויות:</strong> מיפוי מדויק של הטכנולוגיות וכלי החובה שחסרים לך מול דרישות השוק.
                         </div>
                     </div>
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
-                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
-                            <strong>שדרוג קורות חיים ל-<bdi>ATS</bdi>:</strong> המרת ניסוחים לסעיפי הישגים מדידים בפורמט <bdi dir="ltr" style="color: #6C63FF; font-weight: 700;">Action-Impact</bdi>.
+                    <div style="display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; border-radius: 9px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; color: #4A4A55; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                            <strong style="color: #17171C; font-weight: 700;">שדרוג קורות חיים ל-<bdi>ATS</bdi>:</strong> המרת ניסוחים לסעיפי הישגים מדידים בפורמט <span dir="ltr" style="background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EFEADD; border-radius: 8px; padding: 2px 8px; font-size: 12.5px; font-weight: 600; color: #4A4A55; display: inline-block;">Action-Impact</span>.
                         </div>
                     </div>
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
-                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
-                            <strong>צ'קליסט אינטראקטיבי ומעקב התקדמות:</strong> זיהוי החוסרים לקראת תפקיד היעד והצגתם כרשימת משימות לסימון, עם מעקב שוטף ומד מוכנות לגיוס.
+                    <div style="display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; border-radius: 9px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; color: #4A4A55; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                            <strong style="color: #17171C; font-weight: 700;">צ'קליסט אינטראקטיבי ומעקב התקדמות:</strong> זיהוי החוסרים לקראת תפקיד היעד והצגתם כרשימת משימות לסימון, עם מעקב שוטף ומד מוכנות לגיוס.
                         </div>
                     </div>
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <div style="background: rgba(108, 99, 255, 0.12); color: #6C63FF; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">✔</div>
-                        <div style="font-size: 16.5px; color: #1e293b; line-height: 1.5;">
-                            <strong>מסלולי למידה והסמכות:</strong> קורסים מומלצים מחברות טכנולוגיה מובילות (<bdi dir="ltr">Google, AWS, Meta, Figma</bdi>).
+                    <div style="display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; border-radius: 9px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; color: #4A4A55; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                            <strong style="color: #17171C; font-weight: 700;">מסלולי למידה והסמכות:</strong> קורסים מומלצים מחברות טכנולוגיה מובילות (<bdi dir="ltr" style="font-weight: 600; color: #17171C;">Google, AWS, Meta, Figma</bdi>).
                         </div>
                     </div>
                 </div>
@@ -429,23 +469,56 @@ if st.session_state.app_step == 1:
             """
         )
 
-        # כפתור CTA מיושר לצד ימין של הטקסט מעליו, עם רוחב מותאם אישית
-        if st.button("בוא נתחיל: בחר את תפקיד היעד שלך", type="primary", use_container_width=False, key="btn_start_wizard"):
-            st.session_state.app_step = 2
-            st.rerun()
-
     with col_img:
-        # הצגת איור המערכת בסגנון נקי ומודרני
+        # הצגת איור המערכת בסגנון נקי ומודרני לפי מפרט העיצוב
         if os.path.exists("assets/hero_illustration.jpg"):
             st.image("assets/hero_illustration.jpg", use_container_width=True)
         else:
             render_clean_html(
                 """
-                <div style="background: #f1f5f9; border-radius: 20px; padding: 40px; text-align: center; color: #64748b;">
-                    <span style="font-size: 60px;">🚀</span>
+                <div style="background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EEE8DA; border-radius: 22px; padding: 48px 32px; text-align: center; color: #6B6B74; font-family: 'Heebo', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 380px;">
+                    <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; display: flex; align-items: center; justify-content: center; color: #4F46E5; margin-bottom: 14px;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div style="font-size: 15px; font-weight: 700; color: #17171C; margin-bottom: 4px;">GetAJob Platform</div>
+                    <div style="font-size: 13.5px; color: #6B6B74;">Career Intelligence for Tech Candidates</div>
                 </div>
                 """
             )
+
+    # ----------------------------------------------------
+    # 3. סקשן "איך זה עובד" (How It Works - סעיף 3, 5)
+    # ----------------------------------------------------
+    render_clean_html(render_how_it_works())
+
+    # ----------------------------------------------------
+    # 4. סקשן "דוגמת פלט לניתוח אמיתי" (Real Analysis Showcase - סעיף 1.5, 5.3, 5.4)
+    # ----------------------------------------------------
+    render_clean_html(render_sample_showcase())
+
+    # ----------------------------------------------------
+    # 5. סקשן שאלות נפוצות (FAQ - סעיף 3, 7)
+    # ----------------------------------------------------
+    render_clean_html(render_faq_section())
+
+    # ----------------------------------------------------
+    # 6. באנר הנעה לפעולה תחתון (Dark CTA Band - סעיף 5.7)
+    # ----------------------------------------------------
+    render_clean_html(render_bottom_cta_banner())
+
+    col_bot_space1, col_bot_run, col_bot_reg, col_bot_login, col_bot_space2 = st.columns([1, 1.4, 1, 1, 1], vertical_alignment="center")
+    with col_bot_run:
+        if st.button("הריצו ניתוח עכשיו", type="primary", use_container_width=True, key="btn_bottom_run"):
+            st.session_state.app_step = 2
+            st.rerun()
+    with col_bot_reg:
+        if st.button("הירשם למערכת", use_container_width=True, key="btn_bottom_reg"):
+            st.toast("מערכת ההרשמה תוטמע בשלב הבא של הפרויקט. כרגע ניתן להריץ ניתוחים ישירות!")
+    with col_bot_login:
+        if st.button("התחבר", use_container_width=True, key="btn_bottom_login"):
+            st.toast("מערכת ההתחברות תוטמע בשלב הבא. הפלטפורמה פתוחה כעת ללא צורך בהתחברות!")
 
 
 # ==============================================================================
