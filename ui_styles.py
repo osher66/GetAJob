@@ -272,22 +272,33 @@ def get_custom_css(theme: str = "light") -> str:
         text-align: center !important;
     }
 
-    /* תיקון צבע כותרת בבאנר הכהה התחתון */
+    /* תיקון צבע, משקל וגודל בבאנר הכהה התחתון */
+    #bottom-cta {
+        max-width: 900px !important;
+        margin-inline: auto !important;
+    }
     #bottom-cta h2 {
         color: #FBF9F4 !important;
         text-align: center !important;
+        font-weight: 800 !important;
     }
     #bottom-cta p {
-        color: #A9A9B4 !important;
+        color: #D1D1DB !important;
         text-align: center !important;
+        font-weight: 700 !important;
     }
 
     /* הכנסת כפתור ה-CTA התחתון לתוך מלבן הבאנר הכהה בריווח מדויק */
     div:has(#bottom-cta) ~ div [data-testid="stHorizontalBlock"]:has(.stButton) {
-        margin-top: -90px !important;
+        max-width: 900px !important;
+        margin-inline: auto !important;
+        margin-top: -82px !important;
         margin-bottom: 45px !important;
         position: relative !important;
         z-index: 10 !important;
+    }
+    div:has(#bottom-cta) ~ div [data-testid="stHorizontalBlock"] button {
+        font-weight: 800 !important;
     }
 
     /* היסט עוגן גלילה עבור ניווט קבוע */
@@ -1433,11 +1444,11 @@ def render_bottom_cta_banner() -> str:
     title: #FBF9F4 · body: #A9A9B4
     """
     html = """
-    <div id="bottom-cta" style="background-color: #111114; background-image: radial-gradient(700px 340px at 50% -10%, rgba(108, 99, 255, 0.42) 0%, rgba(108, 99, 255, 0) 70%), linear-gradient(180deg, #1B1B22 0%, #101014 100%); border-radius: 26px; padding: 48px 32px 110px 32px; text-align: center; color: #FBF9F4; margin-top: 80px; margin-bottom: 0; box-shadow: 0 40px 90px -50px rgba(23, 23, 28, 0.85); direction: rtl;">
-        <h2 style="margin: 0 0 12px 0; font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; color: #FBF9F4 !important; font-family: 'Heebo', sans-serif; letter-spacing: -0.025em; text-wrap: pretty; text-align: center !important;">
+    <div id="bottom-cta" style="background-color: #111114; background-image: radial-gradient(700px 340px at 50% -10%, rgba(108, 99, 255, 0.42) 0%, rgba(108, 99, 255, 0) 70%), linear-gradient(180deg, #1B1B22 0%, #101014 100%); border-radius: 26px; max-width: 900px; margin-inline: auto; padding: 38px 28px 96px 28px; text-align: center; color: #FBF9F4; margin-top: 80px; margin-bottom: 0; box-shadow: 0 40px 90px -50px rgba(23, 23, 28, 0.85); direction: rtl;">
+        <h2 style="margin: 0 0 6px 0; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; color: #FBF9F4 !important; font-family: 'Heebo', sans-serif; letter-spacing: -0.025em; text-wrap: pretty; text-align: center !important;">
             תגלו מה חסר לפני שהמגייס יגלה
         </h2>
-        <p style="margin: 0 auto; color: #A9A9B4 !important; font-size: 16px; max-width: 600px; line-height: 1.6; font-family: 'Heebo', sans-serif; text-align: center !important;">
+        <p style="margin: 0 auto; color: #D1D1DB !important; font-size: 15.5px; font-weight: 700 !important; max-width: 580px; line-height: 1.5; font-family: 'Heebo', sans-serif; text-align: center !important;">
             העלו קורות חיים ומשרה אחת. הניתוח הראשון לוקח פחות מדקה.
         </p>
     </div>
