@@ -568,7 +568,7 @@ if st.session_state.app_step == 1:
     # ----------------------------------------------------
     render_clean_html(render_bottom_cta_banner())
 
-    col_bot_sp1, col_bot_run, col_bot_sp2 = st.columns([1.2, 1.6, 1.2], vertical_alignment="center")
+    col_bot_sp1, col_bot_run, col_bot_sp2 = st.columns([1.8, 1.0, 1.8], vertical_alignment="center")
     with col_bot_run:
         if st.button("הריצו ניתוח להדגמה", type="primary", use_container_width=True, key="btn_bottom_run"):
             st.session_state.app_step = 2
