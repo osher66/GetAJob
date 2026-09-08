@@ -2,7 +2,7 @@
 
 - **Interaction & Hebrew Alignment**:
   - The user communicates in Hebrew.
-  - All responses, status summaries, and explanations to the user must be strictly right-aligned (יישור לימין) in Hebrew.
+  - All responses, status summaries, and explanations to the user must be strictly right-aligned (יישור לימין) in Hebrew. Always wrap the Hebrew output in `<div dir="rtl" style="text-align: right;">` to enforce right-alignment in the IDE chat UI.
   - Proper handling of mixed Hebrew and English text (טקסט משולב עברית-אנגלית): ensure punctuation, parentheses, English terms, file names, and numbers do not break sentence flow or reverse order (correct bidirectional text flow).
 - **Internal Reasoning & Code**:
   - All internal reasoning, tool calls, terminal commands, code, git messages, and technical comments must remain strictly in English.
