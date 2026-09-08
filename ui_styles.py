@@ -6,6 +6,8 @@ ui_styles.py - מערכת העיצוב המלאה של GetAJob
 ומעקב התקדמות מקצועי בחיפוש עבודה ל-UX/UI.
 """
 
+import os
+import base64
 import textwrap
 
 
@@ -199,6 +201,19 @@ def get_custom_css(theme: str = "light") -> str:
         color: #FFFFFF !important;
         box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset, 0 14px 30px -12px rgba(79, 70, 229, 0.75) !important;
         transform: translateY(-2px) !important;
+    }
+
+    /* סקשן איך זה עובד — גריד 2 טורים זה לצד זה */
+    .m3-how-it-works-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1.08fr !important;
+        gap: 44px !important;
+        align-items: center !important;
+    }
+    @media (max-width: 860px) {
+        .m3-how-it-works-grid {
+            grid-template-columns: 1fr !important;
+        }
     }
 
     /* היסט עוגן גלילה עבור ניווט קבוע */
@@ -935,12 +950,8 @@ def render_landing_navbar() -> str:
             <a href="#faq" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">שאלות</a>
         </div>
 
-        <!-- צד שמאל: אינדיקטור מצב מערכת חי וכפתורי פעולה (justify-self: end) -->
+        <!-- צד שמאל: כפתורי פעולה (justify-self: end) -->
         <div style="display: flex; align-items: center; gap: 14px; justify-self: end;">
-            <div style="display: flex; align-items: center; gap: 7px; margin-left: 4px;">
-                <span style="width: 7px; height: 7px; border-radius: 50%; background: #16A34A; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.16); display: inline-block;"></span>
-                <span style="font-size: 13.5px; font-weight: 600; color: #4A4A55; font-family: 'Heebo', sans-serif;">המערכת פעילה</span>
-            </div>
             <a href="?step=2" target="_self" style="color: #4F46E5; font-size: 14.5px; font-weight: 700; padding: 6px 12px; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">
                 הירשם
             </a>
@@ -986,11 +997,38 @@ def render_how_it_works() -> str:
     - ריווחים מותאמים וצפופים ללא שטחים מתים מיותרים
     - היררכיה ברורה בין כותרת, תיאור ושלבים ממוספרים
     """
-    html = """
+    # טעינת איור המערכת והטמעתו בסקשן 'איך זה עובד' במקום ה-placeholder
+    img_b64_html = ""
+    hero_img_path = os.path.join(os.path.dirname(__file__), "assets", "hero_illustration.jpg")
+    if not os.path.exists(hero_img_path):
+        hero_img_path = "assets/hero_illustration.jpg"
+
+    if os.path.exists(hero_img_path):
+        try:
+            with open(hero_img_path, "rb") as f:
+                b64_data = base64.b64encode(f.read()).decode("utf-8")
+            img_b64_html = f'''
+            <div style="min-width: 0; display: flex; align-items: center; justify-content: center;">
+                <img src="data:image/jpeg;base64,{b64_data}" alt="איור מערכת GetAJob" style="width: 100%; height: auto; max-height: 420px; object-fit: cover; border-radius: 18px; border: 1px solid #EEE8DA; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4); display: block;" />
+            </div>
+            '''
+        except Exception:
+            img_b64_html = ""
+
+    if not img_b64_html:
+        img_b64_html = '''
+        <div style="min-width: 0; background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EEE8DA; border-radius: 22px; min-height: 380px; display: flex; align-items: center; justify-content: center; padding: 28px;">
+            <div style="background: #FFFFFF; border: 1px solid #EEE8DA; border-radius: 12px; padding: 10px 22px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4A4A55; font-weight: 600; direction: ltr; display: inline-flex; align-items: center; gap: 8px;">
+                <span>product shot — analysis flow</span>
+            </div>
+        </div>
+        '''
+
+    html = f"""
     <div id="how-it-works" style="direction: rtl; text-align: right; margin-top: 96px; margin-bottom: 96px;">
-        <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
-            <!-- טור ימין: כותרת, הסבר ו-3 השלבים הממוספרים (flex: 1 1 360px) -->
-            <div style="flex: 1 1 360px; min-width: 0;">
+        <div class="m3-how-it-works-grid">
+            <!-- טור ימין: כותרת, הסבר ו-3 השלבים הממוספרים -->
+            <div style="min-width: 0;">
                 <!-- כותרת ראשית וקטגוריה בריווח הדוק ונקי -->
                 <div style="margin-bottom: 22px;">
                     <span style="color: #4F46E5; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif;">
@@ -1053,12 +1091,8 @@ def render_how_it_works() -> str:
                 </div>
             </div>
 
-            <!-- טור שמאל: מיכל המחשה גרפי (surface-sunken, ללא אימוג'י) -->
-            <div style="flex: 1 1 340px; min-width: 0; background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EEE8DA; border-radius: 22px; min-height: 380px; display: flex; align-items: center; justify-content: center; padding: 28px;">
-                <div style="background: #FFFFFF; border: 1px solid #EEE8DA; border-radius: 12px; padding: 10px 22px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4A4A55; font-weight: 600; direction: ltr; display: inline-flex; align-items: center; gap: 8px;">
-                    <span>product shot — analysis flow</span>
-                </div>
-            </div>
+            <!-- טור שמאל: איור המערכת המחליף את ה-placeholder -->
+            {img_b64_html}
         </div>
     </div>
     """
