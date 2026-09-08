@@ -276,23 +276,32 @@ def get_custom_css(theme: str = "light") -> str:
     #bottom-cta {
         max-width: 900px !important;
         margin-inline: auto !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
-    #bottom-cta h2 {
+    #bottom-cta h2,
+    #bottom-cta .m3-bottom-cta-title {
         color: #FBF9F4 !important;
         text-align: center !important;
         font-weight: 800 !important;
         margin-top: 0 !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 0 !important;
         line-height: 1.15 !important;
+        width: 100% !important;
     }
-    #bottom-cta p {
+    #bottom-cta p,
+    #bottom-cta .m3-bottom-cta-desc {
         color: #A9A9B4 !important;
         text-align: center !important;
         font-weight: 400 !important;
-        margin-top: 0 !important;
+        margin-top: -3px !important;
         margin-bottom: 0 !important;
         font-size: 15px !important;
-        line-height: 1.4 !important;
+        line-height: 1.35 !important;
+        width: 100% !important;
     }
 
     /* הכנסת כפתור ה-CTA התחתון לתוך מלבן הבאנר הכהה בריווח מדויק ומכולה קומפקטית */
@@ -1463,11 +1472,11 @@ def render_bottom_cta_banner() -> str:
     title: #FBF9F4 · body: #A9A9B4
     """
     html = """
-    <div id="bottom-cta" style="background-color: #111114; background-image: radial-gradient(700px 340px at 50% -10%, rgba(108, 99, 255, 0.42) 0%, rgba(108, 99, 255, 0) 70%), linear-gradient(180deg, #1B1B22 0%, #101014 100%); border-radius: 26px; max-width: 900px; margin-inline: auto; padding: 36px 28px 88px 28px; text-align: center; color: #FBF9F4; margin-top: 80px; margin-bottom: 0; box-shadow: 0 40px 90px -50px rgba(23, 23, 28, 0.85); direction: rtl;">
-        <h2 style="margin: 0 0 4px 0 !important; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; color: #FBF9F4 !important; font-family: 'Heebo', sans-serif; letter-spacing: -0.025em; text-wrap: pretty; text-align: center !important; line-height: 1.15 !important;">
+    <div id="bottom-cta" style="background-color: #111114; background-image: radial-gradient(700px 340px at 50% -10%, rgba(108, 99, 255, 0.42) 0%, rgba(108, 99, 255, 0) 70%), linear-gradient(180deg, #1B1B22 0%, #101014 100%); border-radius: 26px; max-width: 900px; margin-inline: auto; padding: 36px 28px 84px 28px; text-align: center; color: #FBF9F4; margin-top: 80px; margin-bottom: 0; box-shadow: 0 40px 90px -50px rgba(23, 23, 28, 0.85); direction: rtl; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div role="heading" aria-level="2" class="m3-bottom-cta-title" style="margin: 0 0 2px 0 !important; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; color: #FBF9F4 !important; font-family: 'Heebo', sans-serif; letter-spacing: -0.025em; text-wrap: pretty; text-align: center !important; line-height: 1.15 !important; width: 100%;">
             תגלו מה חסר לפני שהמגייס יגלה
-        </h2>
-        <p style="margin: 0 auto !important; color: #A9A9B4 !important; font-size: 15px; font-weight: 400 !important; max-width: 580px; line-height: 1.4; font-family: 'Heebo', sans-serif; text-align: center !important;">
+        </div>
+        <p class="m3-bottom-cta-desc" style="margin: -2px auto 0 auto !important; color: #A9A9B4 !important; font-size: 15px; font-weight: 400 !important; max-width: 580px; line-height: 1.35 !important; font-family: 'Heebo', sans-serif; text-align: center !important; width: 100%;">
             העלו קורות חיים ומשרה אחת. הניתוח הראשון לוקח פחות מדקה.
         </p>
     </div>
