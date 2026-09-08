@@ -470,68 +470,76 @@ if st.session_state.app_step == 1:
             <div class="m3-hero-cards-grid">
                 <!-- כרטיסייה 1: איתור פערי מיומנויות -->
                 <div class="m3-hero-card">
-                    <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; flex-shrink: 0;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <circle cx="12" cy="12" r="6"></circle>
-                            <circle cx="12" cy="12" r="2"></circle>
-                        </svg>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; width: 100%;">
+                        <div style="width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; line-height: 1.25;">
+                            איתור פערי מיומנויות
+                        </div>
                     </div>
-                    <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; margin-bottom: 6px; line-height: 1.3;">
-                        איתור פערי מיומנויות
-                    </div>
-                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.5; font-family: 'Heebo', sans-serif;">
                         מיפוי מדויק של הטכנולוגיות וכלי החובה שחסרים לך מול דרישות השוק.
                     </div>
                 </div>
 
                 <!-- כרטיסייה 2: שדרוג קורות חיים ל-ATS -->
                 <div class="m3-hero-card">
-                    <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; flex-shrink: 0;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; width: 100%;">
+                        <div style="width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; line-height: 1.25;">
+                            שדרוג קורות חיים ל-<bdi>ATS</bdi>
+                        </div>
                     </div>
-                    <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; margin-bottom: 6px; line-height: 1.3;">
-                        שדרוג קורות חיים ל-<bdi>ATS</bdi>
-                    </div>
-                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.5; font-family: 'Heebo', sans-serif;">
                         המרת ניסוחים לסעיפי הישגים מדידים בפורמט <bdi dir="ltr" style="font-weight: 600; color: #4338CA;">Action-Impact</bdi>.
                     </div>
                 </div>
 
                 <!-- כרטיסייה 3: צ'קליסט אינטראקטיבי ומעקב -->
                 <div class="m3-hero-card">
-                    <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; flex-shrink: 0;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 11l3 3L22 4"></path>
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                        </svg>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; width: 100%;">
+                        <div style="width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 11l3 3L22 4"></path>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; line-height: 1.25;">
+                            צ'קליסט אינטראקטיבי ומעקב
+                        </div>
                     </div>
-                    <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; margin-bottom: 6px; line-height: 1.3;">
-                        צ'קליסט אינטראקטיבי ומעקב
-                    </div>
-                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.5; font-family: 'Heebo', sans-serif;">
                         זיהוי החוסרים לקראת תפקיד היעד והצגתם כרשימת משימות לסימון, עם מעקב שוטף ומד מוכנות לגיוס.
                     </div>
                 </div>
 
                 <!-- כרטיסייה 4: מסלולי למידה והסמכות -->
                 <div class="m3-hero-card">
-                    <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; flex-shrink: 0;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                        </svg>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; width: 100%;">
+                        <div style="width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                            </svg>
+                        </div>
+                        <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; line-height: 1.25;">
+                            מסלולי למידה והסמכות
+                        </div>
                     </div>
-                    <div style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; margin-bottom: 6px; line-height: 1.3;">
-                        מסלולי למידה והסמכות
-                    </div>
-                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+                    <div style="font-size: 13px; color: #4A4A55; line-height: 1.5; font-family: 'Heebo', sans-serif;">
                         קורסים מומלצים מחברות טכנולוגיה מובילות <span dir="ltr" style="font-weight: 600; color: #17171C;">(Google, AWS, Meta, Figma)</span>.
                     </div>
                 </div>
