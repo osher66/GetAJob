@@ -412,10 +412,16 @@ if st.session_state.app_step == 1:
             direction: rtl !important;
             transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
         }
-        .m3-hero-card:hover {
-            transform: translateY(-3px) !important;
-            box-shadow: 0 12px 28px -10px rgba(79, 70, 229, 0.14) !important;
-            border-color: #DDD6FE !important;
+        /* מרכוז כותרות ותת-כותרות בסקשן ה-Hero */
+        .m3-hero-title-container,
+        .m3-hero-title-1,
+        .m3-hero-title-2,
+        .m3-hero-subtitle-container,
+        .m3-hero-subtitle,
+        .m3-hero-subtitle-container p {
+            text-align: center !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
         }
         </style>
         """,
@@ -444,18 +450,18 @@ if st.session_state.app_step == 1:
             </div>
 
             <!-- כותרת ראשית ממורכזת בדומה לתמונה מקלוד דיזיין -->
-            <div style="text-align: center; margin-bottom: 18px;">
-                <h1 style="margin: 0 0 4px 0; text-align: center !important; font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.1; color: #17171C; letter-spacing: -0.035em; text-wrap: pretty;">
+            <div class="m3-hero-title-container" style="text-align: center !important; margin-bottom: 16px;">
+                <div role="heading" aria-level="1" class="m3-hero-title-1" style="margin: 0 0 4px 0; text-align: center !important; font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.12; color: #17171C; letter-spacing: -0.035em; text-wrap: pretty;">
                     זהה את פערי הידע שלך.
-                </h1>
-                <div style="text-align: center !important; font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.1; background: linear-gradient(180deg, #6C63FF 0%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.035em; text-wrap: pretty;">
+                </div>
+                <div class="m3-hero-title-2" style="text-align: center !important; font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.12; background: linear-gradient(180deg, #6C63FF 0%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.035em; text-wrap: pretty;">
                     ובנה בדיוק את מה שחסר לך.
                 </div>
             </div>
 
-            <!-- תיאור מתחת לכותרת ביישור לימין -->
-            <div style="text-align: right; margin-bottom: 32px; direction: rtl;">
-                <p style="margin: 0; color: #4A4A55; font-size: 16px; line-height: 1.5; font-weight: 400; font-family: 'Heebo', sans-serif;">
+            <!-- תיאור מתחת לכותרת במרכז (Center Aligned) -->
+            <div class="m3-hero-subtitle-container" style="text-align: center !important; margin-bottom: 32px; direction: rtl;">
+                <p class="m3-hero-subtitle" style="margin: 0 auto; text-align: center !important; color: #4A4A55; font-size: 16.5px; line-height: 1.6; font-weight: 400; font-family: 'Heebo', sans-serif; max-width: 680px;">
                     העלו קורות חיים ותיאור משרה — ותקבלו מפת פערים מדויקת, סעיפים משוכתבים, ופרויקט פורטפוליו שסוגר את החסר.
                 </p>
             </div>

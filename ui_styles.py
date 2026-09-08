@@ -105,6 +105,11 @@ def get_custom_css(theme: str = "light") -> str:
         unicode-bidi: isolate !important;
     }
 
+    [dir="ltr"], [dir="ltr"] * {
+        direction: ltr !important;
+        unicode-bidi: isolate !important;
+    }
+
     /* הסתרת סרגל צד */
     [data-testid="stSidebar"],
     [data-testid="collapsedControl"],
@@ -246,6 +251,20 @@ def get_custom_css(theme: str = "light") -> str:
         transform: translateY(-3px) !important;
         box-shadow: 0 12px 28px -10px rgba(79, 70, 229, 0.14) !important;
         border-color: #DDD6FE !important;
+    }
+
+    /* מרכוז כותרות ותיאורים ייעודיים */
+    .m3-hero-title-container,
+    .m3-hero-title-container h1,
+    .m3-hero-title-container .m3-hero-title-1,
+    .m3-hero-title-container .m3-hero-title-2,
+    .m3-hero-subtitle-container,
+    .m3-hero-subtitle-container p,
+    .m3-hero-subtitle,
+    #sample-output .m3-section-header,
+    #sample-output h2,
+    #sample-output p.m3-section-subtitle {
+        text-align: center !important;
     }
 
     /* תיקון צבע כותרת בבאנר הכהה התחתון */
@@ -1147,15 +1166,15 @@ def render_sample_showcase() -> str:
     """
     html = """
     <div id="sample-output" style="direction: rtl; text-align: right; margin-top: 80px; margin-bottom: 0;">
-        <!-- כותרת ראשית וקטגוריה -->
-        <div style="margin-bottom: 24px;">
-            <span style="color: #4F46E5; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif;">
+        <!-- כותרת ראשית וקטגוריה ממורכזת עם ריווח מהודק -->
+        <div class="m3-section-header" style="margin-bottom: 18px; text-align: center;">
+            <span style="color: #4F46E5; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; margin-bottom: 3px; font-family: 'Heebo', sans-serif;">
                 דוגמת פלט
             </span>
-            <h2 style="margin: 0 0 8px 0; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; color: #17171C; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty; line-height: 1.12;">
+            <h2 style="margin: 0 0 4px 0; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; color: #17171C; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty; line-height: 1.12; text-align: center !important;">
                 ככה נראה ניתוח אמיתי
             </h2>
-            <p style="margin: 0; color: #4A4A55; font-size: 15.5px; font-weight: 400; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+            <p class="m3-section-subtitle" style="margin: 0; color: #4A4A55; font-size: 15.5px; font-weight: 400; line-height: 1.45; font-family: 'Heebo', sans-serif; text-align: center !important;">
                 משרת Junior UX/UI Designer מול קורות חיים של בוגר בוטקאמפ.
             </p>
         </div>
@@ -1169,19 +1188,17 @@ def render_sample_showcase() -> str:
                         <span style="font-size: 15.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif;">
                             מד התאמה למשרה
                         </span>
-                        <div style="display: flex; align-items: baseline; gap: 2px;">
-                            <span style="font-size: 36px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; line-height: 1; letter-spacing: -0.035em;">
-                                64
-                            </span>
+                        <div dir="ltr" style="display: inline-flex; align-items: baseline; gap: 2px;">
+                            <span style="font-size: 36px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; line-height: 1; letter-spacing: -0.035em;">64</span>
                             <span style="font-size: 18px; color: #6B6B74; font-weight: 600; font-family: 'Heebo', sans-serif;">%</span>
                         </div>
                     </div>
 
                     <!-- פס התקדמות אופקי — Track & Fill לפי סעיף 5.4 -->
-                    <div role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="מד התאמה למשרה" style="background: linear-gradient(180deg, #E7E2D2, #F1EDE1); border-radius: 999px; height: 10px; overflow: hidden; margin-bottom: 4px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.06) inset; direction: ltr;">
-                        <div style="background: linear-gradient(90deg, #8B84FF, #4F46E5); width: 64%; height: 100%; border-radius: 999px; box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2), 0 6px 14px -6px rgba(79, 70, 229, 0.7);"></div>
+                    <div role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="מד התאמה למשרה" style="background: linear-gradient(180deg, #E7E2D2, #F1EDE1); border-radius: 999px; height: 10px; overflow: hidden; margin-bottom: 4px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.06) inset; direction: rtl;">
+                        <div style="background: linear-gradient(270deg, #8B84FF, #4F46E5); width: 64%; height: 100%; border-radius: 999px; box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2), 0 6px 14px -6px rgba(79, 70, 229, 0.7);"></div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #6B6B74; font-weight: 500; margin-bottom: 12px; direction: ltr; font-family: 'Heebo', sans-serif;">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #6B6B74; font-weight: 500; margin-bottom: 12px; direction: rtl; font-family: 'Heebo', sans-serif;">
                         <span>0</span>
                         <span>100</span>
                     </div>
