@@ -117,12 +117,9 @@ def get_custom_css(theme: str = "light") -> str:
         scroll-behavior: smooth;
     }
 
-    [data-testid="stHeaderActionElements"],
-    [data-testid="stHeaderActionElements"] *,
-    .st-emotion-cache-15zrgzn,
-    .st-emotion-cache-gi04ae,
+    /* הסתרת אייקוני עוגן של כותרות Streamlit בלבד */
     a.anchorjs-link,
-    [data-testid="stMarkdownContainer"] a[href^="#"]:not(.m3-nav-link),
+    [data-testid="stMarkdownContainer"] :is(h1, h2, h3, h4, h5, h6) > a,
     h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
     h1:hover a, h2:hover a, h3:hover a, h4:hover a {
         display: none !important;
@@ -919,7 +916,7 @@ def render_landing_navbar() -> str:
     סרגל ניווט עליון מודרני מותאם לפי מפרט מערכת עיצוב GetAJob v1.0 (סעיף 5.6):
     - מקובע בראש הדף עם אפקט זכוכית מטושטשת (surface-glass: blur 14px + rgba(255,255,255,.72)).
     - מרכוז מושלם באמצעות CSS Grid (1fr auto 1fr) ללא space-between (סעיף 5.6).
-    - טיפוגרפיה: Heebo בלבד, ללא אימוג'י.
+    - כולל לוגו מותג, קישורי עוגן, אינדיקטור פעילות חי, וכפתורי כניסה והרשמה.
     """
     html = """
     <div class="m3-landing-navbar" style="direction: rtl;">
@@ -938,9 +935,13 @@ def render_landing_navbar() -> str:
             <a href="#faq" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">שאלות</a>
         </div>
 
-        <!-- צד שמאל: כפתורי פעולה לפי סעיף 5.1 (justify-self: end) -->
+        <!-- צד שמאל: אינדיקטור מצב מערכת חי וכפתורי פעולה (justify-self: end) -->
         <div style="display: flex; align-items: center; gap: 14px; justify-self: end;">
-            <a href="?step=2" target="_self" style="color: #4F46E5; font-size: 14.5px; font-weight: 700; padding: 8px 12px; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">
+            <div style="display: flex; align-items: center; gap: 7px; margin-left: 4px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #16A34A; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.16); display: inline-block;"></span>
+                <span style="font-size: 13.5px; font-weight: 600; color: #4A4A55; font-family: 'Heebo', sans-serif;">המערכת פעילה</span>
+            </div>
+            <a href="?step=2" target="_self" style="color: #4F46E5; font-size: 14.5px; font-weight: 700; padding: 6px 12px; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">
                 הירשם
             </a>
             <a href="?step=2" target="_self" style="background: #111114; color: #FFFFFF; font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 11px; text-decoration: none; transition: all 0.18s ease; font-family: 'Heebo', sans-serif; border: none;">
@@ -982,70 +983,69 @@ def render_how_it_works() -> str:
     """
     סקשן 'איך זה עובד' לפי מפרט מערכת עיצוב GetAJob v1.0:
     - מרווח סקשן: 96px (סעיף 3)
-    - טור ימין: Eyebrow (#4F46E5), כותרת H2 (pretty text-wrap), 3 שלבים עם תגיות accent-tint
-    - טור שמאל: מיכל המחשה גרפי (surface-sunken, ללא אימוג'י)
-    - שלב 3: ממוקד בבניית פרויקט לפורטפוליו (ללא README).
+    - ריווחים מותאמים וצפופים ללא שטחים מתים מיותרים
+    - היררכיה ברורה בין כותרת, תיאור ושלבים ממוספרים
     """
     html = """
     <div id="how-it-works" style="direction: rtl; text-align: right; margin-top: 96px; margin-bottom: 96px;">
-        <div style="display: flex; flex-wrap: wrap; gap: 44px; align-items: center;">
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
             <!-- טור ימין: כותרת, הסבר ו-3 השלבים הממוספרים (flex: 1 1 360px) -->
             <div style="flex: 1 1 360px; min-width: 0;">
-                <!-- כותרת ראשית וקטגוריה -->
-                <div style="margin-bottom: 32px;">
-                    <span style="color: #4F46E5; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; margin-bottom: 8px; font-family: 'Heebo', sans-serif;">
+                <!-- כותרת ראשית וקטגוריה בריווח הדוק ונקי -->
+                <div style="margin-bottom: 22px;">
+                    <span style="color: #4F46E5; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif;">
                         איך זה עובד
                     </span>
-                    <h2 style="margin: 0 0 12px 0; font-size: clamp(28px, 3.4vw, 42px); font-weight: 800; color: #17171C; line-height: 1.14; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty;">
+                    <h2 style="margin: 0 0 8px 0; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; color: #17171C; line-height: 1.12; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty;">
                         שלוש פעולות בין קורות החיים שלך לראיון
                     </h2>
-                    <p style="margin: 0; color: #4A4A55; font-size: 16px; line-height: 1.6; font-weight: 400; font-family: 'Heebo', sans-serif;">
+                    <p style="margin: 0; color: #4A4A55; font-size: 15.5px; line-height: 1.45; font-weight: 400; font-family: 'Heebo', sans-serif;">
                         אין כאן טיפים כלליים. כל פלט נגזר מהמשרה הספציפית שהעלית.
                     </p>
                 </div>
 
-                <!-- 3 השלבים הממוספרים -->
-                <div style="display: flex; flex-direction: column; gap: 26px;">
+                <!-- 3 השלבים הממוספרים בריווח מהודק -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
                     <!-- שלב 1 -->
-                    <div style="display: flex; align-items: flex-start; gap: 16px;">
-                        <div style="width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Heebo', sans-serif;">
+                    <div style="display: flex; align-items: flex-start; gap: 14px; direction: rtl; text-align: right;">
+                        <div style="width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-family: 'Heebo', sans-serif;">
                             1
                         </div>
                         <div>
-                            <h3 style="margin: 0 0 4px 0; font-size: 17.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em;">
+                            <h3 style="margin: 0 0 2px 0; font-size: 16.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em; line-height: 1.25;">
                                 איתור פערי מיומנויות
                             </h3>
-                            <p style="margin: 0; color: #4A4A55; font-size: 15px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                            <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.45; font-family: 'Heebo', sans-serif;">
                                 סריקה קפדנית של דרישות המשרה מול קורות החיים, ודירוג כל פער לפי חומרה.
                             </p>
                         </div>
                     </div>
 
                     <!-- שלב 2 -->
-                    <div style="display: flex; align-items: flex-start; gap: 16px;">
-                        <div style="width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Heebo', sans-serif;">
+                    <div style="display: flex; align-items: flex-start; gap: 14px; direction: rtl; text-align: right;">
+                        <div style="width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-family: 'Heebo', sans-serif;">
                             2
                         </div>
                         <div>
-                            <h3 style="margin: 0 0 4px 0; font-size: 17.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em;">
+                            <h3 style="margin: 0 0 2px 0; font-size: 16.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em; line-height: 1.25;">
                                 שכתוב סעיפים למדידים
                             </h3>
-                            <p style="margin: 0; color: #4A4A55; font-size: 15px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                            <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.45; font-family: 'Heebo', sans-serif;">
                                 כל סעיף גנרי הופך לפעולה, היקף ותוצאה — בניסוח שעובר גם סינון אוטומטי.
                             </p>
                         </div>
                     </div>
 
                     <!-- שלב 3 (הסרת README והדגשת בניית פרויקט לפורטפוליו) -->
-                    <div style="display: flex; align-items: flex-start; gap: 16px;">
-                        <div style="width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Heebo', sans-serif;">
+                    <div style="display: flex; align-items: flex-start; gap: 14px; direction: rtl; text-align: right;">
+                        <div style="width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #EEE8DA; color: #4F46E5; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-family: 'Heebo', sans-serif;">
                             3
                         </div>
                         <div>
-                            <h3 style="margin: 0 0 4px 0; font-size: 17.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em;">
+                            <h3 style="margin: 0 0 2px 0; font-size: 16.5px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.01em; line-height: 1.25;">
                                 בניית פרויקט לפורטפוליו
                             </h3>
-                            <p style="margin: 0; color: #4A4A55; font-size: 15px; line-height: 1.6; font-family: 'Heebo', sans-serif;">
+                            <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.45; font-family: 'Heebo', sans-serif;">
                                 מפרט פרויקט מעשי שסוגר בדיוק את הפער שנמצא, עם דגש על הצגת תוצרים מוכחים בתיק העבודות למגייסים.
                             </p>
                         </div>
@@ -1054,7 +1054,7 @@ def render_how_it_works() -> str:
             </div>
 
             <!-- טור שמאל: מיכל המחשה גרפי (surface-sunken, ללא אימוג'י) -->
-            <div style="flex: 1 1 340px; min-width: 0; background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EEE8DA; border-radius: 22px; min-height: 420px; display: flex; align-items: center; justify-content: center; padding: 32px;">
+            <div style="flex: 1 1 340px; min-width: 0; background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EEE8DA; border-radius: 22px; min-height: 380px; display: flex; align-items: center; justify-content: center; padding: 28px;">
                 <div style="background: #FFFFFF; border: 1px solid #EEE8DA; border-radius: 12px; padding: 10px 22px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4A4A55; font-weight: 600; direction: ltr; display: inline-flex; align-items: center; gap: 8px;">
                     <span>product shot — analysis flow</span>
                 </div>
@@ -1068,77 +1068,29 @@ def render_how_it_works() -> str:
 def render_sample_showcase() -> str:
     """
     סקשן 'דוגמת פלט לניתוח אמיתי' לפי מפרט מערכת עיצוב GetAJob v1.0:
-    - כרטיסי פערים עם Badges מדויקים (חוסם: #B42318/#FEE2E2, חשוב: #92400E/#FEF3C7, קיים: #166534/#DCFCE7) (סעיף 1.5, 5.3)
-    - מד התאמה אופקי מדויק (גובה 12px, מספר 38px, מילוי אינדיגו בלבד) (סעיף 5.4)
-    - השוואת שכתוב סעיף (לפני / אחרי) בכרטיסים פנימיים (סעיף 5.2)
+    - טור ימין (ב-RTL): מד התאמה למשרה (סעיף 5.4)
+    - טור שמאל (ב-RTL): כרטיסי פערים עם Badges מדויקים (חוסם: #B42318/#FEE2E2, חשוב: #92400E/#FEF3C7, קיים: #166534/#DCFCE7) (סעיף 1.5, 5.3)
+    - כרטיס תחתון מלא: השוואת שכתוב סעיף (לפני בצד ימין / אחרי בצד שמאל) (סעיף 5.2)
     """
     html = """
     <div id="sample-output" style="direction: rtl; text-align: right; margin-top: 96px; margin-bottom: 96px;">
         <!-- כותרת ראשית וקטגוריה -->
-        <div style="margin-bottom: 32px;">
-            <span style="color: #4F46E5; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; margin-bottom: 8px; font-family: 'Heebo', sans-serif;">
+        <div style="margin-bottom: 24px;">
+            <span style="color: #4F46E5; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif;">
                 דוגמת פלט
             </span>
-            <h2 style="margin: 0 0 10px 0; font-size: clamp(28px, 3.4vw, 42px); font-weight: 800; color: #17171C; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty;">
+            <h2 style="margin: 0 0 8px 0; font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; color: #17171C; letter-spacing: -0.025em; font-family: 'Heebo', sans-serif; text-wrap: pretty; line-height: 1.12;">
                 ככה נראה ניתוח אמיתי
             </h2>
-            <p style="margin: 0; color: #4A4A55; font-size: 16px; font-weight: 400; font-family: 'Heebo', sans-serif;">
+            <p style="margin: 0; color: #4A4A55; font-size: 15.5px; font-weight: 400; line-height: 1.45; font-family: 'Heebo', sans-serif;">
                 משרת Junior UX/UI Designer מול קורות חיים של בוגר בוטקאמפ.
             </p>
         </div>
 
-        <!-- גריד עליון: ימין (פערים), שמאל (מדדים) -->
-        <div style="display: flex; flex-wrap: wrap; gap: 26px; align-items: stretch; margin-bottom: 26px;">
-            <!-- טור כרטיסי פערים (בצד ימין ב-RTL, flex: 1 1 320px) -->
-            <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px;">
-                <!-- כרטיס חוסם (#B42318 על #FEE2E2) -->
-                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                        <h3 style="margin: 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
-                            אין תיק עבודות עם תהליך מלא
-                        </h3>
-                        <span style="background: #FEE2E2; color: #B42318; border-radius: 9px; padding: 6px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
-                            חוסם
-                        </span>
-                    </div>
-                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
-                        המשרה דורשת הצגת end-to-end case study. בקורות החיים מופיעים רק מסכים סופיים.
-                    </p>
-                </div>
-
-                <!-- כרטיס חשוב (#92400E על #FEF3C7) -->
-                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                        <h3 style="margin: 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
-                            ניסוח ללא מדידה
-                        </h3>
-                        <span style="background: #FEF3C7; color: #92400E; border-radius: 9px; padding: 6px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
-                            חשוב
-                        </span>
-                    </div>
-                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
-                        כל הסעיפים מתארים מה עשית, אף אחד לא מתאר מה זה שינה.
-                    </p>
-                </div>
-
-                <!-- כרטיס קיים (#166534 על #DCFCE7) -->
-                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                        <h3 style="margin: 0; font-size: 16.5px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif;">
-                            שליטה בכלי העבודה
-                        </h3>
-                        <span style="background: #DCFCE7; color: #166534; border-radius: 9px; padding: 6px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
-                            קיים
-                        </span>
-                    </div>
-                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
-                        Figma, מערכות עיצוב ופרוטוטייפינג — כולם מכוסים ומופיעים בבירור.
-                    </p>
-                </div>
-            </div>
-
-            <!-- טור מדדים (סעיף 5.4, flex: 1 1 300px) -->
-            <div style="flex: 1 1 300px; min-width: 0; background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 22px; padding: 26px 28px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4); display: flex; flex-direction: column; justify-content: space-between;">
+        <!-- גריד עליון: ימין (מדדים), שמאל (פערים) — בדיוק כמו בעיצוב קלוד -->
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch; margin-bottom: 22px;">
+            <!-- טור ימין (RTL): מדדים — סעיף 5.4 (flex: 1 1 300px) -->
+            <div style="flex: 1 1 300px; min-width: 0; background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 20px; padding: 24px 26px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4); display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
                         <span style="font-size: 15px; font-weight: 700; color: #4A4A55; font-family: 'Heebo', sans-serif;">
@@ -1156,14 +1108,14 @@ def render_sample_showcase() -> str:
                     <div role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="מד התאמה למשרה" style="background: linear-gradient(180deg, #E7E2D2, #F1EDE1); border-radius: 999px; height: 12px; overflow: hidden; margin-bottom: 6px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.06) inset; direction: ltr;">
                         <div style="background: linear-gradient(90deg, #8B84FF, #4F46E5); width: 64%; height: 100%; border-radius: 999px; box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2), 0 6px 14px -6px rgba(79, 70, 229, 0.7);"></div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #6B6B74; font-weight: 500; margin-bottom: 22px; direction: ltr; font-family: 'Heebo', sans-serif;">
+                    <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #6B6B74; font-weight: 500; margin-bottom: 20px; direction: ltr; font-family: 'Heebo', sans-serif;">
                         <span>0</span>
                         <span>100</span>
                     </div>
                 </div>
 
                 <!-- מדדי סיכום מספריים עם מפריד פנימי F2EDE1 (סעיף 1.1) -->
-                <div style="display: flex; flex-direction: column; gap: 14px; border-top: 1px solid #F2EDE1; padding-top: 18px;">
+                <div style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #F2EDE1; padding-top: 16px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="color: #4A4A55; font-size: 14.5px; font-weight: 500; font-family: 'Heebo', sans-serif;">כישורים שקיימים</span>
                         <strong style="color: #17171C; font-size: 17px; font-weight: 800; font-family: 'Heebo', sans-serif;">7</strong>
@@ -1178,36 +1130,83 @@ def render_sample_showcase() -> str:
                     </div>
                 </div>
             </div>
+
+            <!-- טור שמאל (RTL): כרטיסי פערים — סעיף 5.3 (flex: 1 1 340px) -->
+            <div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+                <!-- כרטיס חוסם (#B42318 על #FEE2E2) -->
+                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif;">
+                            אין תיק עבודות עם תהליך מלא
+                        </h3>
+                        <span style="background: #FEE2E2; color: #B42318; border-radius: 9px; padding: 5px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
+                            חוסם
+                        </span>
+                    </div>
+                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+                        המשרה דורשת הצגת end-to-end case study. בקורות החיים מופיעים רק מסכים סופיים.
+                    </p>
+                </div>
+
+                <!-- כרטיס חשוב (#92400E על #FEF3C7) -->
+                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif;">
+                            ניסוח ללא מדידה
+                        </h3>
+                        <span style="background: #FEF3C7; color: #92400E; border-radius: 9px; padding: 5px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
+                            חשוב
+                        </span>
+                    </div>
+                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+                        כל הסעיפים מתארים מה עשית, אף אחד לא מתאר מה זה שינה.
+                    </p>
+                </div>
+
+                <!-- כרטיס קיים (#166534 על #DCFCE7) -->
+                <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #17171C; font-family: 'Heebo', sans-serif;">
+                            שליטה בכלי העבודה
+                        </h3>
+                        <span style="background: #DCFCE7; color: #166534; border-radius: 9px; padding: 5px 12px; font-size: 12.5px; font-weight: 800; flex: 0 0 auto; font-family: 'Heebo', sans-serif;">
+                            קיים
+                        </span>
+                    </div>
+                    <p style="margin: 0; color: #4A4A55; font-size: 14px; line-height: 1.45; font-family: 'Heebo', sans-serif;">
+                        Figma, מערכות עיצוב ופרוטוטייפינג — כולם מכוסים ומופיעים בבירור.
+                    </p>
+                </div>
+            </div>
         </div>
 
         <!-- כרטיס שכתוב סעיף רוחבי מלא (Before / After) לפי סעיף 5.2 -->
-        <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 22px 26px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
-            <div style="margin-bottom: 14px;">
+        <div style="background: linear-gradient(180deg, #FFFFFF, #FDFCF9); border: 1px solid #EEE8DA; border-radius: 18px; padding: 20px 24px; box-shadow: 0 1px 2px rgba(23, 23, 28, 0.035), 0 18px 40px -30px rgba(23, 23, 28, 0.4);">
+            <div style="margin-bottom: 12px;">
                 <span style="font-size: 13.5px; font-weight: 800; color: #6B6B74; font-family: 'Heebo', sans-serif;">
                     שכתוב סעיף
                 </span>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 16px;">
-                <!-- לפני (כרטיס פנימי surface-sunken ללא צל) -->
+                <!-- לפני — צד ימין ב-RTL (כרטיס פנימי surface-sunken) -->
                 <div style="flex: 1 1 260px; min-width: 0; background: linear-gradient(180deg, #FCFAF6, #F5F1E7); border: 1px solid #EFEADD; border-radius: 14px; padding: 16px 18px;">
                     <span style="color: #B42318; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif; background: #FEE2E2; padding: 3px 8px; border-radius: 6px;">
                         לפני
                     </span>
-                    <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.55; font-family: 'Heebo', sans-serif;">
+                    <p style="margin: 0; color: #4A4A55; font-size: 14.5px; line-height: 1.45; font-family: 'Heebo', sans-serif;">
                         עיצבתי מסכים לאפליקציית מסחר בקורס.
                     </p>
                 </div>
 
-                <!-- אחרי (כרטיס פנימי accent-tint) -->
+                <!-- אחרי — צד שמאל ב-RTL (כרטיס פנימי accent-tint) -->
                 <div style="flex: 1 1 260px; min-width: 0; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; border-radius: 14px; padding: 16px 18px;">
                     <span style="color: #4338CA; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 6px; font-family: 'Heebo', sans-serif; background: #E0D9FF; padding: 3px 8px; border-radius: 6px;">
                         אחרי
                     </span>
-                    <p style="margin: 0; color: #17171C; font-size: 14.5px; line-height: 1.55; font-weight: 500; font-family: 'Heebo', sans-serif;">
+                    <p style="margin: 0; color: #17171C; font-size: 14.5px; line-height: 1.45; font-weight: 500; font-family: 'Heebo', sans-serif;">
                         עיצבתי מחדש תהליך צ'קאאוט ב-4 מסכים, וקיצרתי אותו מ-6 שלבים ל-3 בבדיקת שימושיות עם 8 משתתפים.
                     </p>
                 </div>
-            </div>
         </div>
     </div>
     """
