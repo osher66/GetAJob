@@ -432,7 +432,7 @@ if st.session_state.app_step == 1:
     # ----------------------------------------------------
     render_clean_html(
         """
-        <div style="direction: rtl; margin-top: 16px; margin-bottom: 36px;">
+        <div style="direction: rtl; margin-top: 10px; margin-bottom: 0;">
             <!-- תגית מותג עליונה ממורכזת — בנוי לג'וניורים -->
             <div style="text-align: center; margin-bottom: 16px;">
                 <div style="display: inline-flex; align-items: center; gap: 7px; background: linear-gradient(180deg, #F4F2FF, #EAE6FF); border: 1px solid #E0D9FF; border-radius: 999px; padding: 5px 16px;">
@@ -445,10 +445,10 @@ if st.session_state.app_step == 1:
 
             <!-- כותרת ראשית ממורכזת בדומה לתמונה מקלוד דיזיין -->
             <div style="text-align: center; margin-bottom: 18px;">
-                <h1 style="margin: 0; font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.1; color: #17171C; letter-spacing: -0.035em; text-wrap: pretty;">
+                <h1 style="margin: 0 0 4px 0; text-align: center !important; font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.1; color: #17171C; letter-spacing: -0.035em; text-wrap: pretty;">
                     זהה את פערי הידע שלך.
                 </h1>
-                <div style="font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.1; background: linear-gradient(180deg, #6C63FF 0%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.035em; text-wrap: pretty;">
+                <div style="text-align: center !important; font-family: 'Heebo', sans-serif; font-size: clamp(32px, 4.4vw, 52px); font-weight: 800; line-height: 1.1; background: linear-gradient(180deg, #6C63FF 0%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.035em; text-wrap: pretty;">
                     ובנה בדיוק את מה שחסר לך.
                 </div>
             </div>
@@ -554,17 +554,11 @@ if st.session_state.app_step == 1:
     # ----------------------------------------------------
     render_clean_html(render_bottom_cta_banner())
 
-    col_bot_space1, col_bot_run, col_bot_reg, col_bot_login, col_bot_space2 = st.columns([1, 1.4, 1, 1, 1], vertical_alignment="center")
+    col_bot_sp1, col_bot_run, col_bot_sp2 = st.columns([1.2, 1.6, 1.2], vertical_alignment="center")
     with col_bot_run:
-        if st.button("הריצו ניתוח עכשיו", type="primary", use_container_width=True, key="btn_bottom_run"):
+        if st.button("הריצו ניתוח להדגמה", type="primary", use_container_width=True, key="btn_bottom_run"):
             st.session_state.app_step = 2
             st.rerun()
-    with col_bot_reg:
-        if st.button("הירשם למערכת", use_container_width=True, key="btn_bottom_reg"):
-            st.toast("מערכת ההרשמה תוטמע בשלב הבא של הפרויקט. כרגע ניתן להריץ ניתוחים ישירות!")
-    with col_bot_login:
-        if st.button("התחבר", use_container_width=True, key="btn_bottom_login"):
-            st.toast("מערכת ההתחברות תוטמע בשלב הבא. הפלטפורמה פתוחה כעת ללא צורך בהתחברות!")
 
 
 # ==============================================================================
