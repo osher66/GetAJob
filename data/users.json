@@ -1,0 +1,25 @@
+{
+  "osher199966@gmail.com": {
+    "name": "אושר אברג'ל",
+    "email": "osher199966@gmail.com",
+    "password_hash": "5dfae637427c1a9bdc53cc0b3df310f533a1661468574b4cb479f3155da19ce7",
+    "created_at": "09 בספטמבר 2026",
+    "history": [
+      {
+        "role": "Junior UX/UI Designer · Wix",
+        "date": "4 בספטמבר 2026",
+        "score": 64
+      },
+      {
+        "role": "Product Designer · Monday",
+        "date": "28 באוגוסט 2026",
+        "score": 71
+      },
+      {
+        "role": "UX Designer · Lightricks",
+        "date": "19 באוגוסט 2026",
+        "score": 52
+      }
+    ]
+  }
+}

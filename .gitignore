@@ -12,3 +12,15 @@ uxui_package_dump.txt
 publish_repo.py
 token.tmp
 scratch/
+.venv/
+venv/
+*.png
+*.jpg
+*.jpeg
+*.webm
+*.webp
+*.gif
+scripts/
+scratch_*.py
+verify_clean.py
+auth_screen_claude.html

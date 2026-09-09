@@ -9,4 +9,9 @@
 - **Response Structure & Token Efficiency**:
   - **Status / Explanation (עברית)**: Short, bulleted summary of what was done or needed. No conversational filler, pleasantries, or apologies. Maximum token efficiency.
   - **Code / Actions (English)**: The actual code or commands directly, without repeating explanations inside the code.
+- **Git & Cloud Push Policy**:
+  - Work strictly on the local development server during daily iterations.
+  - DO NOT push to GitHub or the cloud after individual steps or fixes.
+  - Only commit and push when the user explicitly gives the end-of-day signal ("מסיימים עבודה להיום").
+
 

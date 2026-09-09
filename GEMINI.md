@@ -12,3 +12,9 @@
 ## 3. Design System Standard (Mandatory)
 - **GetAJob — מפרט מערכת עיצוב v1.0** (Claude Design Handoff v1.0, 8 Sep 2026) is the sole, binding design system for the entire application.
 - Before starting work on any screen (Screen 2 / Career Track, Screen 3 / CV Analysis, Auth), explicitly confirm adherence to this specification with the user.
+
+## 4. Git & Cloud Push Policy
+- **Local First**: Work strictly on the local development server during day-to-day iterations.
+- **No Routine Cloud Push**: DO NOT push commits or files to GitHub / cloud after every individual task or fix.
+- **End-of-Day Sync Only**: Only push code to the remote repository when explicitly instructed by the user (e.g., at end of session / 'מסיימים עבודה להיום').
+

@@ -96,9 +96,18 @@ def get_custom_css(theme: str = "light") -> str:
         -webkit-font-smoothing: antialiased;
     }
 
+    body, [data-testid="stAppViewContainer"],
     [data-testid="stMarkdownContainer"],
-    .stMarkdown, .stText, p, span, label, div {
+    .stMarkdown, .stText, p, label {
         font-family: 'Heebo', sans-serif !important;
+    }
+
+    span:not([data-testid="stIconMaterial"]):not([class*="material-symbols"]) {
+        font-family: 'Heebo', sans-serif !important;
+    }
+
+    span[data-testid="stIconMaterial"], .material-symbols-rounded, .material-symbols-outlined, .material-icons {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons" !important;
     }
 
     bdi, [dir="rtl"] {
@@ -1039,17 +1048,37 @@ def render_readme_block(readme_content: str, project_name: str, theme: str = "li
     return textwrap.dedent(html).strip()
 
 
-def render_landing_navbar() -> str:
+def render_landing_navbar(current_user: dict | None = None) -> str:
     """
     סרגל ניווט עליון מודרני מותאם לפי מפרט מערכת עיצוב GetAJob v1.0 (סעיף 5.6):
     - מקובע בראש הדף עם אפקט זכוכית מטושטשת (surface-glass: blur 14px + rgba(255,255,255,.72)).
     - מרכוז מושלם באמצעות CSS Grid (1fr auto 1fr) ללא space-between (סעיף 5.6).
     - כולל לוגו מותג, קישורי עוגן, אינדיקטור פעילות חי, וכפתורי כניסה והרשמה.
     """
+    if current_user:
+        user_first = current_user.get("name", "משתמש/ת").split()[0]
+        action_buttons_html = f"""
+        <a href="?step=auth&mode=account" onclick="window.location.href='?step=auth&mode=account'; return false;" target="_self" style="color: #4F46E5; font-size: 14.5px; font-weight: 700; padding: 6px 12px; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">
+            שלום, {user_first}
+        </a>
+        <a href="?step=auth&mode=account" onclick="window.location.href='?step=auth&mode=account'; return false;" target="_self" style="background: #111114; color: #FFFFFF; font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 11px; text-decoration: none; transition: all 0.18s ease; font-family: 'Heebo', sans-serif; border: none;">
+            האזור האישי
+        </a>
+        """
+    else:
+        action_buttons_html = """
+        <a href="?step=auth&mode=signup" onclick="window.location.href='?step=auth&mode=signup'; return false;" target="_self" style="color: #4F46E5; font-size: 14.5px; font-weight: 700; padding: 6px 12px; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">
+            הירשם
+        </a>
+        <a href="?step=auth&mode=login" onclick="window.location.href='?step=auth&mode=login'; return false;" target="_self" style="background: #111114; color: #FFFFFF; font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 11px; text-decoration: none; transition: all 0.18s ease; font-family: 'Heebo', sans-serif; border: none;">
+            היכנס
+        </a>
+        """
+
     html = """
     <div class="m3-landing-navbar" style="direction: rtl;">
         <!-- צד ימין: לוגו מותג עם ריבוע G אינדיגו (justify-self: start) -->
-        <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; justify-self: start;">
+        <a href="?step=1" onclick="window.location.href='?step=1'; return false;" target="_self" style="display: flex; align-items: center; gap: 10px; text-decoration: none; justify-self: start;">
             <div style="width: 32px; height: 32px; background: linear-gradient(180deg, #6C63FF, #4F46E5); border: 1px solid #4338CA; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 800; font-size: 16.5px; font-family: 'Heebo', sans-serif;">
                 G
             </div>
@@ -1058,19 +1087,14 @@ def render_landing_navbar() -> str:
 
         <!-- מרכז: קישורי ניווט עדינים (justify-self: center) -->
         <div style="display: flex; align-items: center; gap: 28px; justify-self: center;">
-            <a href="#how-it-works" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">איך זה עובד</a>
-            <a href="#sample-output" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">דוגמת ניתוח</a>
-            <a href="#faq" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">שאלות</a>
+            <a href="?step=1#how-it-works" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">איך זה עובד</a>
+            <a href="?step=1#sample-output" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">דוגמת ניתוח</a>
+            <a href="?step=1#faq" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">שאלות</a>
         </div>
 
         <!-- צד שמאל: כפתורי פעולה (justify-self: end) -->
         <div style="display: flex; align-items: center; gap: 14px; justify-self: end;">
-            <a href="?step=2" target="_self" style="color: #4F46E5; font-size: 14.5px; font-weight: 700; padding: 6px 12px; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">
-                הירשם
-            </a>
-            <a href="?step=2" target="_self" style="background: #111114; color: #FFFFFF; font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 11px; text-decoration: none; transition: all 0.18s ease; font-family: 'Heebo', sans-serif; border: none;">
-                היכנס
-            </a>
+            {{ACTION_BUTTONS}}
         </div>
     </div>
 
@@ -1099,7 +1123,7 @@ def render_landing_navbar() -> str:
         setTimeout(checkScroll, 500);
     })();
     </script>
-    """
+    """.replace("{{ACTION_BUTTONS}}", action_buttons_html)
     return textwrap.dedent(html).strip()
 
 

@@ -21,6 +21,11 @@ from career_catalog import (
     get_role_data,
     get_learning_paths_for_skills,
 )
+import importlib
+import ui_styles
+importlib.reload(ui_styles)
+import auth_view
+importlib.reload(auth_view)
 from ui_styles import (
     get_custom_css,
     render_score_gauge,
@@ -33,6 +38,8 @@ from ui_styles import (
     render_faq_section,
     render_bottom_cta_banner,
 )
+from auth_view import render_auth_page, render_auth_navbar
+
 
 # הגדרות עמוד ראשיות
 st.set_page_config(
@@ -293,15 +300,44 @@ def generate_role_milestones(target_role: str, missing_skills: list, project=Non
 
 # אתחול Session State
 if "app_step" not in st.session_state:
-    st.session_state.app_step = 1  # 1 = ברוכים הבאים וערך, 2 = בחירת תפקיד וקלט, 3 = לוח תוצאות
+    st.session_state.app_step = 1  # 1 = ברוכים הבאים וערך, 2 = בחירת תפקיד וקלט, 3 = לוח תוצאות, "auth" = הרשמה והתחברות
 
-# תמיכה במעבר שלבים מקישורי Navbar (הירשם / היכנס)
-if st.query_params.get("step") == "2":
+if "current_user" not in st.session_state:
+    st.session_state.current_user = None
+
+# תמיכה במעבר שלבים מקישורי Navbar (הירשם / היכנס) או Query Params
+step_param = st.query_params.get("step")
+page_param = st.query_params.get("page")
+
+if step_param == "auth" or page_param == "auth":
+    st.session_state.app_step = "auth"
+    if st.query_params.get("mode"):
+        st.session_state.auth_mode = st.query_params.get("mode")
+    try:
+        del st.query_params["step"]
+    except Exception:
+        pass
+    try:
+        del st.query_params["page"]
+    except Exception:
+        pass
+    try:
+        del st.query_params["mode"]
+    except Exception:
+        pass
+elif step_param == "1":
+    st.session_state.app_step = 1
+    try:
+        del st.query_params["step"]
+    except Exception:
+        pass
+elif step_param == "2":
     st.session_state.app_step = 2
     try:
         del st.query_params["step"]
     except Exception:
         pass
+
 
 if "target_role" not in st.session_state:
     st.session_state.target_role = "UX/UI Designer"
@@ -431,7 +467,8 @@ if st.session_state.app_step == 1:
     # ----------------------------------------------------
     # 1. סרגל ניווט עליון קבוע עם אפקט טשטוש (Fixed Frosted Navbar - סעיף 5.6)
     # ----------------------------------------------------
-    render_clean_html(render_landing_navbar())
+    render_clean_html(render_landing_navbar(st.session_state.get("current_user")))
+
 
     # ----------------------------------------------------
     # 2. סקשן מרכזי (Hero Section: Centered Title, Right Subtitle, 4 Value Cards)
@@ -573,6 +610,14 @@ if st.session_state.app_step == 1:
         if st.button("הריצו ניתוח להדגמה", type="primary", use_container_width=True, key="btn_bottom_run"):
             st.session_state.app_step = 2
             st.rerun()
+
+
+# ==============================================================================
+# מסך הרשמה והתחברות (AUTH SCREEN - CLAUDE DESIGN HANDOFF v1.0)
+# ==============================================================================
+elif st.session_state.app_step == "auth":
+    render_auth_navbar()
+    render_auth_page()
 
 
 # ==============================================================================
