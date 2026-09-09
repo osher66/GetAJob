@@ -672,17 +672,20 @@ elif st.session_state.app_step == 2:
     # ----------------------------------------------------
     render_auth_navbar()
 
-    st.markdown(
+    render_clean_html(
         """
         <style>
         .auth-custom-navbar {
             margin-bottom: 24px !important;
         }
-        div[data-testid="stHorizontalBlock"]:has(.step2-role-card) {
+        div[data-testid="stHorizontalBlock"]:has(.step2-role-card),
+        [data-testid="stHorizontalBlock"]:has(.step2-role-card) {
             align-items: stretch !important;
         }
         div[data-testid="stColumn"]:has(.step2-role-card),
-        div[data-testid="column"]:has(.step2-role-card) {
+        div[data-testid="column"]:has(.step2-role-card),
+        [data-testid="stColumn"]:has(.step2-role-card),
+        [data-testid="column"]:has(.step2-role-card) {
             background: #FFFFFF !important;
             border: 1.5px solid #EEE8DA !important;
             border-radius: 16px !important;
@@ -692,6 +695,7 @@ elif st.session_state.app_step == 2:
             display: flex !important;
             flex-direction: column !important;
             justify-content: space-between !important;
+            align-self: stretch !important;
             height: 100% !important;
             direction: rtl !important;
             text-align: right !important;
@@ -764,7 +768,14 @@ elif st.session_state.app_step == 2:
             line-height: 1.5 !important;
             font-family: 'Heebo', sans-serif !important;
             margin-bottom: 4px !important;
-            flex-grow: 1 !important;
+            height: 42px !important;
+            min-height: 42px !important;
+            max-height: 42px !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
         }
         div[data-testid="stColumn"]:has(.step2-role-card) div[data-testid="stElementContainer"]:has(button),
         div[data-testid="column"]:has(.step2-role-card) div[data-testid="stElementContainer"]:has(button) {
@@ -816,7 +827,6 @@ elif st.session_state.app_step == 2:
         }
         </style>
         """,
-        unsafe_allow_html=True,
     )
 
     # ----------------------------------------------------
@@ -848,7 +858,7 @@ elif st.session_state.app_step == 2:
             "id": "ux_ui",
             "title": "מעצב/ת UX/UI",
             "role_name": "UX/UI Designer",
-            "desc": "אפיון מסעות משתמש, עיצוב ממשקים ב-Figma, בניית Design Systems ומחקר שימושיות.",
+            "desc": "אפיון מסעות משתמש, עיצוב ב-Figma, Design Systems ומחקר שימושיות.",
             "svg": '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>',
         },
         {
