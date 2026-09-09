@@ -128,9 +128,50 @@ def get_custom_css(theme: str = "light") -> str:
         width: 0 !important;
     }
 
-    /* החלקת גלילה */
-    html {
-        scroll-behavior: smooth;
+    /* החלקת גלילה וסרגל גלילה בצד ימין מותאם לצבעי הממשק */
+    html, body {
+        scroll-behavior: smooth !important;
+    }
+
+    section[data-testid="stMain"],
+    .stMain {
+        direction: ltr !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: #C7D2FE transparent !important;
+        scroll-behavior: smooth !important;
+    }
+
+    section[data-testid="stMain"] > *,
+    .stMain > * {
+        direction: rtl !important;
+    }
+
+    section[data-testid="stMain"]::-webkit-scrollbar,
+    .stMain::-webkit-scrollbar,
+    ::-webkit-scrollbar {
+        width: 8px !important;
+        height: 8px !important;
+    }
+
+    section[data-testid="stMain"]::-webkit-scrollbar-track,
+    .stMain::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-track {
+        background: transparent !important;
+    }
+
+    section[data-testid="stMain"]::-webkit-scrollbar-thumb,
+    .stMain::-webkit-scrollbar-thumb,
+    ::-webkit-scrollbar-thumb {
+        background: #C7D2FE !important;
+        border-radius: 9999px !important;
+    }
+
+    section[data-testid="stMain"]::-webkit-scrollbar-thumb:hover,
+    .stMain::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:hover {
+        background: #4F46E5 !important;
     }
 
     /* הסתרת אייקוני עוגן של כותרות Streamlit בלבד */
@@ -1077,19 +1118,19 @@ def render_landing_navbar(current_user: dict | None = None) -> str:
 
     html = """
     <div class="m3-landing-navbar" style="direction: rtl;">
-        <!-- צד ימין: לוגו מותג עם ריבוע G אינדיגו (justify-self: start) -->
-        <a href="?step=1" onclick="window.location.href='?step=1'; return false;" target="_self" style="display: flex; align-items: center; gap: 10px; text-decoration: none; justify-self: start;">
+        <!-- צד ימין: לוגו מותג עם ריבוע G אינדיגו בצד שמאל של הטקסט GetAJob -->
+        <a href="?step=1" onclick="window.location.href='?step=1'; return false;" target="_self" style="display: inline-flex; direction: ltr; align-items: center; gap: 10px; text-decoration: none; justify-self: start;">
             <div style="width: 32px; height: 32px; background: linear-gradient(180deg, #6C63FF, #4F46E5); border: 1px solid #4338CA; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 800; font-size: 16.5px; font-family: 'Heebo', sans-serif;">
                 G
             </div>
             <span style="font-size: 19px; font-weight: 800; color: #17171C; font-family: 'Heebo', sans-serif; letter-spacing: -0.02em;"><bdi dir="ltr">GetAJob</bdi></span>
         </a>
 
-        <!-- מרכז: קישורי ניווט עדינים (justify-self: center) -->
+        <!-- מרכז: קישורי ניווט עדינים בגלילה מונפשת חלקה (justify-self: center) -->
         <div style="display: flex; align-items: center; gap: 28px; justify-self: center;">
-            <a href="?step=1#how-it-works" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">איך זה עובד</a>
-            <a href="?step=1#sample-output" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">דוגמת ניתוח</a>
-            <a href="?step=1#faq" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif;">שאלות</a>
+            <a href="#how-it-works" onclick="const el = document.getElementById('how-it-works'); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return false;" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif; cursor: pointer;">איך זה עובד</a>
+            <a href="#sample-output" onclick="const el = document.getElementById('sample-output'); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return false;" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif; cursor: pointer;">דוגמת ניתוח</a>
+            <a href="#faq" onclick="const el = document.getElementById('faq'); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return false;" style="color: #4A4A55; font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color 0.18s ease; font-family: 'Heebo', sans-serif; cursor: pointer;">שאלות</a>
         </div>
 
         <!-- צד שמאל: כפתורי פעולה (justify-self: end) -->
@@ -1099,7 +1140,7 @@ def render_landing_navbar(current_user: dict | None = None) -> str:
     </div>
 
     <!-- כפתור חזרה לראש העמוד (סעיף 5.6) — מופיע מעל 320px גלילה -->
-    <button id="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" aria-label="חזרה לראש העמוד">
+    <button id="back-to-top-btn" onclick="const m = document.querySelector('section[data-testid=\\'stMain\\']') || window; m.scrollTo({top: 0, behavior: 'smooth'});" aria-label="חזרה לראש העמוד">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
@@ -1108,8 +1149,10 @@ def render_landing_navbar(current_user: dict | None = None) -> str:
     (function() {
         function checkScroll() {
             var btn = document.getElementById('back-to-top-btn');
+            var scrollEl = document.querySelector('section[data-testid="stMain"]') || window;
+            var currentY = scrollEl.scrollTop !== undefined ? scrollEl.scrollTop : window.scrollY;
             if (btn) {
-                if (window.scrollY > 320) {
+                if (currentY > 320) {
                     btn.style.opacity = '1';
                     btn.style.pointerEvents = 'auto';
                 } else {
@@ -1118,6 +1161,8 @@ def render_landing_navbar(current_user: dict | None = None) -> str:
                 }
             }
         }
+        var scrollEl = document.querySelector('section[data-testid="stMain"]') || window;
+        scrollEl.addEventListener('scroll', checkScroll, { passive: true });
         window.addEventListener('scroll', checkScroll, { passive: true });
         window.addEventListener('DOMContentLoaded', checkScroll);
         setTimeout(checkScroll, 500);

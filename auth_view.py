@@ -121,9 +121,9 @@ def get_auth_css(initial_mode: str = "signup") -> str:
     }
 
     section[data-testid="stMain"] {
-        overflow-y: scroll !important; /* תמיד מציג סליידר אנכי כדי למנוע קפיצות רוחב */
+        overflow-y: auto !important; /* מסתיר את הסליידר כשאין גלילה */
         scrollbar-width: thin !important;
-        scrollbar-color: #D8D2C4 transparent !important;
+        scrollbar-color: #C7D2FE transparent !important;
     }
 
     /* סליידר גלילה מעוצב, דק ואלגנטי בצד ימין */

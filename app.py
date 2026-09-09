@@ -459,6 +459,49 @@ if st.session_state.app_step == 1:
             margin-left: auto !important;
             margin-right: auto !important;
         }
+
+        /* העברת סליידר הגלילה לצד ימין, הצגה אוטומטית רק כשיש גלילה, והתאמה לפלטת המערכת */
+        section[data-testid="stMain"],
+        .stMain {
+            direction: ltr !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            scrollbar-width: thin !important;
+            scrollbar-color: #C7D2FE transparent !important;
+            scroll-behavior: smooth !important;
+        }
+        section[data-testid="stMain"] > *,
+        .stMain > * {
+            direction: rtl !important;
+        }
+        section[data-testid="stMain"]::-webkit-scrollbar,
+        .stMain::-webkit-scrollbar {
+            width: 8px !important;
+            height: 8px !important;
+        }
+        section[data-testid="stMain"]::-webkit-scrollbar-track,
+        .stMain::-webkit-scrollbar-track {
+            background: transparent !important;
+        }
+        section[data-testid="stMain"]::-webkit-scrollbar-thumb,
+        .stMain::-webkit-scrollbar-thumb {
+            background: #C7D2FE !important;
+            border-radius: 9999px !important;
+        }
+        section[data-testid="stMain"]::-webkit-scrollbar-thumb:hover,
+        .stMain::-webkit-scrollbar-thumb:hover {
+            background: #4F46E5 !important;
+        }
+
+        /* מרווחי גלילה עבור עוגני ה-Navbar עם סרגל ניווט קבוע */
+        html, body {
+            scroll-behavior: smooth !important;
+        }
+        #how-it-works,
+        #sample-output,
+        #faq {
+            scroll-margin-top: 88px !important;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -624,49 +667,242 @@ elif st.session_state.app_step == "auth":
 # מסך 2: בחירת תפקיד והזנת נתוני מועמד (ROLE SELECTION & INPUT)
 # ==============================================================================
 elif st.session_state.app_step == 2:
-    # סרגל חזרה עליון
-    nav_col1, nav_col2 = st.columns([1.2, 4], vertical_alignment="center")
-    with nav_col1:
-        if st.button("⬅ חזרה למסך הבית", use_container_width=True, key="btn_back_to_welcome"):
-            st.session_state.app_step = 1
-            st.rerun()
-    with nav_col2:
-        render_clean_html(
-            """
-            <div style="direction: rtl; text-align: left;">
-                <span style="background: #EDE9FE; color: #3730A3; border-radius: 9999px; padding: 6px 18px; font-size: 13.5px; font-weight: 800; border: 1px solid #C7D2FE;">
-                    שלב 2 מתוך 3 • בחירת תפקיד והזנת קורות חיים
-                </span>
-            </div>
-            """
-        )
-
-    st.markdown("<div style='margin-top: 14px;'></div>", unsafe_allow_html=True)
-
     # ----------------------------------------------------
-    # 1. בחירת תפקיד מהירה (Pills / Quick Buttons + Selectbox)
+    # 1. Header עליון צף ומטושטש (מפרט סעיף 5.6)
     # ----------------------------------------------------
-    st.markdown("<h3 style='color: #0F172A; font-size: 19px; font-weight: 800; margin-bottom: 10px;'>🎯 1. בחר תפקיד יעד בהייטק</h3>", unsafe_allow_html=True)
+    render_auth_navbar()
 
-    quick_options = list(POPULAR_ROLES_MAP.keys()) + ["🔍 תפקיד אחר ממאגר התעשייה..."]
-
-    chosen_pill = st.pills(
-        "תפקידים פופולריים:",
-        options=quick_options,
-        default=st.session_state.quick_role_choice,
-        key="pills_popular_roles",
-        label_visibility="collapsed",
+    st.markdown(
+        """
+        <style>
+        .auth-custom-navbar {
+            margin-bottom: 24px !important;
+        }
+        div[data-testid="stHorizontalBlock"]:has(.step2-role-card) {
+            align-items: stretch !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card),
+        div[data-testid="column"]:has(.step2-role-card) {
+            background: #FFFFFF !important;
+            border: 1.5px solid #EEE8DA !important;
+            border-radius: 16px !important;
+            padding: 16px 15px 14px 15px !important;
+            box-shadow: 0 1px 3px rgba(23, 23, 28, 0.035), 0 8px 20px -16px rgba(23, 23, 28, 0.08) !important;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            height: 100% !important;
+            direction: rtl !important;
+            text-align: right !important;
+            cursor: pointer !important;
+            box-sizing: border-box !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card:not(.active)):hover,
+        div[data-testid="column"]:has(.step2-role-card:not(.active)):hover {
+            transform: translateY(-2px) !important;
+            border-color: #C7D2FE !important;
+            box-shadow: 0 10px 24px -10px rgba(79, 70, 229, 0.16) !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card.active),
+        div[data-testid="column"]:has(.step2-role-card.active) {
+            background: linear-gradient(180deg, #FFFFFF 0%, #F8F7FF 100%) !important;
+            border: 2px solid #4F46E5 !important;
+            box-shadow: 0 0 0 1px #4F46E5, 0 10px 24px -8px rgba(79, 70, 229, 0.22) !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card) > div[data-testid="stVerticalBlock"],
+        div[data-testid="column"]:has(.step2-role-card) > div[data-testid="stVerticalBlock"] {
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            gap: 0 !important;
+        }
+        .step2-role-card {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            min-height: auto !important;
+            cursor: pointer !important;
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+            margin-bottom: 0 !important;
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        .step2-role-card-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            margin-bottom: 8px !important;
+            width: 100% !important;
+        }
+        .step2-role-icon-box {
+            width: 34px !important;
+            height: 34px !important;
+            border-radius: 9px !important;
+            background: linear-gradient(180deg, #F4F2FF, #EAE6FF) !important;
+            border: 1px solid #E0D9FF !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+        }
+        .step2-role-title {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #17171C !important;
+            font-family: 'Heebo', sans-serif !important;
+            line-height: 1.25 !important;
+        }
+        .step2-role-desc {
+            font-size: 12.5px !important;
+            color: #4A4A55 !important;
+            line-height: 1.5 !important;
+            font-family: 'Heebo', sans-serif !important;
+            margin-bottom: 4px !important;
+            flex-grow: 1 !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card) div[data-testid="stElementContainer"]:has(button),
+        div[data-testid="column"]:has(.step2-role-card) div[data-testid="stElementContainer"]:has(button) {
+            margin-top: 12px !important;
+            margin-bottom: 0 !important;
+            width: 100% !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card) button,
+        div[data-testid="column"]:has(.step2-role-card) button {
+            height: 34px !important;
+            min-height: 34px !important;
+            max-height: 34px !important;
+            line-height: 34px !important;
+            padding: 0 10px !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            border-radius: 8px !important;
+            font-family: 'Heebo', sans-serif !important;
+            width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.16s ease !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card) button[kind="secondary"],
+        div[data-testid="column"]:has(.step2-role-card) button[kind="secondary"] {
+            background: #F8F7F4 !important;
+            border: 1px solid #E6DFCE !important;
+            color: #4A4A55 !important;
+            box-shadow: none !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card) button[kind="secondary"]:hover,
+        div[data-testid="column"]:has(.step2-role-card) button[kind="secondary"]:hover {
+            background: #EEF2FF !important;
+            border-color: #C7D2FE !important;
+            color: #4F46E5 !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card) button[kind="primary"],
+        div[data-testid="column"]:has(.step2-role-card) button[kind="primary"] {
+            background: #4F46E5 !important;
+            border: 1px solid #4338CA !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25) !important;
+        }
+        div[data-testid="stColumn"]:has(.step2-role-card) button[kind="primary"]:hover,
+        div[data-testid="column"]:has(.step2-role-card) button[kind="primary"]:hover {
+            background: #4338CA !important;
+            border-color: #3730A3 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
     )
 
-    all_catalog_roles = get_all_roles()
-    popular_catalog_names = list(POPULAR_ROLES_MAP.values())
-    other_catalog_roles = [r for r in all_catalog_roles if r not in popular_catalog_names]
+    # ----------------------------------------------------
+    # 2. בחירת תפקיד יעד (כרטיסיות מעוצבות לפי מפרט העיצוב)
+    # ----------------------------------------------------
+    render_clean_html(
+        """
+        <div style="direction: rtl; text-align: right; margin-bottom: 14px; margin-top: 6px;">
+            <h3 style="color: #17171C; font-size: 19px; font-weight: 800; margin: 0; font-family: 'Heebo', sans-serif; display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-flex; width: 24px; height: 24px; border-radius: 7px; background: #EDE9FE; color: #4F46E5; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;">1</span>
+                בחר תפקיד יעד בהייטק
+            </h3>
+        </div>
+        """
+    )
 
-    if chosen_pill in POPULAR_ROLES_MAP:
-        st.session_state.quick_role_choice = chosen_pill
-        st.session_state.target_role = POPULAR_ROLES_MAP[chosen_pill]
-    else:
-        st.session_state.quick_role_choice = "🔍 תפקיד אחר ממאגר התעשייה..."
+    if "selected_role_category" not in st.session_state:
+        if st.session_state.target_role == "UX/UI Designer":
+            st.session_state.selected_role_category = "ux_ui"
+        elif st.session_state.target_role == "Frontend Developer":
+            st.session_state.selected_role_category = "frontend"
+        elif st.session_state.target_role == "Data Analyst":
+            st.session_state.selected_role_category = "data"
+        else:
+            st.session_state.selected_role_category = "other"
+
+    role_cards_data = [
+        {
+            "id": "ux_ui",
+            "title": "מעצב/ת UX/UI",
+            "role_name": "UX/UI Designer",
+            "desc": "אפיון מסעות משתמש, עיצוב ממשקים ב-Figma, בניית Design Systems ומחקר שימושיות.",
+            "svg": '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>',
+        },
+        {
+            "id": "frontend",
+            "title": "מפתח/ת Frontend",
+            "role_name": "Frontend Developer",
+            "desc": "פיתוח ממשקי Web מודרניים, שימוש ב-React ו-TypeScript, ארכיטקטורת רכיבים וביצועים.",
+            "svg": '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
+        },
+        {
+            "id": "data",
+            "title": "אנליסט/ית נתונים",
+            "role_name": "Data Analyst",
+            "desc": "ניתוח תובנות עסקיות מורכבות, שאילתות SQL מתקדמות, ניתוח דאטה וויזואליזציה ב-BI.",
+            "svg": '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
+        },
+        {
+            "id": "other",
+            "title": "תפקיד נוסף מהמאגר",
+            "role_name": None,
+            "desc": "בחירה חופשית מתוך 21 תפקידי הייטק נוספים (DevOps, QA, Cyber, Fullstack ועוד).",
+            "svg": '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+        },
+    ]
+
+    col_ux, col_fe, col_da, col_ot = st.columns(4)
+    cols = [col_ux, col_fe, col_da, col_ot]
+
+    for col, rdata in zip(cols, role_cards_data):
+        with col:
+            is_active = (st.session_state.selected_role_category == rdata["id"])
+            active_cls = "active" if is_active else ""
+            card_html = f"""
+            <div class="step2-role-card {active_cls}" onclick="const btn = this.closest('[data-testid*=\\'olumn\\']').querySelector('button'); if(btn) btn.click();">
+                <div class="step2-role-card-header">
+                    <div class="step2-role-icon-box">{rdata['svg']}</div>
+                    <div class="step2-role-title">{rdata['title']}</div>
+                </div>
+                <div class="step2-role-desc">{rdata['desc']}</div>
+            </div>
+            """
+            render_clean_html(card_html)
+            btn_label = "✓ נבחר" if is_active else "בחר תפקיד"
+            btn_type = "primary" if is_active else "secondary"
+            if st.button(btn_label, key=f"btn_role_card_{rdata['id']}", type=btn_type, use_container_width=True):
+                st.session_state.selected_role_category = rdata["id"]
+                if rdata["role_name"]:
+                    st.session_state.target_role = rdata["role_name"]
+                st.rerun()
+
+    if st.session_state.selected_role_category == "other":
+        all_catalog_roles = get_all_roles()
+        popular_catalog_names = ["UX/UI Designer", "Frontend Developer", "Data Analyst"]
+        other_catalog_roles = [r for r in all_catalog_roles if r not in popular_catalog_names]
         selected_from_catalog = st.selectbox(
             "בחר תפקיד מתוך מאגר 21 התפקידים:",
             options=other_catalog_roles,
@@ -675,16 +911,25 @@ elif st.session_state.app_step == 2:
         )
         st.session_state.target_role = selected_from_catalog
 
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
 
     # ----------------------------------------------------
-    # 2. מקור נתוני המועמד (דמו מהיר / העלאת קורות חיים)
+    # 3. מקור נתוני המועמד (דמו מהיר / העלאת קורות חיים)
     # ----------------------------------------------------
-    st.markdown("<h3 style='color: #0F172A; font-size: 19px; font-weight: 800; margin-bottom: 10px;'>📄 2. מקור נתוני המועמד</h3>", unsafe_allow_html=True)
+    render_clean_html(
+        """
+        <div style="direction: rtl; text-align: right; margin-bottom: 14px;">
+            <h3 style="color: #17171C; font-size: 19px; font-weight: 800; margin: 0; font-family: 'Heebo', sans-serif; display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-flex; width: 24px; height: 24px; border-radius: 7px; background: #EDE9FE; color: #4F46E5; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;">2</span>
+                מקור נתוני המועמד
+            </h3>
+        </div>
+        """
+    )
 
     source_selection = st.radio(
         "בחר כיצד להזין את נתוני המועמד:",
-        options=["⚡ פרופיל דמו מהיר (הדגמה בקליק אחד)", "📁 העלאת קורות חיים (קובץ PDF או DOCX)"],
+        options=["פרופיל דמו מהיר (הדגמה בקליק אחד)", "העלאת קורות חיים (קובץ PDF או DOCX)"],
         index=0 if st.session_state.data_source == "demo" else 1,
         horizontal=True,
         key="radio_source_selection",
@@ -694,7 +939,7 @@ elif st.session_state.app_step == 2:
     matched_preset_id = map_role_to_preset(st.session_state.target_role)
     matched_preset = next((p for p in PRESETS if p["id"] == matched_preset_id), PRESETS[0] if PRESETS else None)
 
-    if "⚡ פרופיל דמו מהיר" in source_selection:
+    if "פרופיל דמו מהיר" in source_selection:
         st.session_state.data_source = "demo"
         with st.container(border=True):
             if matched_preset:
@@ -732,7 +977,7 @@ elif st.session_state.app_step == 2:
                 except DocumentExtractionError as err:
                     st.error(f"שגיאה בטעינת הקובץ: {err}")
 
-            with st.expander("✍️ צפייה ועריכה של טקסט קורות החיים ותיאור המשרה (אופציונלי)", expanded=False):
+            with st.expander("צפייה ועריכה של טקסט קורות החיים ותיאור המשרה (אופציונלי)", expanded=False):
                 col_c1, col_c2 = st.columns(2)
                 with col_c1:
                     cv_val = st.text_area(
@@ -767,7 +1012,7 @@ elif st.session_state.app_step == 2:
     # 3. פעולה יחידה: כפתור בולט ברוחב מלא
     # ----------------------------------------------------
     analyze_clicked = st.button(
-        "🚀 נתח התאמה לתפקיד",
+        "נתח התאמה לתפקיד",
         type="primary",
         use_container_width=True,
         key="btn_main_analyze_role",

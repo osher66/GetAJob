@@ -18,4 +18,3 @@
 - **Local First**: Work strictly on the local development server during day-to-day iterations.
 - **No Routine Cloud Push**: DO NOT push commits or files to GitHub / cloud after every individual task or fix.
 - **End-of-Day Sync Only**: Only push code to the remote repository when explicitly instructed by the user (e.g., at end of session / 'מסיימים עבודה להיום').
-
